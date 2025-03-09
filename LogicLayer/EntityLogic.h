@@ -3,9 +3,9 @@
 
 
 class EntityLogic{
-    public:
-
-    };
+public:
+    void fetch_all_entities();
+};
 
 
 #endif //ENTITYLOGIC_H

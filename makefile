@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++11
 CXXDEBUGFLAGS = -ggdb -fsanitize=address -fsanitize=undefined
 # CXXFILES = main.cpp
-CXXFILES = main.cpp LogicLayer/BattleLogic.cpp LogicLayer/LogicWrapper.cpp UILayer/UIHandler.cpp UILayer/IOHandler.cpp
+CXXFILES = main.cpp LogicLayer/BattleLogic.cpp LogicLayer/LogicWrapper.cpp UILayer/UIHandler.cpp UILayer/IOHandler.cpp UILayer/BattleHandler.cpp
 
 
 TARGETS = debug main

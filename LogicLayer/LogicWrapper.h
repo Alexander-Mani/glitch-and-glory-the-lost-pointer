@@ -16,6 +16,8 @@ public:
     GameLogic gameLogic;
 
     LogicWrapper();
+
+    // fetch_all_entities();
 };
 
 #endif // LOGICWRAPPER_H

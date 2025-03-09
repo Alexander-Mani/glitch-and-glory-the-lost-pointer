@@ -10,3 +10,4 @@ LogicWrapper::LogicWrapper(){
     this->entityLogic = EntityLogic();
     this->gameLogic = GameLogic();
 }
+
