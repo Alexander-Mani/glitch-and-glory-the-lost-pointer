@@ -1,0 +1,91 @@
+#ifndef ENTITY_MODEL_H
+#define ENTITY_MODEL_H
+
+#include <string>
+
+class EntityModel {
+protected:
+    std::string name;
+    int hp;
+    int atk;
+    int def;
+    int magic;
+    int crit;
+    int evade;
+
+public:
+    EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade);
+    virtual ~EntityModel() = default;
+
+    // Default implementation prints the common stats.
+    virtual void display_stats() const;
+
+    std::string get_name() const { return name; }
+    int get_hp() const { return hp; }
+    int get_atk() const { return atk; }
+    int get_def() const { return def; }
+    int get_magic() const { return magic; }
+    int get_crit() const { return crit; }
+    int get_evade() const { return evade; }
+};
+
+#endif // ENTITY_MODEL_H
+
+
+
+
+
+
+//============================================//
+//======= TOMMI OLD CODE FOR REFERENCE =======//
+//============================================//
+
+// #ifndef ENTITYPARENTMODEL_H
+// #define ENTITYPARENTMODEL_H
+
+// #include <string>
+
+// class Entity {
+// protected:
+//     std::string name;
+//     int hp;
+//     int atk;
+//     int def;
+//     int magic;
+//     int crit;
+//     int evade;
+
+// public:
+//     Entity(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade);
+//     virtual ~Entity() = default;
+
+//     virtual void displayStats() const = 0;
+
+//     std::string getName() const { return name; }
+//     int getHP() const { return hp; }
+//     int getATK() const { return atk; }
+//     int getDEF() const { return def; }
+//     int getMagic() const { return magic; }
+//     int getCrit() const { return crit; }
+//     int getEvade() const { return evade; }
+// };
+
+// class TechnoOracle : public Entity {
+// public:
+//     TechnoOracle();
+//     void displayStats() const override;
+// };
+
+// class CyberGladiator : public Entity {
+// public:
+//     CyberGladiator();
+//     void displayStats() const override;
+// };
+
+// class BioEnhancedBerserker : public Entity {
+// public:
+//     BioEnhancedBerserker();
+//     void displayStats() const override;
+// };
+
+// #endif

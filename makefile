@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++11
 CXXDEBUGFLAGS = -ggdb -fsanitize=address -fsanitize=undefined
 # CXXFILES = main.cpp
-CXXFILES = main.cpp LogicLayer/BattleLogic.cpp LogicLayer/LogicWrapper.cpp UILayer/UIHandler.cpp UILayer/IOHandler.cpp UILayer/BattleHandler.cpp
+CXXFILES = main.cpp LogicLayer/BattleLogic.cpp LogicLayer/LogicWrapper.cpp UILayer/UIHandler.cpp UILayer/IOHandler.cpp UILayer/BattleHandler.cpp Models/Entities/EntityModel.cpp Models/Entities/BioEnhancedBerserkerModel.cpp Models/Entities/CyberGladiatorModel.cpp Models/Entities/TechnoOracleModel.cpp
 
 
 TARGETS = debug main
@@ -29,4 +29,5 @@ clean:
 
 fresh:
 	clean all
+
 
