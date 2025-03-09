@@ -9,18 +9,19 @@
 
 using namespace std;
 
-UIHandler::UIHandler(){
-    this->logicWrapper = LogicWrapper();
-    this->ioHandler = IOHandler();
-    this->battleHandler = BattleHandler();
 
-    // Mapping each menu_action to a method
+UIHandler::UIHandler() 
+    : logicWrapper(), 
+      ioHandler(), 
+      battleHandler(&logicWrapper)   // Initialize battleHandler here with the pointer
+{
+    // Now you can set up your menu_options and menu_actions, etc.
     this->menu_options = {"Play Game [phase 2]", "Activate Battle", "Quit"};
-
     this->menu_actions["Play Game [phase 2]"] = [this]() { play_game(); };
     this->menu_actions["Activate Battle"]     = [this]() { activate_battle(); };
     this->menu_actions["Quit"]                = [this]() { quit(); };
 }
+
 
 
 void UIHandler::initialize_game() {
@@ -46,7 +47,6 @@ void UIHandler::activate_battle(){
     this->battleHandler.initialize_battle();
     
 }
-
 
 void UIHandler::quit(){
     this->ioHandler.output_subtitle("Exiting the game...");
