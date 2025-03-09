@@ -7,9 +7,9 @@
 
 class EntityLogic {
 public:
-    
     /*
-     * @brief Returns a vector of pointers to available entity models.
+     * @brief Gets all Entity Models
+     * @returns A vector of pointers to available entity models.
      */
     std::vector<EntityModel*> get_all_entities();
     

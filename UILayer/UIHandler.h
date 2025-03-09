@@ -28,7 +28,7 @@ public:
 
 
     /*
-     * @brief Starts the game and displays the main menu.
+     * @brief Initializes the game and displays the main menu.
      * 
      * @details This function prints the game title and presents the user with a set of options.
      * The user selects an option, which is then printed.
@@ -39,26 +39,17 @@ public:
 private:
     /*
      * @brief Starts the game and displays the main menu.
-     * 
-     * @details This function prints the game title and presents the user with a set of options.
-     * The user selects an option, which is then printed.
      */
     void play_game();
 
     /*
-     * @brief Starts the game logic.
-     * 
-     * @details This function is executed when the player selects "Play Game".
-     * In the final implementation, this will trigger game-related logic.
+     * @brief Triggers GameHandler to start a battle.
      */
     void activate_battle();
 
 
     /*
      * @brief Exits the game.
-     * 
-     * @details This function is triggered when the player selects "Quit".
-     * It prints a message and terminates the program.
      */
     void quit();
 };

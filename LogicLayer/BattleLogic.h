@@ -9,9 +9,6 @@ using namespace std;
 class BattleLogic{
     public:
 
-    
-    string example_method(string some_str);
-
 };
 
 #endif // BATTLELOGIC_H
