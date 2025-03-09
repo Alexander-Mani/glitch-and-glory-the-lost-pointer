@@ -2,5 +2,13 @@
 #include <iostream>
 
 CyberGladiatorModel::CyberGladiatorModel()
-    : EntityModel("Cyber Gladiator", 100, 50, 50, 5, 10, 10) {}
+    : EntityModel(
+        "Cyber Gladiator",  // Name 
+        100,                // hp         
+        50,                 // atk         
+        50,                 // def         
+        5,                  // magic     
+        10,                 // crit         
+        10                  // evade     
+    ) {}
 

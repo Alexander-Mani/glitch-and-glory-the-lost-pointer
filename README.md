@@ -38,3 +38,51 @@ ProjectRoot/
 ```
 
 Following these conventions ensures a structured and maintainable C++ codebase.
+
+
+
+
+# PA4 - Notes from class for development
+_____________________________________
+
+## Possibly Helpful
+- Templating (one of requirements)
+    - Type Alias
+- Variants (one of requirements)
+- Use compile-time checking such as `constexpr`
+_____________________________________
+
+## Project structure
+
+### Game Ideas
+- Maybe a final fantasy copy?
+- Leveling system?
+
+### Structure Ideas
+Franz:
+- Set up structure with templated values 
+    - This will help us to set up test
+    - Helps with unifying structure of program with all members
+    - Possibly saves time long term, reducing the need to refactor code
+_____________________________________
+
+## Project Instructions
+
+### Game Attributes
+- At least three entities
+    - The player should be able to choose from 3-7 entities
+    - Each entity should have their own stats, commands etc.
+
+
+### README requirements
+- Needs to be designed around the player and developer going over it
+- Player
+    - Needs to have a feel of the game and controls by reading the README.
+- Developer:
+    - Needs to understand the structure of the code from the README.
+
+
+### What can we use?
+- Any C++ version we like
+- We can include any library we want, but we need to state it in the README
+_____________________________________

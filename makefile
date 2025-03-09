@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -std=c++11
+CXXFLAGS = -Wall -std=c++17
 CXXDEBUGFLAGS = -ggdb -fsanitize=address -fsanitize=undefined
 # CXXFILES = main.cpp
 CXXFILES = main.cpp LogicLayer/EntityLogic.cpp LogicLayer/GameLogic.cpp LogicLayer/BattleLogic.cpp LogicLayer/LogicWrapper.cpp UILayer/UIHandler.cpp UILayer/IOHandler.cpp UILayer/BattleHandler.cpp Models/Entities/EntityModel.cpp Models/Entities/BioEnhancedBerserkerModel.cpp Models/Entities/CyberGladiatorModel.cpp Models/Entities/TechnoOracleModel.cpp
