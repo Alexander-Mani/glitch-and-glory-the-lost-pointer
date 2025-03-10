@@ -1,4 +1,5 @@
 #include "UIHandler.h"
+#include "AsciiHandler.h"
 #include "IOHandler.h"
 #include "BattleHandler.h"
 
@@ -13,7 +14,8 @@ using namespace std;
 UIHandler::UIHandler() 
     : logicWrapper(), 
       ioHandler(), 
-      battleHandler(&logicWrapper)   // Initialize battleHandler here with the pointer
+      asciiHandler(),
+      battleHandler(&logicWrapper, &asciiHandler)   // Initialize battleHandler here with the pointer
 {
     // Now you can set up your menu_options and menu_actions, etc.
     this->menu_options = {"Play Game [phase 2]", "Activate Battle", "Quit"};

@@ -1,10 +1,12 @@
 #include "BattleHandler.h"
+#include "AsciiHandler.h"
 #include "IOHandler.h"
 #include "../Models/AllEntities.h"      // For all entity models
+#include "../Models/BattleModel.h"
 #include "../LogicLayer/EntityLogic.h"    // For EntityLogic
 
-BattleHandler::BattleHandler(LogicWrapper* logicWrapper)
-    : logicWrapper(logicWrapper)
+BattleHandler::BattleHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler)
+    : logicWrapper(logicWrapper), asciiHandler(asciiHandler)
 {
     this->ioHandler = IOHandler();
 }
@@ -18,6 +20,12 @@ void BattleHandler::initialize_battle() {
     
     //--- Selecting Entity For Opponent ---//
     EntityModel* opponent_entity = this->select_entity(false);
+
+    BattleModel* battle_model = new BattleModel(player_entity, opponent_entity, true);
+    // Using evade as initave
+    if (player_entity->get_evade() <= opponent_entity->get_evade()) battle_model->player_turn = false;
+    // Start battle
+    if (player_entity && opponent_entity && battle_model) this->start_battle(battle_model); 
 
     
     (void) player_entity;
@@ -60,12 +68,36 @@ EntityModel* BattleHandler::select_entity(bool for_player) {
     if(chosen_entity) {
         this->ioHandler.output_msg("You selected: " + chosen_entity->get_name());
         chosen_entity->display_stats();
+        this->asciiHandler->display_ascii(chosen_entity->get_name());
         return chosen_entity;
     } else {
         this->ioHandler.output_msg("Entity not found.");
         // Since no entity was found, we recursively call the same function
         return select_entity(for_player);
     }
+
+}
+void BattleHandler::start_battle(BattleModel *battle_model) {
+    this->asciiHandler->display_start_of_battle(battle_model);
+    bool battle_on = true;
+    int stub_ind = 0;
+    cout << "Start battle?" << endl;
+    int action;
+    cin >> action;
+    while (battle_on) {
+        stub_ind++;
+        //call some function in battle logic that checks if we have lost
+        // stub for that return value now
+        if (stub_ind > 10) battle_on = false;
+        //display round and stats
+        this->asciiHandler->display_turn(battle_model);
+        //display actions and handle input
+        // call some io logic for actions
+    
+    }
+
+
+
 }
 
 

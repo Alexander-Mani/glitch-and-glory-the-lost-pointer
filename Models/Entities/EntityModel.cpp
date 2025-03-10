@@ -1,10 +1,17 @@
 #include "EntityModel.h"
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
-EntityModel::EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade)
-    : name(name), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade) {}
+EntityModel::EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, vector<string> ascii_art)
+    : name(name), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade), ascii_art(move(ascii_art)) {}
+
+    void EntityModel::display_ascii() const {
+    for (const auto& line : ascii_art) {
+        std::cout << line << std::endl;
+        }
+    }
 
 
     void EntityModel::display_stats() const {

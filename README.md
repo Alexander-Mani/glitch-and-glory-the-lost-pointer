@@ -11,19 +11,20 @@ title: Naming Conventions
 
 ## Phase 1
 
-1. [Attack Logic][Franz][attack][...]
+1. [ ] [Attack Logic][Franz][attack][...]
     a. Finna út hvernig við breytum stats á Entities þegar það er ehv attack/defence
     b. Búa til weapon class með mismunandi attack stats
     c. Gera ehv simple algo sem gerir þetta fair, mögulega hafa low, med, high attack eins og í sword and sandals, annars er leikurinn 100% random haha
-2. [Battle Logic][Lexi][battles][...]
- a. Komast inn í bardaga
- b. Finna út hvernig við munum skiptast á milli characters
- c.  Controls, finna út hvað er hægt að gera í Battle
- d. Prenta win/loss skilaboð og exita leik
+
+2. [ ] [Battle Logic][Lexi][battles][Models*,]
+ a. Komast inn í bardaga [solved WIP]
+ b. Finna út hvernig við munum skiptast á milli characters [bool after actions][NOT Started]
+ c.  Controls, finna út hvað er hægt að gera í Battle [Attack, Special, Forfit... yet to be thought out][NOT Started]
+ d. Prenta win/loss skilaboð og exita leik [NOT Started]
 
 ## Phase 2
 
-1. [Map / Storyline ][Tommi][game-loop][...]
+1. [ ] [Map / Storyline ][Tommi][game-loop][...]
  a. Semja smá söguþráð, ehv start skilaboð kannski og svo hver er tilgangurinn með leiknum, hvað er að frétta
  b. Finna út hvernig mappið mun líta út, hvernig ætlum við að display-a það og hvort við ætlum
  c. Transition til og frá battles

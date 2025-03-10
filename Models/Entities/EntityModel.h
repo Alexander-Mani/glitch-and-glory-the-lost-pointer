@@ -2,6 +2,7 @@
 #define ENTITY_MODEL_H
 
 #include <string>
+#include <vector>
 
 class EntityModel {
 protected:
@@ -12,13 +13,16 @@ protected:
     int magic;
     int crit;
     int evade;
+    std::vector<std::string> ascii_art;
 
 public:
-    EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade);
+    EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, std::vector<std::string> ascii_art);
     virtual ~EntityModel() = default;
 
     // Default implementation prints the common stats.
     virtual void display_stats() const;
+    void display_ascii() const;
+    const std::vector<std::string>& get_ascii() const { return ascii_art; }
 
     std::string get_name() const { return name; }
     int get_hp() const { return hp; }
@@ -27,6 +31,11 @@ public:
     int get_magic() const { return magic; }
     int get_crit() const { return crit; }
     int get_evade() const { return evade; }
+
+    std::vector<int> get_battle_stats() const {
+    return {hp, atk, def, magic, crit, evade};
+    }
+
 };
 
 #endif // ENTITY_MODEL_H

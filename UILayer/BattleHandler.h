@@ -5,6 +5,7 @@
 #include "../LogicLayer/LogicWrapper.h"  // Include LogicWrapper
 
 #include "../Models/BattleModel.h"
+#include "AsciiHandler.h"
 
 #include <iostream>
 #include <vector>
@@ -14,9 +15,10 @@ class BattleHandler {
 public:
     IOHandler ioHandler;
     LogicWrapper* logicWrapper; // Pointer to the LogicWrapper
+    AsciiHandler* asciiHandler;
 
     // Pass a pointer to LogicWrapper so we can access EntityLogic
-    BattleHandler(LogicWrapper* logicWrapper);
+    BattleHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler);
 
     /*
     * @brief Asks the user for Entity for player and for opponent. Then starts the battle.

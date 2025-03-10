@@ -9,6 +9,7 @@
 
 #include "../LogicLayer/LogicWrapper.h"
 #include "IOHandler.h"
+#include "AsciiHandler.h"
 #include "BattleHandler.h"
 
 
@@ -16,8 +17,9 @@ class UIHandler{
 public:
     LogicWrapper logicWrapper;
     IOHandler ioHandler;
+    AsciiHandler asciiHandler; //AsciiHandler must come before BattleHandler
     BattleHandler battleHandler;
-    
+
     // We will have the menu options in a vector<string> simply to control the order within the manu_actions
     vector<string> menu_options;
     // menu_actions will act similarly to a dictionary. For keys it will store menu option, for value it will store the function for that menu option.
