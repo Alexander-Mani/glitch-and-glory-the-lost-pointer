@@ -88,11 +88,12 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
     // cout << "Start battle?" << endl;
     // int action;
     // cin >> action;
-    while (battle_on) {
-        stub_ind++;
+    // while (battle_on) {
+    while (!battleModel->is_finished()) {
+        // stub_ind++;
         //call some function in battle logic that checks if we have lost
         // stub for that return value now
-        if (stub_ind > 10) battle_on = false;
+        // if (stub_ind > 10) battle_on = false;
         //display round and stats
         this->asciiHandler->display_turn(battleModel);
         //display actions and handle input
