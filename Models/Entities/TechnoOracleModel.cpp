@@ -59,5 +59,12 @@ TechnoOracleModel::TechnoOracleModel()
         "  ##+%%@%%%@@%#       ###%@#     ", 
         " %#%@@@@@@@@         #%%#%%%     ", 
         "                    %*%%%@%      " 
-    }
+    },
+    WeaponModel(
+        "Singularity Codex",            // Weapon Name
+        10,                             // Weapon Damage
+        75,                             // Hit Rate
+        "You have hit the enemy!",      // Hit message
+        "You missed the enemy homie!"   // Miss message
+    )
     ) {}

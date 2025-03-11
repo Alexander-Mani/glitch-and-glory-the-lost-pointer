@@ -59,6 +59,13 @@ BioEnhancedBerserkerModel::BioEnhancedBerserkerModel()
         "        +++**#**#%%#+                   #%#####%#===+   ", 
         "      #*****###%%%##                  %%%%%%%%%%%=+     ", 
         "=+*%%%%%%%%%%%%%%%%%%%%              %%%%%%%%%%%%%%%%   " 
-        }
+        },
+        WeaponModel(
+            "Ragnarök Strain",              // Weapon Name
+            100,                            // Weapon Damage
+            25,                             // Hit Rate
+            "You have hit the enemy!",      // Hit message
+            "You missed the enemy homie!"   // Miss message
+        )
     ) {}
 

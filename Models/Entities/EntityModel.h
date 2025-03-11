@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 
+#include "../WeaponModel.h"
+
+
 class EntityModel {
 protected:
     std::string name;
@@ -14,14 +17,18 @@ protected:
     int crit;
     int evade;
     std::vector<std::string> ascii_art;
+    WeaponModel weapon;
 
 public:
-    EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, std::vector<std::string> ascii_art);
+    EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, std::vector<std::string> ascii_art, WeaponModel weapon);
+    
     virtual ~EntityModel() = default;
 
     // Default implementation prints the common stats.
     virtual void display_stats() const;
+    
     void display_ascii() const;
+    
     const std::vector<std::string>& get_ascii() const { return ascii_art; }
 
     std::string get_name() const { return name; }
@@ -35,6 +42,13 @@ public:
     std::vector<int> get_battle_stats() const {
     return {hp, atk, def, magic, crit, evade};
     }
+
+
+    virtual void take_damage(int damage) {
+        hp -= damage;
+        if(hp < 0) hp = 0;
+    }
+
 
 };
 

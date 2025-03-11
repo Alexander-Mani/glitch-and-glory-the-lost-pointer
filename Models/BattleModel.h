@@ -9,8 +9,8 @@ public:
     EntityModel *compEntityModel;
     bool player_turn;  
 
-    BattleModel(EntityModel* player, EntityModel* opponent, bool turn)
-        : playerEntityModel(player), compEntityModel(opponent), player_turn(turn) {}
+    BattleModel(EntityModel* player, EntityModel* opponent, bool player_turn)
+        : playerEntityModel(player), compEntityModel(opponent), player_turn(player_turn) {}
 };
 
 

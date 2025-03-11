@@ -1,6 +1,8 @@
 #include "CyberGladiatorModel.h"
 #include <iostream>
 
+
+
 CyberGladiatorModel::CyberGladiatorModel()
     : EntityModel(
         "Cyber Gladiator",  // Name 
@@ -59,6 +61,13 @@ CyberGladiatorModel::CyberGladiatorModel()
         "-+-..                    .+@@@@%+==*@=.   ..%@@@@@+.                      ", 
         "                             ..    ....    ..-=+=:..                      ", 
         "                                               .                          " 
-        }
+        },
+        WeaponModel(
+            "Titan Protocol",               // Weapon Name
+            25,                             // Weapon Damage
+            50,                             // Hit Rate
+            "You have hit the enemy!",      // Hit message
+            "You missed the enemy homie!"   // Miss message
+        )
     ) {}
 

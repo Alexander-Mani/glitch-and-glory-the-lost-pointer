@@ -9,6 +9,8 @@ BattleHandler::BattleHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHand
     : logicWrapper(logicWrapper), asciiHandler(asciiHandler)
 {
     this->ioHandler = IOHandler();
+    // vector<string> game_options;
+    
 }
 
 void BattleHandler::initialize_battle() {
@@ -93,6 +95,8 @@ void BattleHandler::start_battle(BattleModel *battle_model) {
         this->asciiHandler->display_turn(battle_model);
         //display actions and handle input
         // call some io logic for actions
+
+        // this->
     
     }
 

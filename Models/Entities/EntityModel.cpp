@@ -3,9 +3,10 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+#include "../WeaponModel.h"
 
-EntityModel::EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, vector<string> ascii_art)
-    : name(name), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade), ascii_art(move(ascii_art)) {}
+EntityModel::EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, vector<string> ascii_art, WeaponModel weapon)
+    : name(name), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade), ascii_art(move(ascii_art)), weapon(weapon) {}
 
     void EntityModel::display_ascii() const {
     for (const auto& line : ascii_art) {
