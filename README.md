@@ -67,6 +67,10 @@ Following these conventions ensures a structured and maintainable C++ codebase.
 
 
 # PA4 - Notes from class for development
+
+## Useful Header Libraries from class [10.03.2025]
+- [Github Repo with header-only c++ libraries](https://github.com/p-ranav/awesome-hpp)
+- [Github Repo fyrir TUI art (insane)](https://github.com/ArthurSonzogni/FTXUI)
 _____________________________________
 
 ## Possibly Helpful
