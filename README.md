@@ -10,8 +10,8 @@ title: Naming Conventions
 *STANDARDS: [Task][User][branch][Affected files]*
 
 ## Phase 1
-
-1. [ ] [Attack Logic][Franz][attack][AttackLogic, WeaponModel.h, EntityLogic(maybe), EntityModel (possibly other Entity models later on)]
+**FRANZ**
+1. [WIP] [Attack Logic][Franz][attack][AttackLogic, WeaponModel.h, EntityLogic(maybe), EntityModel (possibly other Entity models later on)]
     a. Finna út hvernig við breytum stats á Entities þegar það er ehv attack/defence [done]
         - Búum til methods fyrir entities sem getur breytt values
     b. Búa til weapon class með mismunandi attack stats [done]
@@ -20,13 +20,20 @@ title: Naming Conventions
         - Fór aðeins aðra leið til að einfalda 
             I.  WeaponModel.hit_rate segir til um hvort þú hittir á óvin og 
             II.  WeaponModel.damage segir til um árásagetu þína. Damage er reiknað () 
+2. BATTLE 
+    a. Komast inn í bardaga [solved WIP]
+    b. Finna út hvernig við munum skiptast á milli characters [bool after actions][NOT Started]
+    c.  Controls, finna út hvað er hægt að gera í Battle [Attack, Special, Forfit... yet to be thought out][NOT Started]
+    d Prenta win/loss skilaboð og exita leik [NOT Started]
+    e. Add weaopons to attribute
     
 
-2. [ ] [Battle Logic][Lexi][battles][Models*,]
- a. Komast inn í bardaga [solved WIP]
- b. Finna út hvernig við munum skiptast á milli characters [bool after actions][NOT Started]
- c.  Controls, finna út hvað er hægt að gera í Battle [Attack, Special, Forfit... yet to be thought out][NOT Started]
- d. Prenta win/loss skilaboð og exita leik [NOT Started]
+**ALEXANDER**
+
+1. [ ] [ ]
+    1. Make a plan for  Currency, equipment and leveling
+    2. Make a overworld_map + game_loop
+        -
 
 ## Phase 2
 
