@@ -55,7 +55,6 @@ void AsciiHandler::display_start_of_battle(BattleModel* battle_model) {
         //cout << total_padding << " " << left_padding << " " << right_padding << "";
         std::cout << player_line << std::string(left_padding, ' ') << content << std::string(right_padding, ' ') << opponent_line << "\n";
     }
-    std::this_thread::sleep_for(std::chrono::seconds(3));
 }
 
 void AsciiHandler::display_turn(BattleModel* battle_model){

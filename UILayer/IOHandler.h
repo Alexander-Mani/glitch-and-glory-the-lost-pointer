@@ -19,6 +19,8 @@ public:
 
     //==== OUTPUT METHODS ====//
     
+    void clear_terminal();
+    void glitch_sleep(unsigned int seconds);
     /*
     * @param title: Takes in a string title  
     * @brief Prints subtitle with padded "="

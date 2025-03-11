@@ -5,12 +5,27 @@
 
 
 #include <limits> // We need this to discard the int input to prevent infinite loopies!
+#include <cstdlib>
+#include <chrono> // for sleep
+#include <thread> // don't worry not for advanced threading just for a universal way to sleep
 
 
 using namespace std;
 
 
 //=========== OUTPUT METHODS ===========//
+
+void IOHandler::glitch_sleep(unsigned int seconds){
+    std::this_thread::sleep_for(std::chrono::seconds(seconds));
+}
+
+void IOHandler::clear_terminal() {
+    #ifdef _WIN32
+        std::system("cls");
+    #else
+        std::system("clear");
+    #endif
+}
 
 void IOHandler::output_title(string title){
     string wrapper(this->title_max_len, '=');

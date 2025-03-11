@@ -6,8 +6,6 @@
 #include <cstddef>
 #include <iostream>
 #include <string>
-#include <chrono> // for sleep
-#include <thread> // don't worry not for advanced threading just for a universal way to sleep
 
 using namespace std;
 

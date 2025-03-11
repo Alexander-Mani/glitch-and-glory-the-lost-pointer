@@ -84,9 +84,12 @@ void BattleHandler::start_battle(BattleModel *battle_model) {
     int stub_ind = 0;
     string action;
     vector<string> action_list = battle_model->get_battle_actions(); 
+    this->ioHandler.glitch_sleep(3);
     while (battle_on) {
         //call some kind of divider or clear screen func
+        this->ioHandler.clear_terminal();
         stub_ind++;
+        this->asciiHandler->display_turn(battle_model);
         if(battle_model->player_turn){
             battle_model->player_turn = false;
             action = this->ioHandler.input_choose_option(action_list);
@@ -97,10 +100,10 @@ void BattleHandler::start_battle(BattleModel *battle_model) {
         // stub for that return value now
         if (stub_ind > 10) battle_on = false;
         //display round and stats
-        this->asciiHandler->display_turn(battle_model);
         //display actions and handle input
         // call some io logic for actions
     
+    this->ioHandler.glitch_sleep(3);
     }
 
 
