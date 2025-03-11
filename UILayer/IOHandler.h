@@ -48,6 +48,9 @@ public:
     */
     void output_options(string options_title, vector<string> options_list);
     
+    void output_battle_info(string info);
+    
+
     
     //==== INPUT METHODS ====//
     /*

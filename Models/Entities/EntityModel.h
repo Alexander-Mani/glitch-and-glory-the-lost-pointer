@@ -49,6 +49,11 @@ public:
         if(hp < 0) hp = 0;
     }
 
+    /*
+     * @brief Simply gets the weapon for Entity
+     */
+    WeaponModel *get_weapon();
+
 
 };
 

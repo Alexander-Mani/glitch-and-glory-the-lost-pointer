@@ -16,6 +16,17 @@ public:
     GameLogic gameLogic;
 
     LogicWrapper();
+
+    //---- Methods ----//
+
+    /*
+     * @brief [TODO] Get dynamic attack options
+     * @details Currently it returns a static vector<string> of two actions
+     */
+    vector<string> get_attack_options();
+
+   
+    string perform_action(string action, BattleModel *battleModel);
 };
 
 #endif // LOGICWRAPPER_H

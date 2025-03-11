@@ -6,7 +6,9 @@ MODELFILES = \
 	Models/Entities/EntityModel.cpp \
 	Models/Entities/BioEnhancedBerserkerModel.cpp \
 	Models/Entities/CyberGladiatorModel.cpp \
-	Models/Entities/TechnoOracleModel.cpp
+	Models/Entities/TechnoOracleModel.cpp \
+	Models/BattleModel.cpp \
+	Models/WeaponModel.cpp 
 
 LOGICFILES = \
 	LogicLayer/EntityLogic.cpp \
@@ -37,7 +39,7 @@ debug:clean
 	$(CXX) $(CXXFLAGS) $(CXXDEBUGFLAGS) -ggdb -o $@.out $(CXXFILES)
 	gdb ./debug.out
 
-run:clean
+run:
 	$(CXX) $(CXXFLAGS) -o glitch-and-glory.out $(CXXFILES)
 	./glitch-and-glory.out
 

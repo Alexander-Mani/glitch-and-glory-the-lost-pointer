@@ -22,7 +22,10 @@ public:
         : name(name), damage(damage), hit_rate(hit_rate), success_msg(success_msg), fail_msg(fail_msg) {}
 
     
-    // int get_damage();
+    int *get_hit_rate();
+    string *get_success_msg();
+    string *get_fail_msg();
+    int *get_damage();
 
 };
 

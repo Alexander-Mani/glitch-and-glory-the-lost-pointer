@@ -4,9 +4,9 @@
 TechnoOracleModel::TechnoOracleModel()
     : EntityModel(
         "Techno Oracle",    // Name                    
-        60,                 // hp        
-        10,                 // atk        
-        5,                  // def    
+        100,                // hp        
+        20,                 // atk        
+        15,                 // def    
         70,                 // magic        
         15,                 // crit        
         10,                 // evade    
@@ -63,7 +63,7 @@ TechnoOracleModel::TechnoOracleModel()
     WeaponModel(
         "Singularity Codex",            // Weapon Name
         10,                             // Weapon Damage
-        75,                             // Hit Rate
+        60,                             // Hit Rate
         "You have hit the enemy!",      // Hit message
         "You missed the enemy homie!"   // Miss message
     )
