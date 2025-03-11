@@ -4,6 +4,7 @@
 #include "../Models/AllEntities.h"      // For all entity models
 #include "../Models/BattleModel.h"
 #include "../LogicLayer/EntityLogic.h"    // For EntityLogic
+#include <string>
 
 BattleHandler::BattleHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler)
     : logicWrapper(logicWrapper), asciiHandler(asciiHandler)
@@ -81,11 +82,17 @@ void BattleHandler::start_battle(BattleModel *battle_model) {
     this->asciiHandler->display_start_of_battle(battle_model);
     bool battle_on = true;
     int stub_ind = 0;
-    cout << "Start battle?" << endl;
-    int action;
-    cin >> action;
+    string action;
+    vector<string> action_list = battle_model->get_battle_actions(); 
     while (battle_on) {
+        //call some kind of divider or clear screen func
         stub_ind++;
+        if(battle_model->player_turn){
+            battle_model->player_turn = false;
+            action = this->ioHandler.input_choose_option(action_list);
+            this->logicWrapper->battleLogic.handle_battle_action(battle_model, action);
+
+        }else battle_model->player_turn = true;
         //call some function in battle logic that checks if we have lost
         // stub for that return value now
         if (stub_ind > 10) battle_on = false;

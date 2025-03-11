@@ -11,6 +11,10 @@ public:
 
     BattleModel(EntityModel* player, EntityModel* opponent, bool turn)
         : playerEntityModel(player), compEntityModel(opponent), player_turn(turn) {}
+
+    std::vector<std::string> get_battle_actions() const {
+        return {"A", "H", "F", "B", "S"};
+    }
 };
 
 

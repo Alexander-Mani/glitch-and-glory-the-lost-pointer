@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 class EntityModel {
 protected:
@@ -33,8 +34,23 @@ public:
     int get_evade() const { return evade; }
 
     std::vector<int> get_battle_stats() const {
-    return {hp, atk, def, magic, crit, evade};
+        return {hp, atk, def, magic, crit, evade};
     }
+
+    std::vector<std::string> get_battle_stat_names() const{
+        return {"Health", "Attack", "Defence", "Magic", "Critical", "Evasion"};
+    }
+
+    //std::unordered_map<std::string, int> get_battle_stats() const {
+    //    return {
+    //        {"hp", hp},
+    //        {"atk", atk},
+    //        {"def", def},
+    //        {"magic", magic},
+    //        {"crit", crit},
+    //        {"evade", evade}
+    //    };
+    //}
 
 };
 
