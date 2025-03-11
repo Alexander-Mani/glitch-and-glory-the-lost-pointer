@@ -11,9 +11,9 @@ title: Naming Conventions
 
 ## Phase 1
 
-1. [ ] [Attack Logic][Franz][attack][AttackLogic, EntityLogic(maybe), EntityModel (possibly other Entity models later on)]
+1. [ ] [Attack Logic][Franz][attack][AttackLogic, EntityLogic(maybe), All model files (sry lexi)]
     a. Finna út hvernig við breytum stats á Entities þegar það er ehv attack/defence [in-progress]
-    b. Búa til weapon class með mismunandi attack stats [NOT-Started]
+    b. Búa til weapon class með mismunandi attack stats [in-progress]
     c. Gera ehv simple algo sem gerir þetta fair, mögulega hafa low, med, high attack eins og í sword and sandals, annars er leikurinn 100% random [in-progress]
 
 2. [ ] [Battle Logic][Lexi][battles][Models*,]
