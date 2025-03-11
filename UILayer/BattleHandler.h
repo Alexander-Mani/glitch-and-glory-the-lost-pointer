@@ -9,6 +9,10 @@
 
 #include <iostream>
 #include <vector>
+
+
+
+
 using namespace std;
 
 class BattleHandler {
@@ -16,6 +20,7 @@ public:
     IOHandler ioHandler;
     LogicWrapper* logicWrapper; // Pointer to the LogicWrapper
     AsciiHandler* asciiHandler;
+
 
     // Pass a pointer to LogicWrapper so we can access EntityLogic
     BattleHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler);
@@ -30,6 +35,7 @@ public:
     * @param BattleModel instance that contains the EntityModel for both the player and opponent
     */
     void start_battle(BattleModel *battleModel);
+
 
     EntityModel* select_entity(bool for_player);
 };

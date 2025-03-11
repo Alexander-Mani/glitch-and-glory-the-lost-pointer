@@ -36,5 +36,7 @@
 *refresh_vscode_server.sh
 refresh_vscode_server.sh*
 refresh_vscode_server.sh
+.vscode/
+.vscode/*
 
 data/all_files_*

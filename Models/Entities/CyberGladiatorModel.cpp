@@ -4,9 +4,9 @@
 CyberGladiatorModel::CyberGladiatorModel()
     : EntityModel(
         "Cyber Gladiator",  // Name 
-        100,                // hp         
-        50,                 // atk         
-        50,                 // def         
+        150,                // hp         
+        20,                 // atk         
+        10,                 // def         
         5,                  // magic     
         10,                 // crit         
         10,                 // evade     
@@ -59,6 +59,13 @@ CyberGladiatorModel::CyberGladiatorModel()
         "-+-..                    .+@@@@%+==*@=.   ..%@@@@@+.                      ", 
         "                             ..    ....    ..-=+=:..                      ", 
         "                                               .                          " 
-        }
+        },
+        WeaponModel(
+            "Titan Protocol",               // Weapon Name
+            9,                              // Weapon Damage
+            50,                             // Hit Rate
+            "You have hit the enemy!",      // Hit message
+            "You missed the enemy homie!"   // Miss message
+        )
     ) {}
 

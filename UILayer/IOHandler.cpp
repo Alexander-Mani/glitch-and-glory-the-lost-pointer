@@ -72,9 +72,31 @@ void IOHandler::output_options(string options_title, vector<string> options_list
 }
 
 
+void IOHandler::output_battle_info(string info){
+
+    string wrapper(this->title_max_len, '*');
+
+    string info_padded = " " + info + " ";
+    int symbol_len = this->title_max_len - info_padded.length();
+    string symbols(symbol_len/2, '*');
+
+    cout << endl << wrapper << endl;
+    cout << symbols + info_padded + symbols << endl;
+    cout << wrapper << endl << endl;
+}
+
+
+
 //=========== INPUT METHODS ===========//
 
 string IOHandler::input_choose_option(vector<string> options_list){
+    
+    // In case there is a need for flush before asking for input
+    if (cin.fail()) {  
+        cin.clear();  
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+    }
+    
     int user_input;
     cout << "Select option: "; 
     cin >> user_input;
@@ -88,6 +110,7 @@ string IOHandler::input_choose_option(vector<string> options_list){
         return input_choose_option(options_list);  // Recursively call again
     }
 }
+
 
 
 

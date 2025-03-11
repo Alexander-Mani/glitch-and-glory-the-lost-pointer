@@ -3,30 +3,39 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+#include "../WeaponModel.h"
 
-EntityModel::EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, vector<string> ascii_art)
-    : name(name), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade), ascii_art(move(ascii_art)) {}
+EntityModel::EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, vector<string> ascii_art, WeaponModel weapon)
+    : name(name), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade), ascii_art(move(ascii_art)), weapon(weapon) {}
 
-    void EntityModel::display_ascii() const {
+
+void EntityModel::display_ascii() const {
     for (const auto& line : ascii_art) {
         std::cout << line << std::endl;
         }
-    }
+}
 
 
-    void EntityModel::display_stats() const {
-        std::cout 
-            << name << "\n"
-            << "HP: " << hp << "\n"
-            << "ATK: " << atk << "\n"
-            << "DEF: " << def << "\n"
-            << "MAGIC: " << magic << "\n"
-            << "CRIT: " << crit << "\n"
-            << "EVADE: " << evade << "\n\n";
-    }
+void EntityModel::display_stats() const {
+    std::cout 
+        << "\n\n|---------------------------------|\n"
+        << "|----| Printing Entity Stats |----|\n"
+        << "|---------------------------------|\n"
+        << "|\n"
+        << "| " << "-- "+name+" --" << "\n"
+        << "| HP: " << hp << "\n"
+        << "| ATK: " << atk << "\n"
+        << "| DEF: " << def << "\n"
+        << "| MAGIC: " << magic << "\n"
+        << "| CRIT: " << crit << "\n"
+        << "| EVADE: " << evade << "\n|\n"
+        << "|---------------------------------|\n\n";
+}
 
 
-
+WeaponModel *EntityModel::get_weapon(){
+    return &this->weapon;
+}
 
 
 

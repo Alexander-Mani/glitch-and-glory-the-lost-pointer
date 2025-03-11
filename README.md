@@ -11,10 +11,16 @@ title: Naming Conventions
 
 ## Phase 1
 
-1. [ ] [Attack Logic][Franz][attack][AttackLogic, EntityLogic(maybe), All model files (sry lexi)]
-    a. Finna út hvernig við breytum stats á Entities þegar það er ehv attack/defence [in-progress]
-    b. Búa til weapon class með mismunandi attack stats [in-progress]
-    c. Gera ehv simple algo sem gerir þetta fair, mögulega hafa low, med, high attack eins og í sword and sandals, annars er leikurinn 100% random [in-progress]
+1. [ ] [Attack Logic][Franz][attack][AttackLogic, WeaponModel.h, EntityLogic(maybe), EntityModel (possibly other Entity models later on)]
+    a. Finna út hvernig við breytum stats á Entities þegar það er ehv attack/defence [done]
+        - Búum til methods fyrir entities sem getur breytt values
+    b. Búa til weapon class með mismunandi attack stats [done]
+        - EzPz
+    c. Gera ehv simple algo sem gerir þetta fair, mögulega hafa low, med, high attack eins og í sword and sandals, annars er leikurinn 100% random [semi-done]
+        - Fór aðeins aðra leið til að einfalda 
+            I.  WeaponModel.hit_rate segir til um hvort þú hittir á óvin og 
+            II.  WeaponModel.damage segir til um árásagetu þína. Damage er reiknað () 
+    
 
 2. [ ] [Battle Logic][Lexi][battles][Models*,]
  a. Komast inn í bardaga [solved WIP]

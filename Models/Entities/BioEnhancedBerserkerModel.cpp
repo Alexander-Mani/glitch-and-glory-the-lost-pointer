@@ -6,7 +6,7 @@ BioEnhancedBerserkerModel::BioEnhancedBerserkerModel()
         "Bio-Enhanced Berserker",   // Name
         150,                        // hp
         30,                         // atk
-        60,                         // def
+        7,                         // def
         5,                          // magic
         5,                          // crit
         5,                          // evade
@@ -59,6 +59,13 @@ BioEnhancedBerserkerModel::BioEnhancedBerserkerModel()
         "        +++**#**#%%#+                   #%#####%#===+   ", 
         "      #*****###%%%##                  %%%%%%%%%%%=+     ", 
         "=+*%%%%%%%%%%%%%%%%%%%%              %%%%%%%%%%%%%%%%   " 
-        }
+        },
+        WeaponModel(
+            "Ragnarök Strain",              // Weapon Name
+            7,                              // Weapon Damage
+            50,                             // Hit Rate
+            "You have hit the enemy!",      // Hit message
+            "You missed the enemy homie!"   // Miss message
+        )
     ) {}
 
