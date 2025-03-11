@@ -18,9 +18,9 @@ class BattleModel {
 
     EntityModel *get_defender();
 
-    bool is_finished();
+    // bool is_finished();
 
-    string BattleModel::fetch_results();
+    // string BattleModel::fetch_results();
 
 };
 
