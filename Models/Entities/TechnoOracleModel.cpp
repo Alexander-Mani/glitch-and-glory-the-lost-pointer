@@ -62,8 +62,8 @@ TechnoOracleModel::TechnoOracleModel()
     },
     WeaponModel(
         "Singularity Codex",            // Weapon Name
-        10,                             // Weapon Damage
-        60,                             // Hit Rate
+        100,                             // Weapon Damage
+        90,                             // Hit Rate
         "You have hit the enemy!",      // Hit message
         "You missed the enemy homie!"   // Miss message
     )

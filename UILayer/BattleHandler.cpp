@@ -84,72 +84,36 @@ EntityModel* BattleHandler::select_entity(bool for_player) {
 }
 void BattleHandler::start_battle(BattleModel *battleModel) {
     this->asciiHandler->display_start_of_battle(battleModel);
-    bool battle_on = true;
-    int stub_ind = 0;
+    // bool battle_on = true;
+    // int stub_ind = 0;
     string action;
     vector<string> action_list = battleModel->get_battle_actions(); 
     this->ioHandler.glitch_sleep(3);
-    while (battle_on) {
+    // while (battle_on) {
         //call some kind of divider or clear screen func
-        this->ioHandler.clear_terminal();
-    // cout << "Start battle?" << endl;
-    // int action;
-    // cin >> action;
-    while (battle_on) {
-    // while (!battleModel->is_finished()) {
-        stub_ind++;
-        this->asciiHandler->display_turn(battleModel);
-        if(battleModel->player_turn){
-            battleModel->player_turn = false;
+        
+        
+        
+        // While goal state has not been reached
+        while (!this->logicWrapper->battleLogic.game_over(battleModel)) {
+            this->ioHandler.clear_terminal();
+
+            this->asciiHandler->display_turn(battleModel);
             action = this->ioHandler.input_choose_option(action_list);
-            this->logicWrapper->battleLogic.handle_battle_action(battleModel, action);
 
-        }else battleModel->player_turn = true;
-        //call some function in battle logic that checks if we have lost
-        // stub for that return value now
-        if (stub_ind > 10) battle_on = false;
-        //display round and stats
-        this->asciiHandler->display_turn(battleModel);
-        //display actions and handle input
-
-        // Fetch available attack options
-        vector<string> attack_options = this->logicWrapper->get_attack_options();
-        assert(attack_options[0] == "weapon_attack" && attack_options[1] == "rest"); // Make sure we got the correct options
+            string result = this->logicWrapper->battleLogic.handle_battle_action(battleModel, action);
+            
+            this->ioHandler.output_battle_info(result); // Mátt taka þetta í burtu ef þér finnst þetta vera hella slay
+            
+            //display round and stats
+            this->asciiHandler->display_turn(battleModel);
 
 
-        // Print available attack options and ask user to choose one
 
-        this->ioHandler.output_title(battleModel->get_attacker()->get_name() + " -> " + battleModel->get_defender()->get_name());
-        if(battleModel->player_turn){
-            this->ioHandler.output_options("How does the player want to proceed?", attack_options);
-        } else {
-            this->ioHandler.output_options("Beep boop, how does computer want to proceed?", attack_options);
+            this->ioHandler.glitch_sleep(3);
         }
-        string action = this->ioHandler.input_choose_option(attack_options);
-
-
         
-        
-        // Perform the action via BattleLogic
-        string result = this->logicWrapper->perform_action(action, battleModel);
-        
-
-        // Print the result of the turn
-        this->ioHandler.output_battle_info(result);
-
-        
-
-        
-
-
-
-        // this->
-
-
-    
-    this->ioHandler.glitch_sleep(3);
-    }
-    }
+    // }
 }
 
 // TESTING

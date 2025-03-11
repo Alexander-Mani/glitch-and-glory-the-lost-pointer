@@ -13,7 +13,7 @@ using namespace std;
 
 class BattleLogic{
     public:
-    void handle_battle_action(BattleModel* battleModel, string action);
+    string handle_battle_action(BattleModel* battleModel, string action);
     void handle_turn(BattleLogic* battleModel);
     void handle_computer_action(BattleModel* battleModel);
     bool battle_over(BattleLogic* battleModel);
@@ -39,6 +39,10 @@ class BattleLogic{
     
     // int calculate_damage(EntityModel* attacker, EntityModel* defender);
     // void perform_action(EntityModel* attacker, EntityModel* defender);
+    bool game_over(BattleModel* battleModel);
+    
+    string game_over_msg(BattleModel* battleModel);
+
     
 private:
 
@@ -53,6 +57,9 @@ private:
      * @param attacker The BattleModel of the active battle
      */
     bool _enemy_hit(BattleModel* battleModel);
+
+
+    
 };
 
 #endif // BATTLELOGIC_H

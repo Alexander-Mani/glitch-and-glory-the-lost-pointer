@@ -9,36 +9,59 @@
 
 #include <cassert>
 
-void BattleLogic::handle_battle_action(BattleModel* battleModel ,string action){
+string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action){
+    string ret_msg;
     if (action == "A"){
         std::cout << "Performing Normal Attack" << std::endl;
+        // string msg;
+        bool attack_successful = this->attack(battleModel);
+        EntityModel *attacker = battleModel->get_attacker();
+        WeaponModel *attacker_weapon = attacker->get_weapon();
+
+        if(!attack_successful){
+            ret_msg = *attacker_weapon->get_fail_msg();
+        } else {
+            ret_msg = *attacker_weapon->get_success_msg();
+        }
         // Implement normal attack logic here
         // Example: battle.playerEntityModel->attack(battle.compEntityModel);
        
     } else if (action == "H") {
-        std::cout << "Performing Heavy Attack" << std::endl;
+        std::cout << "Heavy attack has yet to be implemented! Method will be called recursively for you to try again." << std::endl;
+        return this->handle_battle_action(battleModel, action); // Temporary solution until feature has been implemented
+        
         // Implement heavy attack logic here
         // Example: battle.playerEntityModel->heavyAttack(battle.compEntityModel);
         
     } else if (action == "F") {
-        std::cout << "Attempting to Flee" << std::endl;
+        std::cout << "Fleeing has yet to be implemented! Method will be called recursively for you to try again." << std::endl;
+        return this->handle_battle_action(battleModel, action); // Temporary solution until feature has been implemented
+        
         // Implement flee logic here
         // Example: bool escaped = battle.playerEntityModel->attemptFlee();
         
     } else if (action == "B") {
-        std::cout << "Attempting to Bribe" << std::endl;
+        std::cout << "Bribing has yet to be implemented! Method will be called recursively for you to try again." << std::endl;
+        return this->handle_battle_action(battleModel, action); // Temporary solution until feature has been implemented
+        
         // Implement bribe logic here
         // Example: bool bribed = battle.playerEntityModel->attemptBribe(battle.compEntityModel);
         
     } else if (action == "S") {
-        std::cout << "Using Special Ability" << std::endl;
+        std::cout << "Special Ability has yet to be implemented! Method will be called recursively for you to try again." << std::endl;
+        return this->handle_battle_action(battleModel, action); // Temporary solution until feature has been implemented
+        
         // Implement special ability logic here
         // Example: battle.playerEntityModel->useSpecialAbility(battle.compEntityModel);
         
     } else {
         // This shouldn"t be reached due to the validation check above
         std::cout << "Unhandled action: " << action << std::endl;
+        assert(false); // You fucked up, you should not be here.
     }
+    this->toggle_turn(battleModel);
+    return ret_msg;
+
 }
 
 void BattleLogic::handle_turn(BattleLogic* battleModel){
@@ -174,7 +197,8 @@ int BattleLogic::calculate_damage(BattleModel* battleModel) {
     EntityModel *defender = battleModel->get_defender();
     
     // Simple damage calculation: attacker's attack minus defender's defense.
-    int damage = attacker->get_atk() - defender->get_def();
+    int damage = *attacker->get_weapon()->get_damage() - defender->get_def();
+    // int damage = attacker->get_atk() - defender->get_def();
     
     // Make sure damage is not negative.
     if (damage < 0) {
@@ -202,4 +226,44 @@ bool BattleLogic::_enemy_hit(BattleModel* battleModel){
     }
 
     return false;
+}
+
+bool BattleLogic::game_over(BattleModel* battleModel){
+    EntityModel *attacker = battleModel->get_attacker();
+    EntityModel *defender = battleModel->get_defender();
+
+    int attacker_hp = attacker->get_hp();
+    int defender_hp = defender->get_hp();
+
+    if (attacker_hp == 0 || defender_hp == 0){
+        return true;
+    }
+    return false;
+}
+
+string BattleLogic::game_over_msg(BattleModel* battleModel){
+    EntityModel *player;
+    EntityModel *opponent;
+    if(battleModel->player_turn){
+        player = battleModel->get_attacker();
+        opponent = battleModel->get_defender();
+    } else {
+        opponent = battleModel->get_attacker();
+        player = battleModel->get_defender();
+    }
+    
+
+    int player_hp = player->get_hp();
+    int opponent_hp = opponent->get_hp();
+
+    if (player_hp == 0 && opponent_hp == 0){
+        return "You heard it here first, its a tie somehow, should not be possible rly if u ask me.";
+    } else if (player_hp == 0 && opponent_hp != 0){
+        return "You lost homie, kind funny if u ask me ;)";
+    } else if (player_hp != 0 && opponent_hp == 0){
+        return "You got lucky...";
+    } else {
+        return "Error -1 in game_over_msg";
+    }
+    
 }
