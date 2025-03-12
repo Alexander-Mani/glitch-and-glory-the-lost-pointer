@@ -73,18 +73,20 @@ void IOHandler::output_options(string options_title, vector<string> options_list
 
 
 void IOHandler::output_battle_info(string info){
+    int max_len;
+    // Assign max_len depending on string length, if it's too long then enlarge title_max_len
+    this->title_max_len-4 >= (int)info.length() ? max_len = this->title_max_len : max_len = (int)info.length() + 4;
 
-    string wrapper(this->title_max_len, '*');
+    string wrapper(max_len, '*');
 
     string info_padded = " " + info + " ";
-    int symbol_len = this->title_max_len - info_padded.length();
+    int symbol_len = max_len - info_padded.length();
     string symbols(symbol_len/2, '*');
 
     cout << endl << wrapper << endl;
     cout << symbols + info_padded + symbols << endl;
     cout << wrapper << endl << endl;
 }
-
 
 
 //=========== INPUT METHODS ===========//

@@ -39,6 +39,12 @@ public:
     int get_magic() const { return magic; }
     int get_crit() const { return crit; }
     int get_evade() const { return evade; }
+    void set_hp (int new_hp) { hp = new_hp; if(hp <0) hp = 0;}
+    void set_atk(int new_atk) { atk = new_atk; if(atk < 0) atk = 0;}
+    void set_def(int new_def) { def = new_def; if(def < 0) def = 0;}
+    void set_magic(int new_magic) { magic = new_magic; if (magic < 0) magic = 0;}
+    void set_crit(int new_crit) { crit = new_crit; if (crit < 0) crit = 0;}
+    void set_evade(int new_evade) { evade = new_evade; if (evade < 0) evade = 0;}
 
     std::vector<int> get_battle_stats() const {
         return {hp, atk, def, magic, crit, evade};
