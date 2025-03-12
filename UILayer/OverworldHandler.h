@@ -1,6 +1,7 @@
 #ifndef OVERWORLDHANDLER_H
 #define OVERWORLDHANDLER_H
 
+#include "BattleHandler.h"
 #include "IOHandler.h"
 #include "../LogicLayer/LogicWrapper.h"  // Include LogicWrapper
 
@@ -20,17 +21,18 @@ public:
     LogicWrapper* logicWrapper; // Pointer to the LogicWrapper
     AsciiHandler* asciiHandler;
     IOHandler *ioHandler;
+    BattleHandler *battleHandler;
 
 
     // Pass a pointer to LogicWrapper so we can access EntityLogic
-    OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler* ioHandler);
+    OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler* ioHandler, BattleHandler* battleHandler);
 
     /*
     * @brief Asks the user for Entity for player and for opponent. Then starts the battle.
     */
     void initialize_overworld();
     void move(OverworldModel *overworldModel,string location);
-    void choose_party(OverworldHandler *overworldModel); 
+    void do_action(OverworldModel *overworldModel, string action);
 
     /*
     * @brief [in progress] Starts battle with provided parameters

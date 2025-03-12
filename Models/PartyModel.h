@@ -32,6 +32,9 @@ public:
     EntityModel* get_party_member_1();
     EntityModel* get_party_member_2();
     EntityModel* get_party_member_3();
+
+    vector<string> get_party_member_names();
+    vector<EntityModel*> get_party_members();
     
     //virtual void take_damage(int damage) {
     //    hp -= damage;

@@ -21,19 +21,31 @@ protected:
 
     //Other consts
     const string hub = "Streets";
-    const string final_zone = "Boss";
+    const string final_zone = "Fight Boss";
 
     unordered_map<string, vector<string>> location_map = {
-    {"Streets", {"Arena", "Shop", "Ripper", "HQ", "Apartments", "Warehouse", "Union"}},
-    {"Arena", {"Streets"}},
-    {"Shop", {"Streets"}},
-    {"Ripper", {"Streets"}},
-    {"HQ", {"Streets", "Boss"}},
-    {"Apartments", {"Streets"}},
-    {"Warehouse", {"Streets"}},
-    {"Union", {"Streets"}},
-    {"Boss", {"Win"}}
+        {"Streets", {"Arena", "Shop", "Ripper", "HQ", "Apartments", "Warehouse", "Union"}},
+        {"Arena", {"Streets", "Duel"}},
+        {"Shop", {"Streets", "Browse Equipment"}},
+        {"Ripper", {"Streets", "Browse Implants"}},
+        {"HQ", {"Streets", "Fight Boss"}},
+        {"Apartments", {"Streets", "Stay Night"}},
+        {"Warehouse", {"Streets", "Gamble"}},
+        {"Union", {"Streets", "Apply For Job"}},
+        {"Boss", {"Win"}}
     };
+
+    vector<string> actions = {
+        "Duel",
+        "Browse Equipment",
+        "Browse Implants",
+        "Fight Boss",
+        "Gamble",
+        "Apply For Job"
+
+    };
+
+
 
     vector<string> locations = {
         "Streets",
@@ -61,6 +73,7 @@ public:
     // Default implementation prints the common stats.
     
     vector<string> get_locations();
+    vector<string> get_actions();
     unsigned int get_ascii_location_pointer(string location);
     vector<string> get_routes(string location);
 

@@ -12,6 +12,7 @@ public:
      * @returns A vector of pointers to available entity models.
      */
     std::vector<EntityModel*> get_all_entities();
+    EntityModel* get_random_entity(); 
     
 };
 

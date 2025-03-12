@@ -1,5 +1,6 @@
 #include "OverworldHandler.h"
 #include "AsciiHandler.h"
+#include "BattleHandler.h"
 #include "IOHandler.h"
 #include "../Models/AllEntities.h"      // For all entity models
 #include "../Models/BattleModel.h"
@@ -13,9 +14,10 @@
 #include <cassert>
 #include <chrono>
 #include <thread>
+#include <vector>
 
-OverworldHandler::OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler *ioHandler)
-    : logicWrapper(logicWrapper), asciiHandler(asciiHandler), ioHandler(ioHandler)
+OverworldHandler::OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler *ioHandler, BattleHandler *battleHandler)
+    : logicWrapper(logicWrapper), asciiHandler(asciiHandler), ioHandler(ioHandler), battleHandler(battleHandler)
 {
     // this->ioHandler = IOHandler();
     // vector<string> game_options;
@@ -69,18 +71,62 @@ void OverworldHandler::move(OverworldModel *overworldModel,string location){
     vector<string> locations = overworldModel->get_routes(location);
     this->ioHandler->output_options(location, locations);
     string option = this->ioHandler->input_choose_option(locations);
-    bool is_action = this->logicWrapper->gameLogic->is_action(locations, option);
+    vector<string> actions = overworldModel->get_actions();
+    bool is_action = this->logicWrapper->gameLogic->is_action(actions, option);
     if (location == overworldModel->get_final_zone()){
         cout << "BOSS TIME!" << endl;
         return;
     }else if (is_action) {
         // option is not location so it must be action thus we call action handler
         string action = this->logicWrapper->gameLogic->action_resolver(option);
+        return this->do_action(overworldModel, action);
+
     }
     return this->move(overworldModel,option);
 }
 
-void OverworldHandler::choose_party(OverworldHandler *overworldModel) {
-    (void)overworldModel;
-    // Create a list of entity names for the menu in the same order as entities.
+void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
+    cout << "Action time" << endl;
+    if (action == "Battle") {
+        //Choose our dude to fight
+        int ind = 0;
+        vector<string> party_member_names = overworldModel->get_party_model()->get_party_member_names();
+        vector<EntityModel*> party_members = overworldModel->get_party_model()->get_party_members();
+        this->ioHandler->output_options("Choose from party", party_member_names);
+        string option = this->ioHandler->input_choose_option({"A", "B", "C"});
+        if (option == "A") ind = 0; 
+        else if (option == "B") ind = 1; 
+        else ind = 2; 
+        // could be temp, might be in prod as the old song goes
+        EntityModel* enemyModel = this->logicWrapper->entityLogic->get_random_entity();
+       
+        bool player_starts = true;
+        if (enemyModel->get_evade() > party_members[ind]->get_evade()) player_starts = false;
+        BattleModel* battleModel = new BattleModel(party_members[ind], enemyModel, player_starts);
+
+        this->battleHandler->start_battle(battleModel);
+        delete(battleModel);
+        delete(enemyModel);
+    } else if (action == "Browse Equipment") {
+        cout << "Buy this, buy that, fuck off" << endl;
+        this->ioHandler->glitch_sleep(2);
+             
+    } else if (action == "Browse Implants") {
+        cout << "Buy this, buy that, fuck off" << endl;
+        this->ioHandler->glitch_sleep(2);
+
+    } else if (action == "Fight Boss") {
+        cout << "Fight boss" << endl;
+        return;
+    } else if (action == "Gamble") {
+        cout << "You see an underground gathering of scum and villany" << endl;
+        cout << "You and the lads you and the lads can wreck them in rock, paper, scissors" << endl;
+        this->ioHandler->glitch_sleep(3);
+
+    } else if (action == "Apply For Job") {
+
+    }
+
+    
+    return move(overworldModel, overworldModel->get_curr_location());
 }

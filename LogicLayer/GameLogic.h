@@ -14,7 +14,7 @@ class GameLogic{
     //vector<string> get_accessible_locations(OverworldModel *overworldModel);
     void change_state(OverworldModel *overworldModel, string arg);
     string change_location(OverworldModel *overworldModel, string location);
-    bool is_action(vector<string> locations, string option);
+    bool is_action(vector<string> actions, string option);
     string action_resolver(string action);
 
 

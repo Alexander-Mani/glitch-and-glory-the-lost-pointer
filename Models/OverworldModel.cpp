@@ -26,6 +26,9 @@ PartyModel* OverworldModel::get_party_model(){
 vector<string> OverworldModel::get_locations(){
     return locations;
 }
+vector<string> OverworldModel::get_actions(){
+    return actions;
+}
 vector<string> OverworldModel::get_routes(string location){
     return location_map[location];
     

@@ -19,7 +19,7 @@ UIHandler::UIHandler()
     this->asciiHandler = new AsciiHandler(this->logicWrapper);
     this->ioHandler = new IOHandler();
     this->battleHandler = new BattleHandler(this->logicWrapper, this->asciiHandler, this->ioHandler);
-    this->overworldHandler = new OverworldHandler(this->logicWrapper, this->asciiHandler, this->ioHandler);
+    this->overworldHandler = new OverworldHandler(this->logicWrapper, this->asciiHandler, this->ioHandler, this->battleHandler);
     
     // Set up menu options and actions
     // this->menu_options = {"Play Game [phase 2]", "Activate Battle", "Quit"};

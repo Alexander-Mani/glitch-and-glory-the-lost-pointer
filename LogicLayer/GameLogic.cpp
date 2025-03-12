@@ -33,12 +33,14 @@ string GameLogic::change_location(OverworldModel *overworldModel, string locatio
     return location;
 }
 
-bool GameLogic::is_action(vector<string> locations, string option){
-    if (std::count(locations.begin(), locations.end(), option) < 1) return true;
+bool GameLogic::is_action(vector<string> actions, string option){
+    if (std::count(actions.begin(), actions.end(), option) > 0) return true;
     return false;
-    
 } 
 
 string GameLogic::action_resolver(string action){
-    return "Nice";
+    if (action == "Duel"){
+        return "Battle";
+    }
+    return action;
 }

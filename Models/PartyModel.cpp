@@ -36,3 +36,11 @@ EntityModel* PartyModel::get_party_member_3() {
 
 }
 
+vector<string> PartyModel::get_party_member_names(){
+      return {this->party_member_1->get_name(), this->party_member_2->get_name(), this->party_member_3->get_name()};
+}
+
+vector<EntityModel*> PartyModel::get_party_members(){
+      return {this->party_member_1, this->party_member_2, this->party_member_3};
+}
+
