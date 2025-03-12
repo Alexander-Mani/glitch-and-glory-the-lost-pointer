@@ -46,4 +46,4 @@ public:
     void displayStats() const override;
 };
 
-#endif
+#endif // ENTITYPARENTMODEL_H
