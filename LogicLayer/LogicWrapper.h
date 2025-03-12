@@ -26,7 +26,7 @@ public:
     vector<string> get_attack_options();
 
    
-    string perform_action(string action, BattleModel *battleModel);
+    // string perform_action(string action, BattleModel *battleModel);
 };
 
 #endif // LOGICWRAPPER_H

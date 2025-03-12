@@ -35,8 +35,36 @@ public:
     void display_battle_stats(BattleModel* battleModel);
     size_t calculate_max_stat_length(const std::vector<std::string>& stat_names, const std::vector<int>& stats);
     
+    /*
+     * @brief Prints a big HUD box for the screen, used in battle
+     * @param custom_msg A vector<string> of messages to print within the box
+     * @param padding_symbol The symbol that will be used in outlines
+     * @param total_width The total with of the box
+     */
     void display_hud(const vector<string> &custom_msg, char padding_symbol, size_t total_width);
+
+    /*
+     * @brief Collects relevant info within battleModel then calls this->display_hud method
+     * @param battleModel Instance of active BattleModel
+     */
     void display_attack_hud(BattleModel* battleModel);
+    
+    
+    /*
+     * @brief Displays Entities section in battles
+     * @param battleModel Instance of active BattleModel
+     */
+    void display_battle_entities(BattleModel* battleModel);
+
+
+    /*
+     * @brief Calculates terminal width for hud display using one Entity for each side for battles
+     * @param battleModel Instance of active BattleModel
+     * @returns Battle Terminal width
+     */
+    int get_battle_width(BattleModel* battleModel);
+
+
     // void display_attack_hud(BattleModel* battle_model);
 
     const string CITY =R"(

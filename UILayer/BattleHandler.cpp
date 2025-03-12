@@ -10,11 +10,7 @@
 
 BattleHandler::BattleHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler *ioHandler)
     : logicWrapper(logicWrapper), asciiHandler(asciiHandler), ioHandler(ioHandler)
-{
-    // this->ioHandler = IOHandler();
-    // vector<string> game_options;
-    
-}
+{}
 
 
 void BattleHandler::initialize_battle() {
@@ -29,7 +25,7 @@ void BattleHandler::initialize_battle() {
 
     BattleModel* battleModel = new BattleModel(player_entity, opponent_entity, true);
     // Using evade as initave
-    if (player_entity->get_evade() <= opponent_entity->get_evade()) battleModel->player_turn = false;
+    // if (player_entity->get_evade() <= opponent_entity->get_evade()) battleModel->player_turn = false;
     // Start battle
     if (player_entity && opponent_entity && battleModel) this->start_battle(battleModel); 
 
@@ -85,27 +81,44 @@ EntityModel* BattleHandler::select_entity(bool for_player) {
 
 
 void BattleHandler::start_battle(BattleModel *battleModel) {
+    int terminal_length = this->asciiHandler->get_battle_width(battleModel);
+
+    this->ioHandler->clear_terminal();
     this->asciiHandler->display_start_of_battle(battleModel);
-    // bool battle_on = true;
-    // int stub_ind = 0;
-    string action;
-    vector<string> action_list = battleModel->get_battle_actions(); 
-    this->ioHandler->glitch_sleep(3);
+    vector<string> action_list = battleModel->get_battle_actions();
+    this->ioHandler->glitch_sleep(2);
     while (!this->logicWrapper->battleLogic->battle_over(battleModel)) {
+        this->ioHandler->glitch_sleep(1);
+
+        // this->ioHandler->clear_terminal();
+        this->asciiHandler->display_turn(battleModel);
+
+        string action;
+
+        if(!battleModel->player_turn){
+            action = this->logicWrapper->battleLogic->handle_computer_action(battleModel);
+            // continue;
+        } else {
+            action = this->ioHandler->input_choose_option(action_list);
+        }
+        // string 
+        vector<string> hud_msg;
+        if(!battleModel->player_turn){
+            hud_msg.push_back("Computer Action");
+        } else {
+            hud_msg.push_back("Human Action");
+        }
+        
+        hud_msg.push_back(this->logicWrapper->battleLogic->handle_battle_action(battleModel, action));
+        
+        
+        // Display the results of the action that was taken
         this->ioHandler->clear_terminal();
+        this->asciiHandler->display_battle_entities(battleModel);
+        this->asciiHandler->display_battle_stats(battleModel);
+        this->asciiHandler->display_hud(hud_msg, '*', terminal_length);
+        this->ioHandler->glitch_sleep(2);
 
-        this->asciiHandler->display_turn(battleModel);
-        action = this->ioHandler->input_choose_option(action_list);
-
-        string result = this->logicWrapper->battleLogic->handle_battle_action(battleModel, action);
-        
-        this->ioHandler->output_battle_info(result); // Mátt taka þetta í burtu ef þér finnst þetta vera hella slay
-        
-        //display round and stats
-        this->asciiHandler->display_turn(battleModel);
-
-        // Timeout for 3 seconds
-        this->ioHandler->glitch_sleep(0.5);
     }
 
     this->asciiHandler->display_end_of_battle(battleModel);

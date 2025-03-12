@@ -12,40 +12,49 @@
 string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action){
     string ret_msg;
     if (action == "A"){
-        std::cout << "Performing Normal Attack" << std::endl;
         // string msg;
-        bool attack_successful = this->attack(battleModel);
+        int damage_done = this->attack(battleModel);
         EntityModel *attacker = battleModel->get_attacker();
         WeaponModel *attacker_weapon = attacker->get_weapon();
 
-        if(!attack_successful){
-            ret_msg = *attacker_weapon->get_fail_msg();
+        if(damage_done == 0){
+            ret_msg = attacker_weapon->get_fail_msg(battleModel);
         } else {
-            ret_msg = *attacker_weapon->get_success_msg();
+            ret_msg = attacker_weapon->get_success_msg(damage_done, battleModel);
         }
         // Implement normal attack logic here
         // Example: battle.playerEntityModel->attack(battle.compEntityModel);
-       
+        
     } else if (action == "H") {
-        return "Heavy attack has yet to be implemented! Turn will not toggle.";
+        int damage_done = this->heavy_attack(battleModel);
+        EntityModel *attacker = battleModel->get_attacker();
+        WeaponModel *attacker_weapon = attacker->get_weapon();
+
+        if(damage_done == 0){
+            ret_msg = attacker_weapon->get_fail_msg(battleModel);
+        } else {
+            ret_msg = attacker_weapon->get_success_msg(damage_done, battleModel);
+        }
+        return "Heavy attack has yet to be implemented!";
         
         // Implement heavy attack logic here
         // Example: battle.playerEntityModel->heavyAttack(battle.compEntityModel);
         
     } else if (action == "F") {
-        return "Fleeing has yet to be implemented! Turn will not toggle.";
+        return "Fleeing has yet to be implemented!";
         
         // Implement flee logic here
         // Example: bool escaped = battle.playerEntityModel->attemptFlee();
         
     } else if (action == "B") {
-        return "Bribing has yet to be implemented! Turn will not toggle.";
+        return "Bribing has yet to be implemented!";
         
         // Implement bribe logic here
         // Example: bool bribed = battle.playerEntityModel->attemptBribe(battle.compEntityModel);
         
     } else if (action == "S") {
-        return "Special Ability has yet to be implemented! Turn will not toggle.";
+        // vector<string> random_actions = {"", ""};
+        return "Special Ability has yet to be implemented!";
         
         // Implement special ability logic here
         // Example: battle.playerEntityModel->useSpecialAbility(battle.compEntityModel);
@@ -64,7 +73,7 @@ void BattleLogic::handle_turn(BattleLogic* battleModel){
     (void)battleModel;
 }
 
-void BattleLogic::handle_computer_action(BattleModel* battleModel){
+string BattleLogic::handle_computer_action(BattleModel* battleModel){
     (void)battleModel;
     vector<string> action_list = battleModel->get_battle_actions(); 
     std::random_device rd;
@@ -75,9 +84,9 @@ void BattleLogic::handle_computer_action(BattleModel* battleModel){
 
     string action = action_list[random_index];
     if (action == "F") action = "A";
-    this->handle_battle_action(battleModel, action);
+    // this->handle_battle_action(battleModel, action);
 
-
+    return action;    
 } 
 
 // bool BattleLogic::battle_over(BattleLogic* battleModel){
@@ -90,33 +99,6 @@ BattleLogic::BattleLogic() {
 
 //======== PUBLIC METHODS ========//
 
-string BattleLogic::perform_action(string action, BattleModel* battleModel) {
-    // EntityModel *defender = battleModel->get_defender();
-    
-    if (action == "weapon_attack"){
-        string msg;
-        bool attack_successful = this->attack(battleModel);
-        EntityModel *attacker = battleModel->get_attacker();
-        WeaponModel *attacker_weapon = attacker->get_weapon();
-
-        if(!attack_successful){
-            this->toggle_turn(battleModel);
-            return *attacker_weapon->get_fail_msg();
-        } else {
-            this->toggle_turn(battleModel);
-            return *attacker_weapon->get_success_msg();
-        }
-    }
-    else if (action == "rest"){
-        this->toggle_turn(battleModel);
-        return "Resting for one round";
-    } else {
-        cout << "Something went wrong in BattleLogic::perform_action...";
-        assert(action != "weapon_attack" && action != "rest");
-        return "Something went wrong in BattleLogic::perform_action...";
-    }
-}
-
 void BattleLogic::toggle_turn(BattleModel* battleModel){
     battleModel->player_turn = !battleModel->player_turn;
 }
@@ -124,7 +106,7 @@ void BattleLogic::toggle_turn(BattleModel* battleModel){
 
 //======== PRIVATE METHODS ========//
 
-bool BattleLogic::attack(BattleModel* battleModel){
+int BattleLogic::attack(BattleModel* battleModel){
     bool enemy_hit;
     
     // Check if you will hit the enemy
@@ -135,40 +117,37 @@ bool BattleLogic::attack(BattleModel* battleModel){
     
     int calc_damage = this->calculate_damage(battleModel);
     if(calc_damage == 0){
-        return false;
+        return 0;
+    }
+    
+    EntityModel *defender = battleModel->get_defender();
+    
+
+    defender->decrease_hp(calc_damage);
+    
+    return calc_damage;
+}
+
+int BattleLogic::heavy_attack(BattleModel* battleModel){
+    bool enemy_hit;
+    
+    // Check if you will hit the enemy
+    enemy_hit = this->_enemy_hit(battleModel);
+
+    // If you did not hit the enemy, then return false, indicating that you missed
+    if(!enemy_hit){ return false; }
+    
+    int calc_damage = this->calculate_damage(battleModel);
+    if(calc_damage == 0){
+        return 0;
     }
 
     EntityModel *defender = battleModel->get_defender();
     
-    //===================== DEBUG PRINTS START =====================//
-    // cout << "\n\n\n|---------------------------------|" << endl;
-    // cout << "|     -=-= BEFORE DAMAGE -=-=     |" << endl;
-    // cout << "|---------------------------------|" << endl;
-    // cout << "| Defender Defence: " << battleModel->get_defender()->get_def() << endl;
-    // cout << "| Attacker Atk: " << battleModel->get_attacker()->get_atk() << endl;
-    // cout << "| Attacker Weapon Atk: " << *battleModel->get_attacker()->get_weapon()->get_damage() << endl;
-    // cout << "| Attacker Weapon chance of hit: " << *battleModel->get_attacker()->get_weapon()->get_hit_rate() << "%" << endl;
-    // cout << "|---------------------------------|" << endl;
 
-    // defender->display_stats();
-    //===================== DEBUG PRINTS STOP ======================//
-
-    
-    
-    
     defender->decrease_hp(calc_damage);
     
-    //===================== DEBUG PRINTS START =====================//
-    // cout << "\n\n\n|---------------------------------|" << endl;
-    // cout << "|     -=-= AFTER DAMAGE -=-=      |" << endl;
-    // cout << "|---------------------------------|" << endl;
-    // cout << "| Total damage this turn: " << calc_damage << endl;
-    // cout << "|---------------------------------|" << endl;
-    
-    // defender->display_stats();
-    //===================== DEBUG PRINTS STOP ======================//
-    
-    return true;
+    return calc_damage;
 }
 
 int BattleLogic::calculate_weapon_damage(BattleModel* battleModel) {
@@ -204,7 +183,7 @@ int BattleLogic::calculate_damage(BattleModel* battleModel) {
     return damage;
 }
 
-bool BattleLogic::_enemy_hit(BattleModel* battleModel){
+bool BattleLogic::_enemy_hit(BattleModel* battleModel, int percentage_decrease){
     EntityModel *attacker = battleModel->get_attacker();
     WeaponModel *attacker_weapon = attacker->get_weapon();
     int *weapon_hit_rate = attacker_weapon->get_hit_rate();
