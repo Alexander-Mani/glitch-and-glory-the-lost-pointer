@@ -1,14 +1,18 @@
 CXX = g++
 CXXFLAGS = -Wall -std=c++17
 CXXDEBUGFLAGS = -ggdb -fsanitize=address -fsanitize=undefined
+
 # CXXFILES = main.cpp
+# LEXI: A sanity message for devs if you are having strange errors here:
+#	Note that having a single space or anything behind a '\' will break the entire makefile 
 MODELFILES = \
 	Models/Entities/EntityModel.cpp \
 	Models/Entities/BioEnhancedBerserkerModel.cpp \
 	Models/Entities/CyberGladiatorModel.cpp \
 	Models/Entities/TechnoOracleModel.cpp \
 	Models/BattleModel.cpp \
-	Models/WeaponModel.cpp 
+	Models/WeaponModel.cpp \
+	Models/OverworldModel.cpp
 
 LOGICFILES = \
 	LogicLayer/EntityLogic.cpp \
@@ -29,7 +33,10 @@ CXXFILES = main.cpp $(MODELFILES) $(LOGICFILES) $(UIFILES)
 
 TARGETS = debug main
 
+
 .PHONY: all fresh clean
+
+all: main
 
 main:
 	$(info Building $@)

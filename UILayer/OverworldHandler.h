@@ -1,5 +1,5 @@
-#ifndef OVERWORLD_H
-#define OVERWORLD_H
+#ifndef OVERWORLDHANDLER_H
+#define OVERWORLDHANDLER_H
 
 #include "IOHandler.h"
 #include "../LogicLayer/LogicWrapper.h"  // Include LogicWrapper
@@ -29,6 +29,7 @@ public:
     * @brief Asks the user for Entity for player and for opponent. Then starts the battle.
     */
     void initialize_overworld();
+    void move(OverworldModel *overworldModel,string location);
 
     /*
     * @brief [in progress] Starts battle with provided parameters

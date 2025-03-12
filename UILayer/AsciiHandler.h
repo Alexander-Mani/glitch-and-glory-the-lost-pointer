@@ -55,11 +55,11 @@ const string GAME_MAP=R"(
                            |    |   '==='  |
                            '===='          |
 #*********#                                |
-*ABONDEND *   .======.    .===========.    |
-*WAREHOUSE*   |RIPPER|    \ CORPROTE /     |
-#*********#   '======'     \  UNION /      |
-                            \      /       |
-                             '===='        |
+*ABONDEND *   .======.    .============.   |
+*WAREHOUSE*   |RIPPER|    \ CORPORATE /    |
+#*********#   '======'     \  UNION  /     |
+                            \       /      |
+                             '====='       |
     )";
 const string TITLE = R"(
    ________    __________________  __   ___    _   ______     ________    ____  ______  __
