@@ -60,7 +60,7 @@ CyberGladiatorModel::CyberGladiatorModel()
         "                             ..    ....    ..-=+=:..                      ", 
         "                                               .                          " 
         },
-        WeaponModel(
+        new WeaponModel(
             "Titan Protocol",               // Weapon Name
             50,                             // Weapon Damage
             100,                            // Hit Rate

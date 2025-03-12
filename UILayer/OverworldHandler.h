@@ -17,13 +17,13 @@ using namespace std;
 
 class OverworldHandler {
 public:
-    IOHandler ioHandler;
+    IOHandler *ioHandler;
     LogicWrapper* logicWrapper; // Pointer to the LogicWrapper
     AsciiHandler* asciiHandler;
 
 
     // Pass a pointer to LogicWrapper so we can access EntityLogic
-    OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler);
+    OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler* ioHandler);
 
     /*
     * @brief Asks the user for Entity for player and for opponent. Then starts the battle.

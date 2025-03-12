@@ -60,7 +60,7 @@ TechnoOracleModel::TechnoOracleModel()
         " %#%@@@@@@@@         #%%#%%%     ", 
         "                    %*%%%@%      " 
     },
-    WeaponModel(
+    new WeaponModel(
         "Singularity Codex",            // Weapon Name
         100,                             // Weapon Damage
         90,                             // Hit Rate

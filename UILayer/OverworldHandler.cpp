@@ -14,16 +14,16 @@
 #include <chrono>
 #include <thread>
 
-OverworldHandler::OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler)
-    : logicWrapper(logicWrapper), asciiHandler(asciiHandler)
+OverworldHandler::OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler *ioHandler)
+    : logicWrapper(logicWrapper), asciiHandler(asciiHandler), ioHandler(ioHandler)
 {
-    this->ioHandler = IOHandler();
+    // this->ioHandler = IOHandler();
     // vector<string> game_options;
     
 }
 
 void OverworldHandler::initialize_overworld() {
-    this->ioHandler.clear_terminal();
+    this->ioHandler->clear_terminal();
     string city = this->asciiHandler->CITY;
     string map = this->asciiHandler->GAME_MAP;
     string title = this->asciiHandler->TITLE;
@@ -67,8 +67,8 @@ void OverworldHandler::move(OverworldModel *overworldModel,string location){
      location = this->logicWrapper->gameLogic->change_location(overworldModel, location);
     //string new_location = overworldModel->set_curr_location(location);
     vector<string> locations = overworldModel->get_routes(location);
-    this->ioHandler.output_options(location, locations);
-    string option = this->ioHandler.input_choose_option(locations);
+    this->ioHandler->output_options(location, locations);
+    string option = this->ioHandler->input_choose_option(locations);
     bool is_action = this->logicWrapper->gameLogic->is_action(locations, option);
     if (location == overworldModel->get_final_zone()){
         cout << "BOSS TIME!" << endl;

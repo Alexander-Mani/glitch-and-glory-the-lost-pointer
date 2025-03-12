@@ -18,10 +18,10 @@ protected:
     int crit;
     int evade;
     std::vector<std::string> ascii_art;
-    WeaponModel weapon;
+    WeaponModel *weapon;
 
 public:
-    EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, std::vector<std::string> ascii_art, WeaponModel weapon);
+    EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, std::vector<std::string> ascii_art, WeaponModel *weapon);
     
     virtual ~EntityModel() = default;
 

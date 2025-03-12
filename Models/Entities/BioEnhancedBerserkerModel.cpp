@@ -60,7 +60,7 @@ BioEnhancedBerserkerModel::BioEnhancedBerserkerModel()
         "      #*****###%%%##                  %%%%%%%%%%%=+     ", 
         "=+*%%%%%%%%%%%%%%%%%%%%              %%%%%%%%%%%%%%%%   " 
         },
-        WeaponModel(
+        new WeaponModel(
             "Ragnarök Strain",              // Weapon Name
             7,                              // Weapon Damage
             50,                             // Hit Rate
