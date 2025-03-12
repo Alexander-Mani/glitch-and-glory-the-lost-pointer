@@ -32,7 +32,7 @@ int main(){
     // string test = uiHandler.logicWrapper.battleLogic.example_method("hi there!");
     // cout << uiHandler.logicWrapper->battleLogic;
 
-    cout << "\n\n\nStill works!\n";
+    cout << "\n\n\n============= GAME OVER MSG HERE PLZZZ !;)! =============\n";
 
     return 0;
 }

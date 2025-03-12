@@ -15,6 +15,6 @@ vector<string> LogicWrapper::get_attack_options(){
     return this->battleLogic->attack_options;
 }
 
-string LogicWrapper::perform_action(string action, BattleModel *battleModel){
-    return this->battleLogic->perform_action(action, battleModel);
-}
+// string LogicWrapper::perform_action(string action, BattleModel *battleModel){
+//     return this->battleLogic->perform_action(action, battleModel);
+// }

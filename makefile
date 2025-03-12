@@ -7,9 +7,6 @@ CXXDEBUGFLAGS = -ggdb -fsanitize=address -fsanitize=undefined
 #	Note that having a single space or anything behind a '\' will break the entire makefile 
 MODELFILES = \
 	Models/Entities/EntityModel.cpp \
-	Models/Entities/BioEnhancedBerserkerModel.cpp \
-	Models/Entities/CyberGladiatorModel.cpp \
-	Models/Entities/TechnoOracleModel.cpp \
 	Models/BattleModel.cpp \
 	Models/WeaponModel.cpp \
 	Models/OverworldModel.cpp \

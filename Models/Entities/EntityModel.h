@@ -7,6 +7,9 @@
 
 #include "../WeaponModel.h"
 
+// Forward declaration of EntityModel due to circular import
+class WeaponModel;
+
 
 class EntityModel {
 protected:
@@ -47,17 +50,6 @@ public:
     std::vector<std::string> get_battle_stat_names() const{
         return {"Health", "Attack", "Defence", "Magic", "Critical", "Evasion"};
     }
-
-    //std::unordered_map<std::string, int> get_battle_stats() const {
-    //    return {
-    //        {"hp", hp},
-    //        {"atk", atk},
-    //        {"def", def},
-    //        {"magic", magic},
-    //        {"crit", crit},
-    //        {"evade", evade}
-    //    };
-    //}
 
     virtual void decrease_hp(int damage) {
         hp -= damage;

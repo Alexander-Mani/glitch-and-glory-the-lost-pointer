@@ -15,7 +15,7 @@ class BattleLogic{
 public:
     string handle_battle_action(BattleModel* battleModel, string action);
     void handle_turn(BattleLogic* battleModel);
-    void handle_computer_action(BattleModel* battleModel);
+    string handle_computer_action(BattleModel* battleModel);
 
     vector<string> attack_options;
 
@@ -56,13 +56,21 @@ private:
 
     int calculate_weapon_damage(BattleModel* battleModel);
 
-    bool attack(BattleModel* battleModel);
+    /* 
+     * @brief Performs a normal attack within a battle
+     */
+    int attack(BattleModel* battleModel);
+    
+    /* 
+     * @brief Performs a normal attack within a battle
+     */
+    int heavy_attack(BattleModel* battleModel);
 
     /*
      * @brief Calculates the chance of a hit
      * @param attacker The BattleModel of the active battle
      */
-    bool _enemy_hit(BattleModel* battleModel);
+    bool _enemy_hit(BattleModel* battleModel, int percentage_decrease=0);
 
 
     
