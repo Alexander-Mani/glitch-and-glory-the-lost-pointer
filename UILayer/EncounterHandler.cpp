@@ -34,12 +34,7 @@ void EncounterHandler::initialize_encounter(EntityModel* player) {
 
     std::string outcomeMsg = encounter.outcomes[choiceIndex](player);
     ioHandler.output_battle_info(outcomeMsg);
-    // cout << "Initial Stats:" << endl;
-    // cout << "Health: " << player->get_hp() << endl;
-    // cout << "Attack: " << player->get_atk() << endl;
-    // cout << "Defense: " << player->get_def() << endl;
-    // cout << "Magic: " << player->get_magic() << endl;
-    // cout << "Critical: " << player->get_crit() << endl << endl;
+
 } // use the one below lexi 
 // void EncounterHandler::initialize_encounter(EntityModel* ) {
 //     // Assume 'party' is an accessible party model that holds your three members.
