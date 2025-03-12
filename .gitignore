@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+
+# Some silly files franz doesn't want to push
+*refresh_vscode_server.sh
+refresh_vscode_server.sh*
+refresh_vscode_server.sh
+.vscode/
+.vscode/*
+
+data/all_files_*

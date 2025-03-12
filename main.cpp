@@ -1,17 +1,38 @@
-#include "./models/EntityParentModel.h"
 #include <iostream>
-#include <vector>
+#include "debug.h"
 
-int main() {
-    TechnoOracle oracle;
-    CyberGladiator gladiator;
-    BioEnhancedBerserker berserker;
+/*--- HEADER FILES ---*/
+#include "UILayer/UIHandler.h"
+#include "UILayer/IOHandler.h"
 
-    std::vector<Entity*> party { &oracle, &gladiator, &berserker };
+using namespace std;
 
-    for (auto* e : party) {
-        e->displayStats();
-    }
+
+int main(){
+    disable_stdout(); // Disable prints when using gdb
+    
+    UIHandler uiHandler = UIHandler();
+
+    uiHandler.initialize_game();
+
+    // IOHandler ioHandler = IOHandler();
+
+
+
+
+    // BattleLogic battleLogic = uiHandler.logicWrapper.battleLogic;
+
+    // (void) battleLogic;
+
+    // cout << battleLogic.example_method("testing stuff\n");
+    // ioHandler.output_title("testing stuff");
+    // ioHandler.output_subtitle("testing stuff");
+
+    // cout << uiHandler.logicWrapper.battleLogic;
+    // string test = uiHandler.logicWrapper.battleLogic.example_method("hi there!");
+    // cout << uiHandler.logicWrapper->battleLogic;
+
+    cout << "\n\n\nStill works!\n";
 
     return 0;
 }
