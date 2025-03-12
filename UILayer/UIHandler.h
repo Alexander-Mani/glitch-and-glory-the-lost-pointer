@@ -10,6 +10,7 @@
 #include "../LogicLayer/LogicWrapper.h"
 #include "IOHandler.h"
 #include "AsciiHandler.h"
+#include "OverworldHandler.h"
 #include "BattleHandler.h"
 
 
@@ -18,6 +19,7 @@ public:
     LogicWrapper logicWrapper;
     IOHandler ioHandler;
     AsciiHandler asciiHandler; //AsciiHandler must come before BattleHandler
+    OverworldHandler overworldHandler;
     BattleHandler battleHandler;
 
     // We will have the menu options in a vector<string> simply to control the order within the manu_actions

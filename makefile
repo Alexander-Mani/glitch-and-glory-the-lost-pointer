@@ -20,7 +20,8 @@ UIFILES = \
 	UILayer/UIHandler.cpp \
 	UILayer/IOHandler.cpp \
 	UILayer/BattleHandler.cpp \
-	UILayer/AsciiHandler.cpp 
+	UILayer/AsciiHandler.cpp \
+	UILayer/OverworldHandler.cpp
 
 # Combine all source files
 CXXFILES = main.cpp $(MODELFILES) $(LOGICFILES) $(UIFILES)

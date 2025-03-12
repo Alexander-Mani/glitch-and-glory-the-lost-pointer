@@ -4,6 +4,7 @@
 #include "BattleHandler.h"
 
 #include "../LogicLayer/LogicWrapper.h"
+#include "OverworldHandler.h"
 
 #include <iostream>
 #include <vector>
@@ -15,11 +16,12 @@ UIHandler::UIHandler()
     : logicWrapper(), 
       ioHandler(), 
       asciiHandler(),
+      overworldHandler(&logicWrapper, &asciiHandler),
       battleHandler(&logicWrapper, &asciiHandler)   // Initialize battleHandler here with the pointer
 {
     // Now you can set up your menu_options and menu_actions, etc.
-    this->menu_options = {"Play Game [phase 2]", "Activate Battle", "Quit"};
-    this->menu_actions["Play Game [phase 2]"] = [this]() { play_game(); };
+    this->menu_options = {"Play Game", "Activate Battle", "Quit"};
+    this->menu_actions["Play Game"] = [this]() { play_game(); };
     this->menu_actions["Activate Battle"]     = [this]() { activate_battle(); };
     this->menu_actions["Quit"]                = [this]() { quit(); };
 }
@@ -41,7 +43,8 @@ void UIHandler::initialize_game() {
 
 
 void UIHandler::play_game(){
-    this->ioHandler.output_subtitle("Starting the game... [phase 2]");
+    this->ioHandler.output_subtitle("Starting the game...");
+    this->overworldHandler.initialize_overworld();
 }
 
 
