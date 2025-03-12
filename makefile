@@ -12,7 +12,8 @@ MODELFILES = \
 	Models/Entities/TechnoOracleModel.cpp \
 	Models/BattleModel.cpp \
 	Models/WeaponModel.cpp \
-	Models/OverworldModel.cpp
+	Models/OverworldModel.cpp \
+	Models/PartyModel.cpp
 
 LOGICFILES = \
 	LogicLayer/EntityLogic.cpp \

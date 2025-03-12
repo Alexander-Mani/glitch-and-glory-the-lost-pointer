@@ -5,6 +5,9 @@
 #include <vector>
 #include <unordered_map>
 #include <iostream>
+
+#include "PartyModel.h"
+
 using namespace std;
 
 
@@ -14,6 +17,7 @@ protected:
     string current_location;
     unsigned int ascii_location_pointer;
     string ascii_art;
+    PartyModel* partyModel;
 
     //Other consts
     const string hub = "Streets";
@@ -46,12 +50,11 @@ protected:
 
 
 public:
-    OverworldModel(const std::string &current_location, unsigned int &ascii_location_pointer,const std::string &ascii_art);
+    //OverworldModel(const std::string &current_location, unsigned int &ascii_location_pointer,const std::string &ascii_art);
     // OverworldModel(const std::string &current_location = "HUB", 
     // In OverworldModel.h
-
     // Default Constructor
-    OverworldModel();
+    OverworldModel(PartyModel* partyModel);
 
     virtual ~OverworldModel() = default;
 
@@ -67,7 +70,7 @@ public:
     const string& get_curr_location() const { return current_location; }
     string get_hub() const { return hub; }
     string get_final_zone() const { return final_zone; }
-
+    PartyModel* get_party_model();
 
     //set
     //const string& set_curr_location(const string& location){

@@ -5,6 +5,7 @@
 #include "../Models/BattleModel.h"
 #include "../LogicLayer/EntityLogic.h"    // For EntityLogic
 #include "../Models/OverworldModel.h"
+#include "../Models/PartyModel.h"
 #include <iostream>
 #include <ostream>
 #include <string>
@@ -50,8 +51,14 @@ void OverworldHandler::initialize_overworld() {
 
     //Initialize party model
     //Initialize overworld model
-    OverworldModel *overWorldModel = new OverworldModel();
+    vector<EntityModel*> entities = this->logicWrapper->entityLogic.get_all_entities();
+    PartyModel* partyModel = new PartyModel(entities[0], entities[1], entities[2]);
+    OverworldModel *overWorldModel = new OverworldModel(partyModel);
     string location = overWorldModel->get_curr_location();
+    PartyModel *testPartyModel = overWorldModel->get_party_model();
+    testPartyModel->get_party_member_1()->display_stats();
+    testPartyModel->get_party_member_2()->display_stats();
+    testPartyModel->get_party_member_3()->display_stats();
     this->move(overWorldModel, location);
     // display options for curr location initaly hub
 }
@@ -71,9 +78,9 @@ void OverworldHandler::move(OverworldModel *overworldModel,string location){
         string action = this->logicWrapper->gameLogic.action_resolver(option);
     }
     return this->move(overworldModel,option);
-
-
 }
 
-
-
+void OverworldHandler::choose_party(OverworldHandler *overworldModel) {
+    (void)overworldModel;
+    // Create a list of entity names for the menu in the same order as entities.
+}

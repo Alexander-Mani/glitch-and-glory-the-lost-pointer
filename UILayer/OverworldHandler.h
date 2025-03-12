@@ -30,6 +30,7 @@ public:
     */
     void initialize_overworld();
     void move(OverworldModel *overworldModel,string location);
+    void choose_party(OverworldHandler *overworldModel); 
 
     /*
     * @brief [in progress] Starts battle with provided parameters
