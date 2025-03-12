@@ -8,10 +8,6 @@
 
 #include "../Models/BattleModel.h"
 #include "../Models/AllEntities.h"
-// #include "../UILayer/AsciiHandler.h"
-
-// Forward declaration to avoid circular dependency
-class AsciiHandler;
 
 using namespace std;
 
@@ -21,11 +17,10 @@ public:
     int subtitle_max_len = 50;  // Assigned here since it's a constant value
     int msg_padding_len = 5;    // Assigned here since it's a constant value
 
-    AsciiHandler *asciiHandler;
     
 
     // IOHandler(AsciiHandler *asciiHandler); // Declaring constructer to be used within the .cpp file
-    IOHandler(AsciiHandler *asciiHandler = nullptr);
+    IOHandler();
 
     //==== OUTPUT METHODS ====//
     

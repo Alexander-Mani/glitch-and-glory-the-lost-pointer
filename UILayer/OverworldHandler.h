@@ -17,9 +17,9 @@ using namespace std;
 
 class OverworldHandler {
 public:
-    IOHandler *ioHandler;
     LogicWrapper* logicWrapper; // Pointer to the LogicWrapper
     AsciiHandler* asciiHandler;
+    IOHandler *ioHandler;
 
 
     // Pass a pointer to LogicWrapper so we can access EntityLogic

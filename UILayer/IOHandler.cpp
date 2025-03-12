@@ -1,5 +1,4 @@
 #include "IOHandler.h"
-#include "AsciiHandler.h"
 
 
 #include <iostream>
@@ -15,8 +14,7 @@
 using namespace std;
 
 //=========== CONSTRUCTER METHODS ===========//
-IOHandler::IOHandler(AsciiHandler *asciiHandler)
-    : asciiHandler(asciiHandler){}
+IOHandler::IOHandler(){}
 
 
 //=========== OUTPUT METHODS ===========//
