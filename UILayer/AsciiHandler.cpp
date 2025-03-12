@@ -14,9 +14,6 @@
 using std::string;
 using std::endl;
 
-// AsciiHandler::AsciiHandler(LogicWrapper *logicWrapper)
-//     : logicWrapper(*logicWrapper)
-//  {}
 AsciiHandler::AsciiHandler(LogicWrapper *logicWrapper, IOHandler* ioHandler)
     : logicWrapper(logicWrapper), ioHandler(ioHandler)
 {}
@@ -113,28 +110,6 @@ void AsciiHandler::display_hud(const vector<string> &custom_msg, char padding_sy
     cout << padding_symbol << string(total_width-2, ' ') << padding_symbol << endl;
     cout << string(total_width, padding_symbol)<< endl;
 }
-
-// void AsciiHandler::display_attack_hud(BattleModel* battleModel){
-//     string turn;
-//     string content;
-//     vector<string> hud_msg;
-    
-//     // Generate turn and content based on the current player
-//     battleModel->player_turn ? turn = "YOU TURN!" : turn = "OPPONENT'S TURN!";
-//     battleModel->player_turn ? content = "1: Normal Attack | 2: Heavy | 3: Flee | 4: Bribe | 5: Special" : content =  "Opponent is deciding";
-
-//     // Insert turn an content to hud_msg 
-//     hud_msg.push_back(turn);
-//     hud_msg.push_back(content);
-
-//     // Fetch Entity sizes to determine total_width
-//     size_t player_width = battleModel->playerEntityModel->get_ascii()[0].size();
-//     size_t opponent_width = battleModel->compEntityModel->get_ascii()[0].size();
-//     size_t total_width = player_width+SPACES+opponent_width;
-
-//     // Display the hud message
-//     this->display_hud(hud_msg, '*', total_width);
-// }
 
 void AsciiHandler::display_attack_hud(BattleModel* battleModel){
     string turn;

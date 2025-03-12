@@ -15,10 +15,10 @@
 
 class UIHandler{
 public:
-    LogicWrapper logicWrapper;
-    AsciiHandler asciiHandler; //AsciiHandler must come before BattleHandler
-    IOHandler ioHandler;
-    BattleHandler battleHandler;
+    LogicWrapper *logicWrapper;
+    AsciiHandler *asciiHandler; //AsciiHandler must come before BattleHandler
+    IOHandler *ioHandler;
+    BattleHandler *battleHandler;
 
     // We will have the menu options in a vector<string> simply to control the order within the manu_actions
     vector<string> menu_options;
@@ -27,6 +27,8 @@ public:
 
 
     UIHandler();
+
+    ~UIHandler();
 
     /*
      * @brief Initializes the game and displays the main menu.
