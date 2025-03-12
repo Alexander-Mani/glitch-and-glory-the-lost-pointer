@@ -13,17 +13,16 @@ using namespace std;
 
 UIHandler::UIHandler() 
     : logicWrapper(), 
-      ioHandler(), 
-      asciiHandler(),
-      battleHandler(&logicWrapper, &asciiHandler)   // Initialize battleHandler here with the pointer
+      asciiHandler(&logicWrapper),
+      ioHandler(&asciiHandler),
+      battleHandler(&logicWrapper, &asciiHandler, &ioHandler)
 {
-    // Now you can set up your menu_options and menu_actions, etc.
+    // Set up menu options and actions
     this->menu_options = {"Play Game [phase 2]", "Activate Battle", "Quit"};
     this->menu_actions["Play Game [phase 2]"] = [this]() { play_game(); };
     this->menu_actions["Activate Battle"]     = [this]() { activate_battle(); };
     this->menu_actions["Quit"]                = [this]() { quit(); };
 }
-
 
 
 void UIHandler::initialize_game() {

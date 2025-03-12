@@ -1,4 +1,6 @@
 #include "IOHandler.h"
+#include "AsciiHandler.h"
+
 
 #include <iostream>
 #include <vector>
@@ -11,6 +13,10 @@
 
 
 using namespace std;
+
+//=========== CONSTRUCTER METHODS ===========//
+IOHandler::IOHandler(AsciiHandler *asciiHandler)
+    : asciiHandler(asciiHandler){}
 
 
 //=========== OUTPUT METHODS ===========//
@@ -28,6 +34,10 @@ void IOHandler::clear_terminal() {
 }
 
 void IOHandler::output_title(string title){
+    int max_len;
+    // Assign max_len depending on string length, if it's too long then enlarge title_max_len
+    this->title_max_len-4 >= (int)title.length() ? max_len = this->title_max_len : max_len = (int)title.length() + 4;
+
     string wrapper(this->title_max_len, '=');
 
 
@@ -42,10 +52,14 @@ void IOHandler::output_title(string title){
 
 
 void IOHandler::output_subtitle(string subtitle){
-    string wrapper(this->subtitle_max_len, '-');
+    int max_len;
+    // Assign max_len depending on string length, if it's too long then enlarge title_max_len
+    this->subtitle_max_len-4 >= (int)subtitle.length() ? max_len = this->subtitle_max_len : max_len = (int)subtitle.length() + 4;
+
+    string wrapper(max_len, '-');
 
     string subtitle_padded = " " + subtitle + " ";
-    int symbol_len = this->subtitle_max_len - subtitle_padded.length();
+    int symbol_len = max_len - subtitle_padded.length();
     string symbols(symbol_len/2, '-');
 
     cout << wrapper << endl;
@@ -73,11 +87,15 @@ void IOHandler::output_options(string options_title, vector<string> options_list
 
 
 void IOHandler::output_battle_info(string info){
+    int max_len;
+    // Assign max_len depending on string length, if it's too long then enlarge title_max_len
+    this->title_max_len-4 >= (int)info.length() ? max_len = this->title_max_len : max_len = (int)info.length() + 4;
 
-    string wrapper(this->title_max_len, '*');
+
+    string wrapper(max_len, '*');
 
     string info_padded = " " + info + " ";
-    int symbol_len = this->title_max_len - info_padded.length();
+    int symbol_len = max_len - info_padded.length();
     string symbols(symbol_len/2, '*');
 
     cout << endl << wrapper << endl;

@@ -9,10 +9,17 @@
 #include <algorithm>
 #include <iomanip>
 
+#include <cassert> // For debuggin purposes
+
 using std::string;
 using std::endl;
 
-AsciiHandler::AsciiHandler() {}
+// AsciiHandler::AsciiHandler(LogicWrapper *logicWrapper)
+//     : logicWrapper(*logicWrapper)
+//  {}
+AsciiHandler::AsciiHandler(LogicWrapper *logicWrapper, IOHandler* ioHandler)
+    : logicWrapper(logicWrapper), ioHandler(ioHandler)
+{}
 
 void AsciiHandler::display_ascii(const string& entity_name) {
     cout << "Displaying ASCII art for: " << entity_name << endl;
@@ -24,9 +31,9 @@ void AsciiHandler::display_character_selector(std::vector<EntityModel*>* entitie
 
 }
 
-void AsciiHandler::display_start_of_battle(BattleModel* battle_model) {
-    std::vector<std::string> player_ascii = battle_model->playerEntityModel->get_ascii();
-    std::vector<std::string> opponent_ascii = battle_model->compEntityModel->get_ascii();
+void AsciiHandler::display_start_of_battle(BattleModel* battleModel) {
+    std::vector<std::string> player_ascii = battleModel->playerEntityModel->get_ascii();
+    std::vector<std::string> opponent_ascii = battleModel->compEntityModel->get_ascii();
     for (auto &line : player_ascii) {
         std::reverse(line.begin(), line.end());
     }
@@ -36,9 +43,9 @@ void AsciiHandler::display_start_of_battle(BattleModel* battle_model) {
     for (size_t i = 0; i < max_length; ++i) {
         std::string player_line = (i < player_ascii.size()) ? player_ascii[i] : "";
         std::string opponent_line = (i < opponent_ascii.size()) ? opponent_ascii[i] : "";
-        if (i == 23) content = battle_model->playerEntityModel->get_name();
+        if (i == 23) content = battleModel->playerEntityModel->get_name();
         else if (i == 24) content = "VS";
-        else if (i == 25) content = battle_model->compEntityModel->get_name();
+        else if (i == 25) content = battleModel->compEntityModel->get_name();
         else{
             content = "/";
             if( i % 2 ==0) content = "\\";
@@ -57,10 +64,10 @@ void AsciiHandler::display_start_of_battle(BattleModel* battle_model) {
     }
 }
 
-void AsciiHandler::display_turn(BattleModel* battle_model){
-    std::vector<std::string> player_ascii = battle_model->playerEntityModel->get_ascii();
-    std::vector<std::string> opponent_ascii = battle_model->compEntityModel->get_ascii();
-    size_t stat_length = max(battle_model->playerEntityModel->get_battle_stats().size(), battle_model->compEntityModel->get_battle_stats().size()); 
+void AsciiHandler::display_turn(BattleModel* battleModel){
+    std::vector<std::string> player_ascii = battleModel->playerEntityModel->get_ascii();
+    std::vector<std::string> opponent_ascii = battleModel->compEntityModel->get_ascii();
+    size_t stat_length = max(battleModel->playerEntityModel->get_battle_stats().size(), battleModel->compEntityModel->get_battle_stats().size()); 
     for (auto &line : player_ascii) {
         std::reverse(line.begin(), line.end());
     }
@@ -86,49 +93,82 @@ void AsciiHandler::display_turn(BattleModel* battle_model){
         }
 
     }
-    this->display_battle_stats(battle_model);
-    this->display_attack_hud(battle_model);
+    this->display_battle_stats(battleModel);
+    this->display_attack_hud(battleModel);
 }
 
-void AsciiHandler::display_attack_hud(BattleModel* battle_model){
-    size_t player_width = battle_model->playerEntityModel->get_ascii()[0].size();
-    size_t opponent_width = battle_model->compEntityModel->get_ascii()[0].size();
-    size_t total_width = player_width+SPACES+opponent_width;
-    string turn = "OPPONENT'S TURN!";
-    string content = "Opponent is deciding.";
-    if(battle_model->player_turn){
-    content = "1: Normal Attack | 2: Heavy | 3: Flee | 4: Bribe | 5: Special"; 
-    turn = "YOU TURN!";
+
+void AsciiHandler::display_hud(const vector<string> &custom_msg, char padding_symbol, size_t total_width){
+    cout << string(total_width, padding_symbol)<< endl;
+    cout << padding_symbol << string(total_width-2, ' ') << padding_symbol << endl;
+    for(string msg : custom_msg){
+        assert(msg.size() < total_width);
+
+        int msg_total_padding = total_width - msg.size();
+        int msg_left_padding = msg_total_padding / 2;
+        int msg_right_padding = msg_total_padding - msg_left_padding;
+
+        cout << padding_symbol << string(msg_left_padding-1, ' ') << msg << string(msg_right_padding-1, ' ') << padding_symbol << endl;
     }
-    int turn_total_padding = total_width - turn.size();
-    int turn_left_padding = turn_total_padding / 2;
-    int turn_right_padding = turn_total_padding - turn_left_padding;
-
-    int total_padding = total_width - content.size();
-    int left_padding = total_padding / 2;
-    int right_padding = total_padding - left_padding;
-    cout << string(total_width, '*')<< endl;
-    cout << '*' << string(total_width-2, ' ') << '*' << endl;
-    cout << '*' << string(turn_left_padding-1, ' ') << turn << string(turn_right_padding-1, ' ') << '*' << endl;
-    cout << '*' << string(left_padding-1, ' ') << content << string(right_padding-1, ' ') << '*' << endl;
-    cout << '*' << string(total_width-2, ' ') << '*' << endl;
-    cout << string(total_width, '*')<< endl;
-
-    
-
+    cout << padding_symbol << string(total_width-2, ' ') << padding_symbol << endl;
+    cout << string(total_width, padding_symbol)<< endl;
 }
 
-void AsciiHandler::display_battle_stats(BattleModel* battle_model){
+// void AsciiHandler::display_attack_hud(BattleModel* battleModel){
+//     string turn;
+//     string content;
+//     vector<string> hud_msg;
+    
+//     // Generate turn and content based on the current player
+//     battleModel->player_turn ? turn = "YOU TURN!" : turn = "OPPONENT'S TURN!";
+//     battleModel->player_turn ? content = "1: Normal Attack | 2: Heavy | 3: Flee | 4: Bribe | 5: Special" : content =  "Opponent is deciding";
 
-    std::vector<int> player_stats = battle_model->playerEntityModel->get_battle_stats();
-    std::vector<int> opponent_stats = battle_model->compEntityModel->get_battle_stats(); 
+//     // Insert turn an content to hud_msg 
+//     hud_msg.push_back(turn);
+//     hud_msg.push_back(content);
+
+//     // Fetch Entity sizes to determine total_width
+//     size_t player_width = battleModel->playerEntityModel->get_ascii()[0].size();
+//     size_t opponent_width = battleModel->compEntityModel->get_ascii()[0].size();
+//     size_t total_width = player_width+SPACES+opponent_width;
+
+//     // Display the hud message
+//     this->display_hud(hud_msg, '*', total_width);
+// }
+
+void AsciiHandler::display_attack_hud(BattleModel* battleModel){
+    string turn;
+    string content;
+    vector<string> hud_msg;
+    
+    // Generate turn and content based on the current player
+    battleModel->player_turn ? turn = "YOU TURN!" : turn = "OPPONENT'S TURN!";
+    battleModel->player_turn ? content = "1: Normal Attack | 2: Heavy | 3: Flee | 4: Bribe | 5: Special" : content =  "Opponent is deciding";
+
+    // Insert turn an content to hud_msg 
+    hud_msg.push_back(turn);
+    hud_msg.push_back(content);
+
+    // Fetch Entity sizes to determine total_width
+    size_t player_width = battleModel->playerEntityModel->get_ascii()[0].size();
+    size_t opponent_width = battleModel->compEntityModel->get_ascii()[0].size();
+    size_t total_width = player_width+SPACES+opponent_width;
+
+    // Display the hud message
+    this->display_hud(hud_msg, '*', total_width);
+}
+
+void AsciiHandler::display_battle_stats(BattleModel* battleModel){
+
+    std::vector<int> player_stats = battleModel->playerEntityModel->get_battle_stats();
+    std::vector<int> opponent_stats = battleModel->compEntityModel->get_battle_stats(); 
 
 
-    std::vector<std::string> player_stat_names = battle_model->playerEntityModel->get_battle_stat_names();
-    std::vector<std::string> opponent_stat_names = battle_model->compEntityModel->get_battle_stat_names();
+    std::vector<std::string> player_stat_names = battleModel->playerEntityModel->get_battle_stat_names();
+    std::vector<std::string> opponent_stat_names = battleModel->compEntityModel->get_battle_stat_names();
 
-    size_t player_width = battle_model->playerEntityModel->get_ascii()[0].size();
-    size_t opponent_width = battle_model->compEntityModel->get_ascii()[0].size();
+    size_t player_width = battleModel->playerEntityModel->get_ascii()[0].size();
+    size_t opponent_width = battleModel->compEntityModel->get_ascii()[0].size();
 
     size_t max_length = max(player_stats.size(), opponent_stats.size());
 
@@ -173,9 +213,8 @@ void AsciiHandler::display_battle_stats(BattleModel* battle_model){
 
         }
     }
-    
-
 }
+
 size_t AsciiHandler::calculate_max_stat_length(const std::vector<std::string>& stat_names, const std::vector<int>& stats) {
     size_t max_length = 0;
     for (size_t i = 0; i < stat_names.size() && i < stats.size(); ++i) {
@@ -185,8 +224,10 @@ size_t AsciiHandler::calculate_max_stat_length(const std::vector<std::string>& s
     return max_length;
 }
 
-void AsciiHandler::display_end_of_battle(BattleModel* batlle_model){
-    (void)batlle_model;
+void AsciiHandler::display_end_of_battle(BattleModel* battleModel){
+    (void)battleModel;
+    string battle_msg = this->logicWrapper->battleLogic->battle_over_msg(battleModel);
+    cout << "=== BATTLE OVER ===" << endl << battle_msg << endl;
 
 }
 

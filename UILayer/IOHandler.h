@@ -6,6 +6,12 @@
 #include <iostream>
 #include <vector>
 
+#include "../Models/BattleModel.h"
+#include "../Models/AllEntities.h"
+// #include "../UILayer/AsciiHandler.h"
+
+// Forward declaration to avoid circular dependency
+class AsciiHandler;
 
 using namespace std;
 
@@ -15,7 +21,11 @@ public:
     int subtitle_max_len = 50;  // Assigned here since it's a constant value
     int msg_padding_len = 5;    // Assigned here since it's a constant value
 
-    // IOHandler(); // Declaring constructer to be used within the .cpp file
+    AsciiHandler *asciiHandler;
+    
+
+    // IOHandler(AsciiHandler *asciiHandler); // Declaring constructer to be used within the .cpp file
+    IOHandler(AsciiHandler *asciiHandler = nullptr);
 
     //==== OUTPUT METHODS ====//
     
@@ -51,6 +61,12 @@ public:
     void output_options(string options_title, vector<string> options_list);
     
     void output_battle_info(string info);
+
+    /*
+    * @brief Displays battle info in HUD Ascii
+    * @param BattleModel instance 
+    */
+    // void display_attack_hud(BattleModel *battleModel);
     
 
     
@@ -61,6 +77,7 @@ public:
     * @returns string: Selected choice 
     */
     string input_choose_option(vector<string> options_list);
+    
 
 
 private:

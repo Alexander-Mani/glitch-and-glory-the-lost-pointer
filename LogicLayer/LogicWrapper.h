@@ -11,9 +11,9 @@
 
 class LogicWrapper{
 public:
-    BattleLogic battleLogic;
-    EntityLogic entityLogic;
-    GameLogic gameLogic;
+    BattleLogic *battleLogic;
+    EntityLogic *entityLogic;
+    GameLogic *gameLogic;
 
     LogicWrapper();
 

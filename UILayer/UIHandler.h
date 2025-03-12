@@ -16,8 +16,8 @@
 class UIHandler{
 public:
     LogicWrapper logicWrapper;
-    IOHandler ioHandler;
     AsciiHandler asciiHandler; //AsciiHandler must come before BattleHandler
+    IOHandler ioHandler;
     BattleHandler battleHandler;
 
     // We will have the menu options in a vector<string> simply to control the order within the manu_actions
@@ -26,8 +26,7 @@ public:
     unordered_map<string, function<void()>> menu_actions;
 
 
-    UIHandler(); // Declaring constructer to be used within the .cpp file
-
+    UIHandler();
 
     /*
      * @brief Initializes the game and displays the main menu.
@@ -48,6 +47,11 @@ private:
      * @brief Triggers GameHandler to start a battle.
      */
     void activate_battle();
+
+    /*
+     * @brief Triggers HUD function to test.
+     */
+    void test_hud();
 
 
     /*

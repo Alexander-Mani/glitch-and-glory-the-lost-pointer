@@ -62,8 +62,8 @@ CyberGladiatorModel::CyberGladiatorModel()
         },
         WeaponModel(
             "Titan Protocol",               // Weapon Name
-            9,                              // Weapon Damage
-            50,                             // Hit Rate
+            50,                             // Weapon Damage
+            100,                            // Hit Rate
             "You have hit the enemy!",      // Hit message
             "You missed the enemy homie!"   // Miss message
         )

@@ -12,14 +12,12 @@
 using namespace std;
 
 class BattleLogic{
-    public:
+public:
     string handle_battle_action(BattleModel* battleModel, string action);
     void handle_turn(BattleLogic* battleModel);
     void handle_computer_action(BattleModel* battleModel);
-    bool battle_over(BattleLogic* battleModel);
 
     vector<string> attack_options;
-// public:
 
     BattleLogic();
 
@@ -37,11 +35,19 @@ class BattleLogic{
 
     void toggle_turn(BattleModel* battleModel);
     
-    // int calculate_damage(EntityModel* attacker, EntityModel* defender);
-    // void perform_action(EntityModel* attacker, EntityModel* defender);
-    bool game_over(BattleModel* battleModel);
+    /*
+     * @brief Checks if game is over by checking if any entity_hp is 0
+     * @param instance of BattleModel
+     * @retuns True if any entity has hp 0, otherwise false
+     */
+    bool battle_over(BattleModel* battleModel);
     
-    string game_over_msg(BattleModel* battleModel);
+    /*
+     * @brief Generates battle_over message depending on the battleModel
+     * @param instance of BattleModel
+     * @retuns Game over message in string
+     */
+    string battle_over_msg(BattleModel* battleModel);
 
     
 private:

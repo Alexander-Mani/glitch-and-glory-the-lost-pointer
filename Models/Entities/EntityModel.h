@@ -59,7 +59,7 @@ public:
     //    };
     //}
 
-    virtual void take_damage(int damage) {
+    virtual void decrease_hp(int damage) {
         hp -= damage;
         if(hp < 0) hp = 0;
     }

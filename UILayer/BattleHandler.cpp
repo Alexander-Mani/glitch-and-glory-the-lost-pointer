@@ -8,16 +8,17 @@
 
 #include <cassert>
 
-BattleHandler::BattleHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler)
-    : logicWrapper(logicWrapper), asciiHandler(asciiHandler)
+BattleHandler::BattleHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler *ioHandler)
+    : logicWrapper(logicWrapper), asciiHandler(asciiHandler), ioHandler(ioHandler)
 {
-    this->ioHandler = IOHandler();
+    // this->ioHandler = IOHandler();
     // vector<string> game_options;
     
 }
 
+
 void BattleHandler::initialize_battle() {
-    this->ioHandler.output_title("Welcome to battle arena!");
+    this->ioHandler->output_title("Welcome to battle arena!");
     
     
     //--- Selecting Entity For Player ---//
@@ -48,7 +49,7 @@ EntityModel* BattleHandler::select_entity(bool for_player) {
 
 
     // Use EntityLogic to get all entity models via their classes.
-    vector<EntityModel*> entities = this->logicWrapper->entityLogic.get_all_entities();
+    vector<EntityModel*> entities = this->logicWrapper->entityLogic->get_all_entities();
 
     // Create a list of entity names for the menu in the same order as entities.
     vector<string> entity_options;
@@ -57,8 +58,8 @@ EntityModel* BattleHandler::select_entity(bool for_player) {
     }
 
     // Display the menu of available entities with custom msg depending on for_player value
-    this->ioHandler.output_options(menu_msg, entity_options);
-    string selected = this->ioHandler.input_choose_option(entity_options);
+    this->ioHandler->output_options(menu_msg, entity_options);
+    string selected = this->ioHandler->input_choose_option(entity_options);
 
     //--- Find the chosen entity ---//
     EntityModel* chosen_entity = nullptr;
@@ -71,54 +72,42 @@ EntityModel* BattleHandler::select_entity(bool for_player) {
     }
 
     if(chosen_entity) {
-        this->ioHandler.output_msg("You selected: " + chosen_entity->get_name());
+        this->ioHandler->output_msg("You selected: " + chosen_entity->get_name());
         chosen_entity->display_stats();
         this->asciiHandler->display_ascii(chosen_entity->get_name());
         return chosen_entity;
     } else {
-        this->ioHandler.output_msg("Entity not found.");
+        this->ioHandler->output_msg("Entity not found.");
         // Since no entity was found, we recursively call the same function
         return select_entity(for_player);
     }
-
 }
+
+
 void BattleHandler::start_battle(BattleModel *battleModel) {
     this->asciiHandler->display_start_of_battle(battleModel);
     // bool battle_on = true;
     // int stub_ind = 0;
     string action;
     vector<string> action_list = battleModel->get_battle_actions(); 
-    this->ioHandler.glitch_sleep(3);
-    // while (battle_on) {
-        //call some kind of divider or clear screen func
+    this->ioHandler->glitch_sleep(3);
+    while (!this->logicWrapper->battleLogic->battle_over(battleModel)) {
+        this->ioHandler->clear_terminal();
+
+        this->asciiHandler->display_turn(battleModel);
+        action = this->ioHandler->input_choose_option(action_list);
+
+        string result = this->logicWrapper->battleLogic->handle_battle_action(battleModel, action);
         
+        this->ioHandler->output_battle_info(result); // Mátt taka þetta í burtu ef þér finnst þetta vera hella slay
         
-        
-        // While goal state has not been reached
-        while (!this->logicWrapper->battleLogic.game_over(battleModel)) {
-            this->ioHandler.clear_terminal();
+        //display round and stats
+        this->asciiHandler->display_turn(battleModel);
 
-            this->asciiHandler->display_turn(battleModel);
-            action = this->ioHandler.input_choose_option(action_list);
+        // Timeout for 3 seconds
+        this->ioHandler->glitch_sleep(0.5);
+    }
 
-            string result = this->logicWrapper->battleLogic.handle_battle_action(battleModel, action);
-            
-            this->ioHandler.output_battle_info(result); // Mátt taka þetta í burtu ef þér finnst þetta vera hella slay
-            
-            //display round and stats
-            this->asciiHandler->display_turn(battleModel);
-
-
-
-            this->ioHandler.glitch_sleep(3);
-        }
-        
-    // }
+    this->asciiHandler->display_end_of_battle(battleModel);
 }
 
-// TESTING
-// // Create an instance of CyberGladiatorModel
-// CyberGladiatorModel cyber_gladiator;
-
-// // Call the display_stats method to print the entity's stats
-// cyber_gladiator.display_stats();
