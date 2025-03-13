@@ -71,6 +71,17 @@ public:
         if(magic < 0) magic = 0;
     }
 
+
+    void level_up(unsigned int level) {
+        this->max_hp+= (level*2);
+        this->hp += level;
+        this->atk += level;
+        this->def += level;
+        this->magic += level;
+        this->crit += level;
+        this->evade += level;
+    
+    }
     /*
      * @brief Simply gets the weapon for Entity
      */
