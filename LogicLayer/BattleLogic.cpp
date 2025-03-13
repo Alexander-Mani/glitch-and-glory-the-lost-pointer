@@ -20,24 +20,69 @@ BattleLogic::BattleLogic(AttackLogic *attackLogic){
 
 string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action){
     string ret_msg;
+    int attack_type;
 
     if (action == "A"){
-        int damage_done = this->attackLogic->attack(battleModel, AttackLogic::ATTACK_NORMAL);
+        string atk_prefix;
+
+        // Check if attack will be crit (done in BattleLogic to get prefix str)
+        bool crit_hit = this->attackLogic->enemy_crit_hit(battleModel, AttackLogic::ATTACK_NORMAL);
+
+        // Assign attack_type to pass into attack method
+        (crit_hit) ? attack_type = AttackLogic::ATTACK_CRIT : attack_type = AttackLogic::ATTACK_NORMAL;
+
+        // Fetches damage from AttackLogic
+        int damage_done = this->attackLogic->attack(battleModel, attack_type);
+
+        if (crit_hit)
+            atk_prefix = "CRITICAL HIT: ";
+        else if (damage_done > 0)
+            atk_prefix = "NORMAL ATTACK: ";
+        else if (damage_done == 0)
+            atk_prefix = "NORMAL ATTACK EVADED: ";
+        else
+            assert(false); // This should never be true
+
+
+        
+        // (crit_hit) ? atk_prefix = "CRITICAL HIT: " : atk_prefix = "NORMAL HIT:";
+
+        ret_msg = atk_prefix;
+
         if(damage_done == 0){
-            battleModel->player_turn ? ret_msg = "You missed the enemy!" : ret_msg = "NORMAL ATTACK: The enemy missed, your HP was not affected.";
+            battleModel->player_turn ? ret_msg += "You missed the enemy!" : ret_msg += "The enemy missed, your HP was not affected.";
         } 
         else {
-            battleModel->player_turn ? ret_msg = "You hit the enemy for " + to_string(damage_done) + "!" : ret_msg = ("NORMAL ATTACK: The hit you with a normal attack, you lost " + to_string(damage_done) + "HP");
+            battleModel->player_turn ? ret_msg += "You hit the enemy for " + to_string(damage_done) + "!" : ret_msg += ("The enemy hit you with a normal attack, you lost " + to_string(damage_done) + "HP");
         }
         
     } else if (action == "H") {
-        int damage_done = this->attackLogic->attack(battleModel, AttackLogic::ATTACK_HEAVY);
+        string atk_prefix;
+
+        // Check if attack will be crit (done in BattleLogic to get prefix str)
+        bool crit_hit = this->attackLogic->enemy_crit_hit(battleModel, AttackLogic::ATTACK_NORMAL);
+
+        // Assign attack_type to pass into attack method
+        (crit_hit) ? attack_type = AttackLogic::ATTACK_CRIT : attack_type = AttackLogic::ATTACK_NORMAL;
+
+        // Fetches damage from AttackLogic
+        int damage_done = this->attackLogic->attack(battleModel, attack_type);
+
+        if (crit_hit)
+            atk_prefix = "CRITICAL HIT: ";
+        else if (damage_done > 0)
+            atk_prefix = "NORMAL ATTACK: ";
+        else if (damage_done == 0)
+            atk_prefix = "NORMAL ATTACK EVADED: ";
+        else
+            assert(false); // This should never be true
+
 
         if(damage_done == 0){
             battleModel->player_turn ? ret_msg = "You missed the enemy!" : ret_msg = "HEAVY ATTACK: The enemy missed, your HP was not affected.";    
         } 
         else {
-            battleModel->player_turn ? ret_msg = "You hit the enemy for " + to_string(damage_done) + "!" : ret_msg = ("HEAVY ATTACK: The hit you with a normal attack, you lost " + to_string(damage_done) + "HP");
+            battleModel->player_turn ? ret_msg = "You hit the enemy for " + to_string(damage_done) + "!" : ret_msg = ("HEAVY ATTACK: The enemy hit you with a normal attack, you lost " + to_string(damage_done) + "HP");
         }
 
     } else if (action == "F") {

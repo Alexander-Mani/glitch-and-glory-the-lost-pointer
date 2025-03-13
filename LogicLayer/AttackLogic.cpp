@@ -11,6 +11,10 @@ AttackLogic::AttackLogic(EntityLogic *entityLogic){
 }
 
 int AttackLogic::attack(BattleModel* battleModel, int attack_type) {
+    // If attack_type 
+    // if(this->enemy_crit_hit(battleModel, attack_type)){
+    //     attack_type = this->ATTACK_CRIT;
+    // }
     // Check if the attack hits
     if (!enemy_hit(battleModel, attack_type)) {
         return 0; // Attack missed, no damage dealt.
@@ -33,6 +37,8 @@ int AttackLogic::calculate_damage(BattleModel* battleModel, int attack_type) {
     // Make sure damage doesn't become negative
     if (dmg_dealt > 0 && attack_type==this->ATTACK_HEAVY){
         dmg_dealt = dmg_dealt * 1.5;
+    } else if (dmg_dealt > 0 && attack_type==this->ATTACK_CRIT){
+        dmg_dealt = dmg_dealt * 2;
     }
 
     return dmg_dealt;
@@ -40,6 +46,10 @@ int AttackLogic::calculate_damage(BattleModel* battleModel, int attack_type) {
 
 bool AttackLogic::enemy_hit(BattleModel* battleModel, int attack_type) {
     int hit_chance;
+
+    if(attack_type == this->ATTACK_CRIT){
+        return true;
+    }
     
     // Ensure only Normal or Heavy attacks are used.
     assert(attack_type == this->ATTACK_NORMAL || attack_type == this->ATTACK_HEAVY);
@@ -56,4 +66,36 @@ bool AttackLogic::enemy_hit(BattleModel* battleModel, int attack_type) {
     
     // If the random number is lower than the hit chance, return true.
     return (random_number < hit_chance);
+}
+
+bool AttackLogic::enemy_crit_hit(BattleModel* battleModel, int attack_type) {
+    // Only allow normal or heavy attacks
+    if (attack_type != ATTACK_NORMAL && attack_type != ATTACK_HEAVY)
+        return false;
+
+    EntityModel* attacker = battleModel->get_attacker();
+    EntityModel* defender = battleModel->get_defender();
+
+    // Base crit chance from the attacker's inherent stat
+    int base_crit = attacker->get_crit();
+
+    // Calculate hit chance similarly to enemy_hit()
+    int atk = attacker->get_atk();
+    int defender_evade = defender->get_evade();
+    int hit_chance = (atk * 100) / (atk + defender_evade);
+
+    // Use (hit_chance - 50) as a bonus or penalty.
+    // If hit_chance > 50, attacker is relatively strong compared to defender,
+    // which increases the crit chance. If below 50, it decreases the crit chance.
+    int effective_crit = base_crit + (hit_chance - 50);
+
+    // Clamp effective crit chance to be between 0 and 100.
+    if (effective_crit < 0) effective_crit = 0;
+    if (effective_crit > 100) effective_crit = 100;
+
+    // Generate a random number from 0 to 100 (inclusive)
+    int random_value = rand() % 101;
+
+    // Return true if the random value is less than the effective crit chance.
+    return (random_value < effective_crit);
 }
