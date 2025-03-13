@@ -12,7 +12,7 @@
 #include "AsciiHandler.h"
 #include "OverworldHandler.h"
 #include "BattleHandler.h"
-
+#include "EncounterHandler.h"
 
 class UIHandler{
 public:
@@ -21,6 +21,7 @@ public:
     IOHandler *ioHandler;
     BattleHandler *battleHandler;
     OverworldHandler *overworldHandler;
+    EncounterHandler *encounterHandler;
 
     // LogicWrapper logicWrapper;
     // IOHandler ioHandler;
@@ -33,6 +34,7 @@ public:
     // menu_actions will act similarly to a dictionary. For keys it will store menu option, for value it will store the function for that menu option.
     unordered_map<string, function<void()>> menu_actions;
 
+    void activate_encounter();
 
     UIHandler();
 

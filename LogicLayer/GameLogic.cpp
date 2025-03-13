@@ -50,6 +50,7 @@ unsigned int GameLogic::deligate_post_battle_money(OverworldModel *overworldMode
     unsigned int min = money * 0.8;
     unsigned int max = money * 1.2;
     money = this->get_random_from_range(min, max);
+    cout << money << endl;
     overworldModel->get_party_model()->increase_money(money);
     return money;
 

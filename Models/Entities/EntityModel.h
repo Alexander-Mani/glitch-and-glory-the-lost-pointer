@@ -49,6 +49,12 @@ public:
     int get_evade() const { return evade; }
 
     // int get_crit_chance(BattleModel* battleModel);
+    void set_hp(int val) { this->hp=val; }
+    void set_atk(int val) { this->hp=val; }
+    void set_def(int val) { this->hp=val; }
+    void set_magic(int val) { this->hp=val; }
+    void set_crit(int val) { this->hp=val; }
+    void set_evade(int val) { this->hp=val; }
 
     std::vector<int> get_battle_stats() const {
         return {hp, atk, def, magic, crit, evade};

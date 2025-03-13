@@ -1,6 +1,7 @@
 #include "OverworldHandler.h"
 #include "AsciiHandler.h"
 #include "BattleHandler.h"
+#include "EncounterHandler.h"
 #include "IOHandler.h"
 #include "../Models/AllEntities.h"      // For all entity models
 #include "../Models/BattleModel.h"
@@ -15,8 +16,8 @@
 #include <cassert>
 #include <vector>
 
-OverworldHandler::OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler *ioHandler, BattleHandler *battleHandler)
-    : logicWrapper(logicWrapper), asciiHandler(asciiHandler), ioHandler(ioHandler), battleHandler(battleHandler)
+OverworldHandler::OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler *ioHandler, BattleHandler *battleHandler, EncounterHandler* encounterHandler)
+    : logicWrapper(logicWrapper), asciiHandler(asciiHandler), ioHandler(ioHandler), battleHandler(battleHandler), encounterHandler(encounterHandler)
 {
     // this->ioHandler = IOHandler();
     // vector<string> game_options;
@@ -54,6 +55,7 @@ void OverworldHandler::initialize_overworld() {
 }
 
 void OverworldHandler::move(OverworldModel *overworldModel,string location){
+    this->handle_random_encounter(overworldModel);
     this->handle_level_up(overworldModel);
     location = this->logicWrapper->gameLogic->change_location(overworldModel, location);
     //string new_location = overworldModel->set_curr_location(location);
@@ -169,12 +171,21 @@ EntityModel* OverworldHandler::choose_party_member(OverworldModel *overworldMode
 
 void OverworldHandler::handle_level_up(OverworldModel *overworldModel){
     if (!this->logicWrapper->gameLogic->can_level_up(overworldModel)) return;
+    overworldModel->get_party_model()->display_party();
     this->ioHandler->output_title("You Leveled Up!");
     unsigned int new_level = this->overworldModel->get_party_model()->get_level()+1; 
     cout << "Your Party is Now Level: " << new_level << endl;
     cout << "Select One Character to Give a +"<< new_level <<" To Each Stat!" << endl;
-    overworldModel->get_party_model()->display_party();
     EntityModel* character = this->choose_party_member(overworldModel);
     this->logicWrapper->gameLogic->level_up(overworldModel, character);
     }
 
+void OverworldHandler::handle_random_encounter(OverworldModel *overworldModel){
+    bool encounter = this->logicWrapper->encounterLogic->will_get_encounter();
+    if (encounter){ 
+        cout << "You Hear something behind you..." << endl;
+        cout << "Who responds?" << endl;
+        EntityModel *entityModel = this->choose_party_member(overworldModel);
+        this->encounterHandler->get_random_encounter(overworldModel->get_party_model(), entityModel);
+    }
+}
