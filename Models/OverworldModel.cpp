@@ -1,4 +1,6 @@
 #include "OverworldModel.h"
+#include "Equipment/EquipmentFactory.h"
+#include "Equipment/EquipmentModel.h"
 #include "PartyModel.h"
 #include <iostream>
 #include <vector>
@@ -18,11 +20,17 @@ OverworldModel::OverworldModel(PartyModel* partyModel)
       ascii_location_pointer(0),  // Note: this assigns a value, not a reference
       ascii_art(""),
       partyModel(partyModel)
-    {}
+    {
+    equipmentFactory = new EquipmentFactory();
+    }
 
 PartyModel* OverworldModel::get_party_model(){
     return this->partyModel;
 }
+EquipmentFactory* OverworldModel::get_equipment_factory(){
+    return this->equipmentFactory;
+}
+
 vector<string> OverworldModel::get_locations(){
     return locations;
 }

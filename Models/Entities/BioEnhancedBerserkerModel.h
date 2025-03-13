@@ -2,13 +2,14 @@
 #define BIO_ENHANCED_BERSERKER_MODEL_H
 
 #include "EntityModel.h"
-#include "../WeaponModel.h"
+//#include "../WeaponModel.h"
 
 class BioEnhancedBerserkerModel : public EntityModel {
 public:
     BioEnhancedBerserkerModel()
         : EntityModel(
             "Bio-Enhanced Berserker",   // Name
+            150,                        // max_hp
             150,                        // hp
             30,                         // atk
             7,                          // def
@@ -64,14 +65,14 @@ public:
                 "        +++**#**#%%#+                   #%#####%#===+   ", 
                 "      #*****###%%%##                  %%%%%%%%%%%=+     ", 
                 "=+*%%%%%%%%%%%%%%%%%%%%              %%%%%%%%%%%%%%%%   " 
-            },
-            new WeaponModel(
-                "Ragnarök Strain",              // Weapon Name
-                7,                              // Weapon Damage
-                50,                             // Hit Rate
-                "You have hit the enemy!",      // Hit message
-                "You missed the enemy homie!"   // Miss message
-            )
+            }
+            //new WeaponModel(
+            //    "Ragnarök Strain",              // Weapon Name
+            //    7,                              // Weapon Damage
+            //    50,                             // Hit Rate
+            //    "You have hit the enemy!",      // Hit message
+            //    "You missed the enemy homie!"   // Miss message
+            //)
         )
     { }
 };

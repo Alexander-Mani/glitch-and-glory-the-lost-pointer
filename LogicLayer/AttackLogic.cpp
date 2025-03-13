@@ -39,7 +39,7 @@ int AttackLogic::calculate_damage(BattleModel* battleModel) {
     // Simple damage calculation: attacker's weapon damage minus defender's defence.
     auto attacker = battleModel->get_attacker();
     auto defender = battleModel->get_defender();
-    int damage = *(attacker->get_weapon()->get_damage()) - defender->get_def();
+    int damage = (attacker->get_atk()) - defender->get_def();
     return (damage < 0) ? 0 : damage;
 }
 

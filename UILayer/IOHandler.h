@@ -72,6 +72,7 @@ public:
     * @returns string: Selected choice 
     */
     string input_choose_option(vector<string> options_list);
+    int input_choose_index(int size);
     
 
 
@@ -88,6 +89,7 @@ private:
      * @returns Returns `true` if the input is valid, otherwise `false`.
      */
     bool validate_option_input(int user_input, vector<string> options_list);
+    bool validate_index_input(int user_input, int size);
 };
 
 

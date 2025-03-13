@@ -44,3 +44,17 @@ vector<EntityModel*> PartyModel::get_party_members(){
       return {this->party_member_1, this->party_member_2, this->party_member_3};
 }
 
+void PartyModel::display_party() {
+   vector<EntityModel*> members = this->get_party_members();
+   cout << "Your Party: " << endl;
+   cout << "Eddies: " << party_money << endl;
+   cout << "Level: " << level << " | Next level: [" << party_xp <<"/" << party_xp_level_up_threshold << "xp] " << endl;
+   for (EntityModel* member: members){
+      member->display_stats();
+      member->display_inventory();
+   }
+   cout << "Eddies: " << party_money << endl;
+   cout << "Level: " << level << " | Next level: [" << party_xp <<"/" << party_xp_level_up_threshold << "xp] " << endl;
+
+}
+

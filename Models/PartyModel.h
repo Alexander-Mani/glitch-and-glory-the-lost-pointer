@@ -35,7 +35,10 @@ public:
 
     vector<string> get_party_member_names();
     vector<EntityModel*> get_party_members();
-    
+
+    void display_party();
+    void increase_money(int money) { this->party_money += money; } 
+    void increase_xp(int xp){ this->party_xp += xp; } 
     //virtual void take_damage(int damage) {
     //    hp -= damage;
     //    if(hp < 0) hp = 0;

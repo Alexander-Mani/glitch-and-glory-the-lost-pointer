@@ -38,6 +38,8 @@ public:
     * @brief [in progress] Starts battle with provided parameters
     * @param BattleModel instance that contains the EntityModel for both the player and opponent
     */
+    protected:
+    EntityModel* choose_party_member(OverworldModel *overworldModel);
 
 
 };

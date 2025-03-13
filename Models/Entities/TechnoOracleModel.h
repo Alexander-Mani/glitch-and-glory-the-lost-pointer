@@ -2,13 +2,14 @@
 #define TECHNO_ORACLE_MODEL_H
 
 #include "EntityModel.h"
-#include "../WeaponModel.h"
+//#include "../WeaponModel.h"
 
 class TechnoOracleModel : public EntityModel {
 public:
     TechnoOracleModel()
         : EntityModel(
             "Techno Oracle",    // Name
+            100,                // max_hp
             100,                // hp
             20,                 // atk
             15,                 // def
@@ -64,14 +65,14 @@ public:
                 "  ##+%%@%%%@@%#       ###%@#     ", 
                 " %#%@@@@@@@@         #%%#%%%     ", 
                 "                    %*%%%@%      " 
-            },
-            new WeaponModel(
-                "Singularity Codex",            // Weapon Name
-                100,                             // Weapon Damage
-                90,                             // Hit Rate
-                "You have hit the enemy!",      // Hit message
-                "You missed the enemy homie!"   // Miss message
-            )
+            }
+            //new WeaponModel(
+            //    "Singularity Codex",            // Weapon Name
+            //    100,                             // Weapon Damage
+            //    90,                             // Hit Rate
+            //    "You have hit the enemy!",      // Hit message
+            //    "You missed the enemy homie!"   // Miss message
+            //)
         )
     { }
 };

@@ -5,6 +5,8 @@
 #include <vector>
 #include <unordered_map>
 #include <iostream>
+#include "Equipment/EquipmentFactory.h"
+//#include "AllEquipment.h"
 
 #include "PartyModel.h"
 
@@ -24,18 +26,19 @@ protected:
     const string final_zone = "Fight Boss";
 
     unordered_map<string, vector<string>> location_map = {
-        {"Streets", {"Arena", "Shop", "Ripper", "HQ", "Apartments", "Warehouse", "Union"}},
-        {"Arena", {"Streets", "Duel"}},
-        {"Shop", {"Streets", "Browse Equipment"}},
-        {"Ripper", {"Streets", "Browse Implants"}},
-        {"HQ", {"Streets", "Fight Boss"}},
-        {"Apartments", {"Streets", "Stay Night"}},
-        {"Warehouse", {"Streets", "Gamble"}},
-        {"Union", {"Streets", "Apply For Job"}},
-        {"Boss", {"Win"}}
+        {"Streets", {"View Party", "Arena", "Shop", "Ripper", "HQ", "Apartments", "Warehouse", "Union"}},
+        {"Arena", {"View Party", "Streets", "Duel"}},
+        {"Shop", {"View Party", "Streets", "Browse Equipment"}},
+        {"Ripper", {"View Party", "Streets", "Browse Implants"}},
+        {"HQ", {"View Party", "Streets", "Fight Boss"}},
+        {"Apartments", {"View Party", "Streets", "Stay Night"}},
+        {"Warehouse", {"View Party", "Streets", "Gamble"}},
+        {"Union", {"View Party", "Streets", "Apply For Job"}},
+        {"Boss", {"View Party", "Win"}}
     };
 
     vector<string> actions = {
+        "View Party", 
         "Duel",
         "Browse Equipment",
         "Browse Implants",
@@ -62,6 +65,7 @@ protected:
 
 
 public:
+    EquipmentFactory* equipmentFactory;
     //OverworldModel(const std::string &current_location, unsigned int &ascii_location_pointer,const std::string &ascii_art);
     // OverworldModel(const std::string &current_location = "HUB", 
     // In OverworldModel.h
@@ -84,6 +88,7 @@ public:
     string get_hub() const { return hub; }
     string get_final_zone() const { return final_zone; }
     PartyModel* get_party_model();
+    EquipmentFactory* get_equipment_factory();
 
     //set
     //const string& set_curr_location(const string& location){

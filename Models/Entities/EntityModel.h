@@ -4,16 +4,19 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include "../AllEquipment.h"
+//#include "../WeaponModel.h"
 
-#include "../WeaponModel.h"
+using std::string;
 
 // Forward declaration of EntityModel due to circular import
-class WeaponModel;
+//class WeaponModel;
 
 
 class EntityModel {
 protected:
     std::string name;
+    int max_hp;
     int hp;
     int atk;
     int def;
@@ -21,10 +24,12 @@ protected:
     int crit;
     int evade;
     std::vector<std::string> ascii_art;
-    WeaponModel *weapon;
-
+    //WeaponModel *weapon;
+    
+    unordered_map<string, EquipmentModel*> inventory;
+    
 public:
-    EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, std::vector<std::string> ascii_art, WeaponModel *weapon);
+    EntityModel(const std::string &name, int max_hp, int hp, int atk, int def, int magic, int crit, int evade, std::vector<std::string> ascii_art);
     
     virtual ~EntityModel() = default;
 
@@ -56,10 +61,14 @@ public:
         if(hp < 0) hp = 0;
     }
 
+    void equip_item(const std::string &slot, EquipmentModel *item);
+    EquipmentModel* get_equipped_item(const std::string &slot) const;
+    void display_inventory() const;
+
     /*
      * @brief Simply gets the weapon for Entity
      */
-    WeaponModel *get_weapon();
+    //WeaponModel *get_weapon();
 
 
 };

@@ -8,7 +8,7 @@ CXXDEBUGFLAGS = -ggdb -fsanitize=address -fsanitize=undefined
 MODELFILES = \
 	Models/Entities/EntityModel.cpp \
 	Models/BattleModel.cpp \
-	Models/WeaponModel.cpp \
+	Models/Equipment/EquipmentFactory.cpp \
 	Models/OverworldModel.cpp \
 	Models/PartyModel.cpp
 

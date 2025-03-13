@@ -2,13 +2,14 @@
 #define CYBER_GLADIATOR_MODEL_H
 
 #include "EntityModel.h"
-#include "../WeaponModel.h"
+//#include "../WeaponModel.h"
 
 class CyberGladiatorModel : public EntityModel {
 public:
     CyberGladiatorModel()
         : EntityModel(
             "Cyber Gladiator",  // Name 
+            150,                        // max_hp
             150,                // hp         
             20,                 // atk         
             10,                 // def         
@@ -64,14 +65,14 @@ public:
                 "-+-..                    .+@@@@%+==*@=.   ..%@@@@@+.                      ", 
                 "                             ..    ....    ..-=+=:..                      ", 
                 "                                               .                          " 
-            },
-            new WeaponModel(
-                "Titan Protocol",               // Weapon Name
-                50,                             // Weapon Damage
-                100,                            // Hit Rate
-                "You have hit the enemy!",      // Hit message
-                "You missed the enemy homie!"   // Miss message
-            )
+            }
+            //new WeaponModel(
+            //    "Titan Protocol",               // Weapon Name
+            //    50,                             // Weapon Damage
+            //    100,                            // Hit Rate
+            //    "You have hit the enemy!",      // Hit message
+            //    "You missed the enemy homie!"   // Miss message
+            //)
         )
     { }
 };

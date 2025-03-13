@@ -127,6 +127,24 @@ string IOHandler::input_choose_option(vector<string> options_list){
     }
 }
 
+int IOHandler::input_choose_index(int size) {
+    if (cin.fail()) {  
+        cin.clear();  
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+    }
+    
+    int user_input;
+    cout << "Select option: "; 
+    cin >> user_input;
+    
+    if (this->validate_index_input(user_input, size)) {
+        cout << endl; 
+        return user_input - 1; // Convert to 0-based index
+    } else {
+        return input_choose_index(size);  // Recursively call again
+    }
+}
+
 
 
 
@@ -142,6 +160,19 @@ bool IOHandler::validate_option_input(int user_input, vector<string> options_lis
     cin.clear();  
     cin.ignore(numeric_limits<streamsize>::max(), '\n');  
     cout << "Invalid input, enter a number between 1-" << (int)options_list.size()+1 << endl << endl;
+
+    return false;
+}
+
+
+bool IOHandler::validate_index_input(int user_input, int size) {
+    if (1 <= user_input && user_input <= size && !cin.fail()) {
+        return true;
+    }
+
+    cin.clear();  
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');  
+    cout << "Invalid input, enter a number between 1-" << size << endl << endl;
 
     return false;
 }
