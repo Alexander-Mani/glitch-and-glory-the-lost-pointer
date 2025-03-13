@@ -151,7 +151,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         this->ioHandler->glitch_sleep(3);
 
     } else if (action == "Apply For Job") {
-
+        cout << DENY_JOB_LETTER << endl;
     }
 
     

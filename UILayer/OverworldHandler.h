@@ -57,6 +57,22 @@ public:
 //    }
 
 
+string DENY_JOB_LETTER = R"([ACCESS DENIED] Application Status Update
+
+Candidate ID: #4C-3D-12
+Clearance Level: Insufficient
+
+Dear Applicant,
+
+Your profile has been processed through [SYNTH-RECRUIT v9.2], our autonomous candidate evaluation system. After cross-referencing your credentials with the operational directives of OmniTek Systems, we regret to inform you that your application for the Neural Systems Analyst position does not meet the precision parameters required for integration.
+
+This is not an assessment of deficiency, but rather a mismatch with current system architecture. Your data remains archived in our talent grid for potential alignment with future protocols. Should recalibration of requirements occur, you may be contacted via an encrypted channel.
+
+Until then, remain operational.
+
+OmniTek Systems
+Human-Cyber Resource Division
+// END TRANSMISSION //)";
 
 };
 
