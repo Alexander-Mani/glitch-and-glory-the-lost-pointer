@@ -121,6 +121,7 @@ void EntityModel::display_inventory() const {
 
 
 
+
     
 //============================================//
 //======= TOMMI OLD CODE FOR REFERENCE =======//

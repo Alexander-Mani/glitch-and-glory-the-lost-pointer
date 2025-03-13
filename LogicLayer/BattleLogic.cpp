@@ -1,4 +1,5 @@
 #include "BattleLogic.h"
+#include "AttackLogic.h"
 #include "../Models/BattleModel.h"
 
 #include <iostream>
@@ -9,59 +10,124 @@
 
 #include <cassert>
 
+
+
+BattleLogic::BattleLogic(AttackLogic *attackLogic){
+    this->attack_options = {"weapon_attack", "rest"};
+    this->attackLogic = attackLogic;
+}
+
+
 string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action){
     string ret_msg;
+    int attack_type;
+
     if (action == "A"){
-        // string msg;
-        int damage_done = this->attack(battleModel);
-        //EntityModel *attacker = battleModel->get_attacker();
-        //WeaponModel *attacker_weapon = attacker->get_weapon();
+//<<<<<<< HEAD
+//        // string msg;
+//        int damage_done = this->attack(battleModel);
+//        //EntityModel *attacker = battleModel->get_attacker();
+//        //WeaponModel *attacker_weapon = attacker->get_weapon();
+//
+//        if(damage_done == 0){
+//            //ret_msg = attacker_weapon->get_fail_msg(battleModel);
+//            ret_msg = "You missed that one, try another";
+//        } else {
+//            //ret_msg = attacker_weapon->get_success_msg(damage_done, battleModel);
+//            ret_msg = "You hit!";
+//=======
+        string atk_prefix;
+
+        // Check if attack will be crit (done in BattleLogic to get prefix str)
+        bool crit_hit = this->attackLogic->enemy_crit_hit(battleModel, AttackLogic::ATTACK_NORMAL);
+
+        // Assign attack_type to pass into attack method
+        (crit_hit) ? attack_type = AttackLogic::ATTACK_CRIT : attack_type = AttackLogic::ATTACK_NORMAL;
+
+        // Fetches damage from AttackLogic
+        int damage_done = this->attackLogic->attack(battleModel, attack_type);
+
+        if (crit_hit)
+            atk_prefix = "CRITICAL HIT: ";
+        else if (damage_done > 0)
+            atk_prefix = "NORMAL ATTACK: ";
+        else if (damage_done == 0)
+            atk_prefix = "NORMAL ATTACK EVADED: ";
+        else
+            assert(false); // This should never be true
+
+
+        
+        // (crit_hit) ? atk_prefix = "CRITICAL HIT: " : atk_prefix = "NORMAL HIT:";
+
+        ret_msg = atk_prefix;
 
         if(damage_done == 0){
-            //ret_msg = attacker_weapon->get_fail_msg(battleModel);
-            ret_msg = "You missed that one, try another";
-        } else {
-            //ret_msg = attacker_weapon->get_success_msg(damage_done, battleModel);
-            ret_msg = "You hit!";
+            battleModel->player_turn ? ret_msg += "You missed the enemy!" : ret_msg += "The enemy missed, your HP was not affected.";
+        } 
+        else {
+            battleModel->player_turn ? ret_msg += "You hit the enemy for " + to_string(damage_done) + "!" : ret_msg += ("The enemy hit you with a normal attack, you lost " + to_string(damage_done) + "HP");
         }
-        // Implement normal attack logic here
-        // Example: battle.playerEntityModel->attack(battle.compEntityModel);
         
     } else if (action == "H") {
-        int damage_done = this->heavy_attack(battleModel);
-        //EntityModel *attacker = battleModel->get_attacker();
-        //WeaponModel *attacker_weapon = attacker->get_weapon();
+//<<<<<<< HEAD
+//        int damage_done = this->heavy_attack(battleModel);
+//        //EntityModel *attacker = battleModel->get_attacker();
+//        //WeaponModel *attacker_weapon = attacker->get_weapon();
+//
+//        if(damage_done == 0){
+//            //ret_msg = attacker_weapon->get_fail_msg(battleModel);
+//            ret_msg = "You missed that one, try another";
+//        } else {
+//            //ret_msg = attacker_weapon->get_success_msg(damage_done, battleModel);
+//            ret_msg = "You hit!";
+//=======
+        string atk_prefix;
+
+        // Check if attack will be crit (done in BattleLogic to get prefix str)
+        bool crit_hit = this->attackLogic->enemy_crit_hit(battleModel, AttackLogic::ATTACK_NORMAL);
+
+        // Assign attack_type to pass into attack method
+        (crit_hit) ? attack_type = AttackLogic::ATTACK_CRIT : attack_type = AttackLogic::ATTACK_NORMAL;
+
+        // Fetches damage from AttackLogic
+        int damage_done = this->attackLogic->attack(battleModel, attack_type);
+
+        if (crit_hit)
+            atk_prefix = "CRITICAL HIT: ";
+        else if (damage_done > 0)
+            atk_prefix = "NORMAL ATTACK: ";
+        else if (damage_done == 0)
+            atk_prefix = "NORMAL ATTACK EVADED: ";
+        else
+            assert(false); // This should never be true
+
 
         if(damage_done == 0){
-            //ret_msg = attacker_weapon->get_fail_msg(battleModel);
-            ret_msg = "You missed that one, try another";
-        } else {
-            //ret_msg = attacker_weapon->get_success_msg(damage_done, battleModel);
-            ret_msg = "You hit!";
+            battleModel->player_turn ? ret_msg = "You missed the enemy!" : ret_msg = "HEAVY ATTACK: The enemy missed, your HP was not affected.";    
+        } 
+        else {
+            battleModel->player_turn ? ret_msg = "You hit the enemy for " + to_string(damage_done) + "!" : ret_msg = ("HEAVY ATTACK: The enemy hit you with a normal attack, you lost " + to_string(damage_done) + "HP");
         }
-        return "Heavy attack has yet to be implemented!";
-        
-        // Implement heavy attack logic here
-        // Example: battle.playerEntityModel->heavyAttack(battle.compEntityModel);
-        
+
     } else if (action == "F") {
-        return "Fleeing has yet to be implemented!";
-        
-        // Implement flee logic here
-        // Example: bool escaped = battle.playerEntityModel->attemptFlee();
-        
-    } else if (action == "B") {
-        return "Bribing has yet to be implemented!";
-        
-        // Implement bribe logic here
-        // Example: bool bribed = battle.playerEntityModel->attemptBribe(battle.compEntityModel);
+        return this->handle_battle_action(battleModel, "A");
+        // return "Fleeing has yet to be implemented!";
+    } 
+    else if (action == "B") {
+        return this->handle_battle_action(battleModel, "A");
+        // return "Bribing has yet to be implemented!";
         
     } else if (action == "S") {
-        // vector<string> random_actions = {"", ""};
-        return "Special Ability has yet to be implemented!";
+        EntityModel *attacker = battleModel->get_attacker();
+        int atk_magic_pts = attacker->get_magic();
+        if(atk_magic_pts < 10)
+            return "You need 10 hacking points to perform a Special Ability Attack.";
         
-        // Implement special ability logic here
-        // Example: battle.playerEntityModel->useSpecialAbility(battle.compEntityModel);
+        // Removing magic (hack points) that will be used
+        attacker->decrease_magic(10);
+
+        ret_msg = "HACK ATTACK: You hacked the enemy! Only messages found, you did no damage.";
         
     } else {
         // This shouldn"t be reached due to the validation check above
@@ -88,124 +154,14 @@ string BattleLogic::handle_computer_action(BattleModel* battleModel){
 
     string action = action_list[random_index];
     if (action == "F") action = "A";
-    // this->handle_battle_action(battleModel, action);
 
     return action;    
 } 
-
-// bool BattleLogic::battle_over(BattleLogic* battleModel){
-//     return true;
-// }
-BattleLogic::BattleLogic() {
-    this->attack_options = {"weapon_attack", "rest"};
-    // Constructor left empty for simplicity.
-}
 
 //======== PUBLIC METHODS ========//
 
 void BattleLogic::toggle_turn(BattleModel* battleModel){
     battleModel->player_turn = !battleModel->player_turn;
-}
-
-
-//======== PRIVATE METHODS ========//
-
-int BattleLogic::attack(BattleModel* battleModel){
-    bool enemy_hit;
-    
-    // Check if you will hit the enemy
-    enemy_hit = this->_enemy_hit(battleModel);
-
-    // If you did not hit the enemy, then return false, indicating that you missed
-    if(!enemy_hit){ return false; }
-    
-    int calc_damage = this->calculate_damage(battleModel);
-    if(calc_damage == 0){
-        return 0;
-    }
-    
-    EntityModel *defender = battleModel->get_defender();
-    
-
-    defender->decrease_hp(calc_damage);
-    
-    return calc_damage;
-}
-
-int BattleLogic::heavy_attack(BattleModel* battleModel){
-    bool enemy_hit;
-    
-    // Check if you will hit the enemy
-    enemy_hit = this->_enemy_hit(battleModel);
-
-    // If you did not hit the enemy, then return false, indicating that you missed
-    if(!enemy_hit){ return false; }
-    
-    int calc_damage = this->calculate_damage(battleModel);
-    if(calc_damage == 0){
-        return 0;
-    }
-
-    EntityModel *defender = battleModel->get_defender();
-    
-
-    defender->decrease_hp(calc_damage);
-    
-    return calc_damage;
-}
-
-int BattleLogic::calculate_weapon_damage(BattleModel* battleModel) {
-    // Fetch current attacker and defender
-    EntityModel *attacker = battleModel->get_attacker();
-    EntityModel *defender = battleModel->get_defender();
-    
-    // Simple damage calculation: attacker's attack minus defender's defense.
-    int damage = attacker->get_atk() - defender->get_def();
-    
-    // Make sure damage is not negative.
-    if (damage < 0) {
-        damage = 0;
-    }
-    
-    return damage;
-}
-
-int BattleLogic::calculate_damage(BattleModel* battleModel) {
-    // Fetch current attacker and defender
-    EntityModel *attacker = battleModel->get_attacker();
-    EntityModel *defender = battleModel->get_defender();
-    
-    // Simple damage calculation: attacker's attack minus defender's defense.
-    int damage = attacker->get_atk() - defender->get_def();
-    // int damage = attacker->get_atk() - defender->get_def();
-    
-    // Make sure damage is not negative.
-    if (damage < 0) {
-        damage = 0;
-    }
-    
-    return damage;
-}
-
-bool BattleLogic::_enemy_hit(BattleModel* battleModel, int percentage_decrease){
-    //EntityModel *attacker = battleModel->get_attacker();
-    //WeaponModel *attacker_weapon = attacker->get_weapon();
-    //int *weapon_hit_rate = attacker_weapon->get_hit_rate();
-    //stub
-    int hit_rate = 75;
-
-    // Checks if random number from 0-100 is lower than or equal to the percentage (WeaponModel.hit_rate of the attacker's weapon)
-    int random_num = rand() % 101;
-
-
-    // Nice print for debugging purposes
-    // cout << "\n\n|------- Print For Debug Start -------|\n|\n| random_num: " << random_num << "\n|\n| *weapon_hit_rate: " << *weapon_hit_rate << "\n|" << endl << "|------- Print For Debug Stop --------|" << endl;
-    
-    if (random_num <= hit_rate){
-        return true;
-    }
-
-    return false;
 }
 
 bool BattleLogic::battle_over(BattleModel* battleModel){

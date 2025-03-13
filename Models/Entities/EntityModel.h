@@ -48,6 +48,8 @@ public:
     int get_crit() const { return crit; }
     int get_evade() const { return evade; }
 
+    // int get_crit_chance(BattleModel* battleModel);
+
     std::vector<int> get_battle_stats() const {
         return {hp, atk, def, magic, crit, evade};
     }
@@ -57,13 +59,17 @@ public:
     }
 
     virtual void decrease_hp(int damage) {
-        hp -= damage;
+        this->hp -= damage;
         if(hp < 0) hp = 0;
     }
 
     bool equip_item(const std::string &slot, EquipmentModel *item);
     EquipmentModel* get_equipped_item(const std::string &slot) const;
     void display_inventory() const;
+    virtual void decrease_magic(int amount) {
+        this->magic -= amount;
+        if(magic < 0) magic = 0;
+    }
 
     /*
      * @brief Simply gets the weapon for Entity

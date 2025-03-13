@@ -25,13 +25,10 @@ void BattleHandler::initialize_battle() {
 
     BattleModel* battleModel = new BattleModel(player_entity, opponent_entity, true);
     // Using evade as initave
-    // if (player_entity->get_evade() <= opponent_entity->get_evade()) battleModel->player_turn = false;
-    // Start battle
-    if (player_entity && opponent_entity && battleModel) this->start_battle(battleModel); 
-
     
-    (void) player_entity;
-    (void) opponent_entity;
+    if (player_entity && opponent_entity && battleModel) 
+        this->start_battle(battleModel); 
+
 }
 
 
@@ -90,7 +87,7 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
     while (!this->logicWrapper->battleLogic->battle_over(battleModel)) {
         this->ioHandler->glitch_sleep(1);
 
-        // this->ioHandler->clear_terminal();
+        this->ioHandler->clear_terminal();
         this->asciiHandler->display_turn(battleModel);
 
         string action;
@@ -117,10 +114,12 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
         this->asciiHandler->display_battle_entities(battleModel);
         this->asciiHandler->display_battle_stats(battleModel);
         this->asciiHandler->display_hud(hud_msg, '*', terminal_length);
-        this->ioHandler->glitch_sleep(2);
+        this->ioHandler->glitch_sleep(3);
 
     }
 
     this->asciiHandler->display_end_of_battle(battleModel);
+
+
 }
 

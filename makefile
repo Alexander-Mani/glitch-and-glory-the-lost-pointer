@@ -2,9 +2,6 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++17
 CXXDEBUGFLAGS = -ggdb -fsanitize=address -fsanitize=undefined
 
-# CXXFILES = main.cpp
-# LEXI: A sanity message for devs if you are having strange errors here:
-#	Note that having a single space or anything behind a '\' will break the entire makefile 
 MODELFILES = \
 	Models/Entities/EntityModel.cpp \
 	Models/BattleModel.cpp \
@@ -16,6 +13,7 @@ LOGICFILES = \
 	LogicLayer/EntityLogic.cpp \
 	LogicLayer/GameLogic.cpp \
 	LogicLayer/BattleLogic.cpp \
+	LogicLayer/AttackLogic.cpp \
 	LogicLayer/LogicWrapper.cpp
 
 UIFILES = \
@@ -28,9 +26,7 @@ UIFILES = \
 # Combine all source files
 CXXFILES = main.cpp $(MODELFILES) $(LOGICFILES) $(UIFILES)
 
-
 TARGETS = debug main
-
 
 .PHONY: all fresh clean
 
@@ -40,9 +36,9 @@ main:
 	$(info Building $@)
 	$(CXX) $(CXXFLAGS) -o glitch-and-glory.out $(CXXFILES)
 
-debug:clean
+debug: clean
 	$(info Building debug $@)
-	$(CXX) $(CXXFLAGS) $(CXXDEBUGFLAGS) -ggdb -o $@.out $(CXXFILES)
+	$(CXX) $(CXXFLAGS) $(CXXDEBUGFLAGS) -o debug.out $(CXXFILES)
 	gdb ./debug.out
 
 run:
@@ -52,12 +48,10 @@ run:
 fast:
 	./glitch-and-glory.out
 
-clean: 
+clean:
 	rm -f ./glitch-and-glory.out ./debug.out
 	$(info Cleaned project)
 
-
 fresh:
-	clean all
-
-
+	$(MAKE) clean
+	$(MAKE) all

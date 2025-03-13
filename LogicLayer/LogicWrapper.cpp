@@ -3,12 +3,14 @@
 #include "BattleLogic.h"
 #include "EntityLogic.h"
 #include "GameLogic.h"
+#include "AttackLogic.h"
 
 
 LogicWrapper::LogicWrapper(){
-    this->battleLogic = new BattleLogic();
     this->entityLogic = new EntityLogic();
     this->gameLogic = new GameLogic();
+    this->attackLogic = new AttackLogic(this->entityLogic);
+    this->battleLogic = new BattleLogic(this->attackLogic);
 }
 
 vector<string> LogicWrapper::get_attack_options(){

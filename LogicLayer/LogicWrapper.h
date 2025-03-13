@@ -7,6 +7,7 @@
 #include "BattleLogic.h"
 #include "EntityLogic.h"
 #include "GameLogic.h"
+#include "AttackLogic.h"
 
 
 class LogicWrapper{
@@ -14,6 +15,7 @@ public:
     BattleLogic *battleLogic;
     EntityLogic *entityLogic;
     GameLogic *gameLogic;
+    AttackLogic *attackLogic;
 
     LogicWrapper();
 

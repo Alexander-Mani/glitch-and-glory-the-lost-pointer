@@ -99,18 +99,6 @@ void AsciiHandler::display_turn(BattleModel* battleModel){
 }
 
 int AsciiHandler::get_battle_width(BattleModel* battleModel){
-    string turn;
-    string content;
-    vector<string> hud_msg;
-    
-    // Generate turn and content based on the current player
-    battleModel->player_turn ? turn = "YOU TURN!" : turn = "OPPONENT'S TURN!";
-    battleModel->player_turn ? content = "1: Normal Attack | 2: Heavy | 3: Flee | 4: Bribe | 5: Special" : content =  "Opponent is deciding";
-
-    // Insert turn an content to hud_msg 
-    hud_msg.push_back(turn);
-    hud_msg.push_back(content);
-
     // Fetch Entity sizes to determine total_width
     size_t player_width = battleModel->playerEntityModel->get_ascii()[0].size();
     size_t opponent_width = battleModel->compEntityModel->get_ascii()[0].size();
@@ -140,19 +128,20 @@ void AsciiHandler::display_attack_hud(BattleModel* battleModel){
     string turn;
     string content;
     vector<string> hud_msg;
+
+    string normal_atk_chance = to_string(this->logicWrapper->entityLogic->get_hit_chance_normal(battleModel)) + "%";
+    string heavy_atk_chance = to_string(this->logicWrapper->entityLogic->get_hit_chance_heavy(battleModel)) + "%";
     
     // Generate turn and content based on the current player
     battleModel->player_turn ? turn = "YOU TURN!" : turn = "OPPONENT'S TURN!";
-    battleModel->player_turn ? content = "1: Normal Attack | 2: Heavy | 3: Flee | 4: Bribe | 5: Special" : content =  "Opponent is deciding";
+    battleModel->player_turn ? content = "1: Normal Attack (" + normal_atk_chance + ") | 2: Heavy (" + heavy_atk_chance + ") | 3: Flee | 4: Bribe | 5: Hack" : content =  "Opponent is deciding";
+
 
     // Insert turn an content to hud_msg 
     hud_msg.push_back(turn);
     hud_msg.push_back(content);
 
     // // Fetch Entity sizes to determine total_width
-    // size_t player_width = battleModel->playerEntityModel->get_ascii()[0].size();
-    // size_t opponent_width = battleModel->compEntityModel->get_ascii()[0].size();
-    // size_t total_width = player_width+SPACES+opponent_width;
     int total_width = this->get_battle_width(battleModel);
 
     // Display the hud message
