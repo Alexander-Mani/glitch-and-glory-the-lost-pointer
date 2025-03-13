@@ -22,6 +22,7 @@ public:
     AsciiHandler* asciiHandler;
     IOHandler *ioHandler;
     BattleHandler *battleHandler;
+    OverworldModel* overworldModel;
 
 
     // Pass a pointer to LogicWrapper so we can access EntityLogic

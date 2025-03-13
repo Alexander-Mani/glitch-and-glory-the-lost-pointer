@@ -37,7 +37,9 @@ public:
     vector<EntityModel*> get_party_members();
 
     void display_party();
+    size_t get_money() const { return this->party_money; }
     void increase_money(int money) { this->party_money += money; } 
+    void decrease_money(int money) { this->party_money -= money; } 
     void increase_xp(int xp){ this->party_xp += xp; } 
     //virtual void take_damage(int damage) {
     //    hp -= damage;

@@ -61,7 +61,7 @@ public:
         if(hp < 0) hp = 0;
     }
 
-    void equip_item(const std::string &slot, EquipmentModel *item);
+    bool equip_item(const std::string &slot, EquipmentModel *item);
     EquipmentModel* get_equipped_item(const std::string &slot) const;
     void display_inventory() const;
 

@@ -40,7 +40,7 @@ void EntityModel::display_stats() const {
         << "| EVADE: " << evade << "\n|\n"
         << "|---------------------------------|\n\n";
 }
-void EntityModel::equip_item(const std::string &slot, EquipmentModel *item) {
+bool EntityModel::equip_item(const std::string &slot, EquipmentModel *item) {
     if (inventory.find(slot) != inventory.end()) {
         if (inventory[slot]){
             cout << "You already have: " << inventory[slot]->get_name() << " In that slot." << endl;
@@ -50,7 +50,7 @@ void EntityModel::equip_item(const std::string &slot, EquipmentModel *item) {
             cout << "Do you want to replace it: ";
             cin >> confirm; 
             if (confirm != 1){
-                return;
+                return false;
             }
             this->max_hp -= inventory[slot]->get_max_hp();
             this->atk -= inventory[slot]->get_atk();
@@ -68,7 +68,9 @@ void EntityModel::equip_item(const std::string &slot, EquipmentModel *item) {
         inventory[slot] = item;
     } else {
         cout << "Invalid equipment slot: " << slot << endl;
+        return false;
     }
+    return true;
 }
 
 // Retrieve an equipped item

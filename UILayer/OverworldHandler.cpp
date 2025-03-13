@@ -57,13 +57,14 @@ void OverworldHandler::initialize_overworld() {
     vector<EntityModel*> entities = this->logicWrapper->entityLogic->get_all_entities();
     PartyModel* partyModel = new PartyModel(entities[0], entities[1], entities[2]);
 
-    OverworldModel *overWorldModel = new OverworldModel(partyModel);
-    string location = overWorldModel->get_curr_location();
-    PartyModel *testPartyModel = overWorldModel->get_party_model();
+    this->overworldModel = new OverworldModel(partyModel);
+    string location = overworldModel->get_curr_location();
+    PartyModel *testPartyModel = overworldModel->get_party_model();
     testPartyModel->get_party_member_1()->display_stats();
     testPartyModel->get_party_member_2()->display_stats();
     testPartyModel->get_party_member_3()->display_stats();
-    this->move(overWorldModel, location);
+    this->overworldModel->get_party_model()->increase_money(900000);
+    this->move(this->overworldModel, location);
     // display options for curr location initaly hub
 }
 
@@ -110,30 +111,53 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         //overworldModel->get_party_model()->get_party_member_3()->equip_item("Weapon", weapon);
 
 
-        overworldModel->get_party_model()->increase_money(9900000);
         overworldModel->get_party_model()->display_party();
         ioHandler->glitch_sleep(3);
 
     } else if (action == "Browse Equipment") {
+        bool purchase;
         overworldModel->get_party_model()->display_party();
         vector<WeaponModel*>* weapons = overworldModel->get_equipment_factory()->get_weapons();
         vector<ArmorModel*>* armors = overworldModel->get_equipment_factory()->get_armors();
         overworldModel->get_equipment_factory()->show_combat_gear();
-        int index = this->ioHandler->input_choose_index(weapons->size()+armors->size());
+        unsigned int index = this->ioHandler->input_choose_index(weapons->size()+armors->size());
         if (index+1 <= weapons->size()){
             WeaponModel* weapon = (*weapons)[index];
+            if ((unsigned int)weapon->get_price() > overworldModel->get_party_model()->get_money()) { 
+                cout << "You can't afford that" << endl;
+                this->ioHandler->glitch_sleep(1);
+                return move(overworldModel, overworldModel->get_curr_location());
+            }
             EntityModel* character = this->choose_party_member(overworldModel);
-            character->equip_item("Weapon", weapon);
+            purchase = character->equip_item("Weapon", weapon);
             
         }else{
             index %=5;
             ArmorModel* armor = (*armors)[index];
+            if ((unsigned int)armor->get_price() > overworldModel->get_party_model()->get_money()) { 
+                cout << "You can't afford that" << endl;
+                this->ioHandler->glitch_sleep(1);
+                return move(overworldModel, overworldModel->get_curr_location());
+            }
             EntityModel* character = this->choose_party_member(overworldModel);
-            character->equip_item("Armor", armor);
+            purchase = character->equip_item("Armor", armor);
+            if (purchase) overworldModel->get_party_model()->decrease_money(armor->get_price());
         } 
     } else if (action == "Browse Implants") {
+        bool purchase;
+        overworldModel->get_party_model()->display_party();
+        vector<ImplantModel*>* implants = overworldModel->get_equipment_factory()->get_implants();
         overworldModel->get_equipment_factory()->show_cyber_augments();
-        this->ioHandler->glitch_sleep(2);
+        unsigned int index = this->ioHandler->input_choose_index(implants->size());
+        ImplantModel* implant = (*implants)[index];
+        if ((unsigned int)implant->get_price() > overworldModel->get_party_model()->get_money()) { 
+            cout << "You can't afford that" << endl;
+            this->ioHandler->glitch_sleep(1);
+            return move(overworldModel, overworldModel->get_curr_location());
+        }
+        EntityModel* character = this->choose_party_member(overworldModel);
+        purchase = character->equip_item("Implant", implant);
+        if (purchase) overworldModel->get_party_model()->decrease_money(implant->get_price());
 
     } else if (action == "Fight Boss") {
         cout << "Fight boss" << endl;
