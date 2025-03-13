@@ -9,12 +9,12 @@ public:
     CyberGladiatorModel()
         : EntityModel(
             "Cyber Gladiator",  // Name 
-            150,                // hp         
+            50,                 // hp         
             20,                 // atk         
             10,                 // def         
             5,                  // magic     
             10,                 // crit         
-            10,                 // evade     
+            50,                 // evade     
             {
                 "                                                                          ", 
                 "                                                                          ", 

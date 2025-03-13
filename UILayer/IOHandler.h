@@ -26,6 +26,10 @@ public:
     
     void clear_terminal();
     void glitch_sleep(unsigned int seconds);
+
+    
+    static void glitch_sleep_static(unsigned int seconds);
+
     /*
     * @param title: Takes in a string title  
     * @brief Prints subtitle with padded "="
@@ -71,8 +75,11 @@ public:
     * @brief Asks user for a numeric input to select an option
     * @returns string: Selected choice 
     */
-    string input_choose_option(vector<string> options_list);
-    
+   string input_choose_option(vector<string> options_list);
+   
+   
+    //==== STATIC METHODS ====//
+    static void clear_terminal_static();
 
 
 private:

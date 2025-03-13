@@ -10,7 +10,7 @@ public:
         : EntityModel(
             "Techno Oracle",    // Name
             100,                // hp
-            20,                 // atk
+            100,                 // atk
             15,                 // def
             70,                 // magic
             15,                 // crit

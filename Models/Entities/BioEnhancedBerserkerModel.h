@@ -9,12 +9,12 @@ public:
     BioEnhancedBerserkerModel()
         : EntityModel(
             "Bio-Enhanced Berserker",   // Name
-            150,                        // hp
+            10,                         // hp
             30,                         // atk
             7,                          // def
             5,                          // magic
             5,                          // crit
-            5,                          // evade
+            100,                        // evade
             {
                 "           +=*++#*                                      ", 
                 "        +######%%%###*+==-                              ", 

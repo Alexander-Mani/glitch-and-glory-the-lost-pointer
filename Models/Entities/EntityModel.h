@@ -52,8 +52,13 @@ public:
     }
 
     virtual void decrease_hp(int damage) {
-        hp -= damage;
+        this->hp -= damage;
         if(hp < 0) hp = 0;
+    }
+
+    virtual void decrease_magic(int amount) {
+        this->magic -= amount;
+        if(magic < 0) magic = 0;
     }
 
     /*

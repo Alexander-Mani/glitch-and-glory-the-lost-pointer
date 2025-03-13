@@ -30,8 +30,7 @@ void BattleHandler::initialize_battle() {
     if (player_entity && opponent_entity && battleModel) this->start_battle(battleModel); 
 
     
-    (void) player_entity;
-    (void) opponent_entity;
+    
 }
 
 
@@ -113,14 +112,16 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
         
         
         // Display the results of the action that was taken
-        this->ioHandler->clear_terminal();
+        // this->ioHandler->clear_terminal();
         this->asciiHandler->display_battle_entities(battleModel);
         this->asciiHandler->display_battle_stats(battleModel);
         this->asciiHandler->display_hud(hud_msg, '*', terminal_length);
-        this->ioHandler->glitch_sleep(2);
+        this->ioHandler->glitch_sleep(3);
 
     }
 
     this->asciiHandler->display_end_of_battle(battleModel);
+
+
 }
 

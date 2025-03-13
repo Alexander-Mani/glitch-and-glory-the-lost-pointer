@@ -105,7 +105,7 @@ int AsciiHandler::get_battle_width(BattleModel* battleModel){
     
     // Generate turn and content based on the current player
     battleModel->player_turn ? turn = "YOU TURN!" : turn = "OPPONENT'S TURN!";
-    battleModel->player_turn ? content = "1: Normal Attack | 2: Heavy | 3: Flee | 4: Bribe | 5: Special" : content =  "Opponent is deciding";
+    battleModel->player_turn ? content = "1: Normal Attack | 2: Heavy | 3: Flee | 4: Bribe | 5: Hack" : content =  "Opponent is deciding";
 
     // Insert turn an content to hud_msg 
     hud_msg.push_back(turn);

@@ -23,6 +23,10 @@ void IOHandler::glitch_sleep(unsigned int seconds){
     std::this_thread::sleep_for(std::chrono::seconds(seconds));
 }
 
+void IOHandler::glitch_sleep_static(unsigned int seconds){
+    std::this_thread::sleep_for(std::chrono::seconds(seconds));
+}
+
 void IOHandler::clear_terminal() {
     #ifdef _WIN32
         std::system("cls");
@@ -30,6 +34,7 @@ void IOHandler::clear_terminal() {
         std::system("clear");
     #endif
 }
+
 
 void IOHandler::output_title(string title){
     int max_len;
