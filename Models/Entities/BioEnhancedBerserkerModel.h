@@ -9,8 +9,8 @@ public:
     BioEnhancedBerserkerModel()
         : EntityModel(
             "Bio-Enhanced Berserker",   // Name
-            10,                         // hp
-            30,                         // atk
+            250,                         // hp
+            50,                         // atk
             7,                          // def
             5,                          // magic
             5,                          // crit
@@ -77,16 +77,3 @@ public:
 };
 
 #endif // BIO_ENHANCED_BERSERKER_MODEL_H
-
-// #ifndef BIO_ENHANCED_BERSERKER_MODEL_H
-// #define BIO_ENHANCED_BERSERKER_MODEL_H
-
-// #include "EntityModel.h"
-
-// class BioEnhancedBerserkerModel : public EntityModel {
-// public:
-//     BioEnhancedBerserkerModel();
-// };
-
-// #endif // BIO_ENHANCED_BERSERKER_MODEL_H
-

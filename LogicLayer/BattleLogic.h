@@ -10,6 +10,7 @@
 #include "../Models/BattleModel.h"
 
 #include "AttackLogic.h"
+#include "EntityLogic.h"
 
 using namespace std;
 

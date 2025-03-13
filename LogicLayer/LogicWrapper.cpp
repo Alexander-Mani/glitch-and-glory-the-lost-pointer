@@ -9,7 +9,7 @@
 LogicWrapper::LogicWrapper(){
     this->entityLogic = new EntityLogic();
     this->gameLogic = new GameLogic();
-    this->attackLogic = new AttackLogic();
+    this->attackLogic = new AttackLogic(this->entityLogic);
     this->battleLogic = new BattleLogic(this->attackLogic);
 }
 

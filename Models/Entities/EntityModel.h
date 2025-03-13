@@ -43,6 +43,8 @@ public:
     int get_crit() const { return crit; }
     int get_evade() const { return evade; }
 
+    // int get_crit_chance(BattleModel* battleModel);
+
     std::vector<int> get_battle_stats() const {
         return {hp, atk, def, magic, crit, evade};
     }

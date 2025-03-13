@@ -9,8 +9,8 @@ public:
     TechnoOracleModel()
         : EntityModel(
             "Techno Oracle",    // Name
-            100,                // hp
-            100,                 // atk
+            125,                // hp
+            100,                // atk
             15,                 // def
             70,                 // magic
             15,                 // crit
@@ -77,16 +77,3 @@ public:
 };
 
 #endif // TECHNO_ORACLE_MODEL_H
-
-// #ifndef TECHNO_ORACLE_MODEL_H
-// #define TECHNO_ORACLE_MODEL_H
-
-// #include "EntityModel.h"
-// #include "../WeaponModel.h"
-
-// class TechnoOracleModel : public EntityModel {
-// public:
-//     TechnoOracleModel();
-// };
-
-// #endif // TECHNO_ORACLE_MODEL_H
