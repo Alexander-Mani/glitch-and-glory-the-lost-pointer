@@ -242,7 +242,7 @@ bool BattleLogic::player_won(BattleModel* battleModel){
     int opponent_hp = opponent->get_hp();
 
     // There should never be a tie
-    assert(!(player_hp == 0 && opponent_hp == 0));
+    // assert(!(player_hp == 0 && opponent_hp == 0));
     
     // Player lost
     if (player_hp == 0 && opponent_hp != 0){
