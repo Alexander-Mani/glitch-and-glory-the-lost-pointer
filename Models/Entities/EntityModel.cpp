@@ -9,8 +9,8 @@ using namespace std;
 //EntityModel::EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, vector<string> ascii_art, )
 //    : name(name), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade), ascii_art(move(ascii_art)), weapon(weapon) {}
 
-EntityModel::EntityModel(const std::string &name, int max_hp, int hp, int atk, int def, int magic, int crit, int evade, vector<string> ascii_art)
-    : name(name), max_hp(max_hp), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade), ascii_art(move(ascii_art)) {
+EntityModel::EntityModel(const std::string &name, int max_hp, int hp, int atk, int def, int magic, int crit, int evade, int acc, vector<string> ascii_art)
+    : name(name), max_hp(max_hp), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade), acc(acc), ascii_art(move(ascii_art)) {
     // Initialize inventory with nullptrs
     inventory["Weapon"] = nullptr;
     inventory["Armor"] = nullptr;
@@ -32,12 +32,14 @@ void EntityModel::display_stats() const {
         << "|---------------------------------|\n"
         << "|\n"
         << "| " << "-- "+name+" --" << "\n"
+        << "| MAX HP: " << max_hp << "\n"
         << "| HP: " << hp << "\n"
         << "| ATK: " << atk << "\n"
         << "| DEF: " << def << "\n"
         << "| MAGIC: " << magic << "\n"
         << "| CRIT: " << crit << "\n"
         << "| EVADE: " << evade << "\n|\n"
+        << "| ACC: " << acc << "\n|\n"
         << "|---------------------------------|\n\n";
 }
 bool EntityModel::equip_item(const std::string &slot, EquipmentModel *item) {
@@ -113,6 +115,7 @@ void EntityModel::display_inventory() const {
 
     cout << "|----------------------------|\n";
 }
+
 
 //WeaponModel *EntityModel::get_weapon(){
 //    return this->weapon;

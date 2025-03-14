@@ -151,6 +151,15 @@ int IOHandler::input_choose_index(int size) {
 }
 
 
+// void IOHandler::input(const std::string &prompt) {
+//     std::cout << prompt << std::endl;
+//     std::cout.flush();
+//     // Clear any leftover newline from previous input
+//     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+//     std::string dummy;
+//     std::getline(std::cin, dummy);
+// }
+
 
 
 //=========== VALIDATION METHODS ===========//

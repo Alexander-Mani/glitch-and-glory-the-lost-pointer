@@ -11,11 +11,12 @@ public:
             "Bio-Enhanced Berserker",   // Name
             150,                        // max_hp
             250,                         // hp
-            50,                         // atk
+            150,                         // atk
             7,                          // def
-            5,                          // magic
-            5,                          // crit
-            100,                        // evade
+            1000005,                          // magic
+            50,                          // crit
+            50,                        // evade
+            80,                        // acc (Accuracy)
             {
                 "           +=*++#*                                      ", 
                 "        +######%%%###*+==-                              ", 

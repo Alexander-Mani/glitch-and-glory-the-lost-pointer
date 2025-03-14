@@ -16,14 +16,13 @@ BattleHandler::BattleHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHand
 void BattleHandler::initialize_battle() {
     this->ioHandler->output_title("Welcome to battle arena!");
     
-    
     //--- Selecting Entity For Player ---//
     EntityModel* player_entity = this->select_entity(true);
     
     //--- Selecting Entity For Opponent ---//
     EntityModel* opponent_entity = this->select_entity(false);
 
-    BattleModel* battleModel = new BattleModel(player_entity, opponent_entity, true);
+    BattleModel* battleModel = new BattleModel(player_entity, opponent_entity, true, 100000);
     // Using evade as initave
     
     if (player_entity && opponent_entity && battleModel) 
@@ -83,12 +82,16 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
     this->ioHandler->clear_terminal();
     this->asciiHandler->display_start_of_battle(battleModel);
     vector<string> action_list = battleModel->get_battle_actions();
-    this->ioHandler->glitch_sleep(2);
-    while (!this->logicWrapper->battleLogic->battle_over(battleModel)) {
-        this->ioHandler->glitch_sleep(1);
-
-        this->ioHandler->clear_terminal();
+    this->ioHandler->glitch_sleep(3);
+    while (!this->logicWrapper->battleLogic->battle_over(battleModel) && !battleModel->fled && !battleModel->bribed) {
+        this->ioHandler->glitch_sleep(3);
+        
+        // this->ioHandler->clear_terminal();
         this->asciiHandler->display_turn(battleModel);
+        // if(!battleModel->player_turn){
+            // this->ioHandler->input_continue();
+        // }
+        // this->ioHandler->input("continue...");
 
         string action;
 
@@ -110,11 +113,14 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
         
         
         // Display the results of the action that was taken
-        this->ioHandler->clear_terminal();
+        // this->ioHandler->clear_terminal();
         this->asciiHandler->display_battle_entities(battleModel);
         this->asciiHandler->display_battle_stats(battleModel);
         this->asciiHandler->display_hud(hud_msg, '*', terminal_length);
+        
         this->ioHandler->glitch_sleep(3);
+        // cout << "NUMMIE 2!!!" << endl;
+        // this->ioHandler->input_continue();
 
     }
 

@@ -47,6 +47,14 @@ public:
      */
     bool battle_over(BattleModel* battleModel);
     
+    
+    /*
+     * @brief Checks if game is over using HP of each Entity 
+     * @param instance of BattleModel
+     * @retuns True player won, otherwise false
+     */
+    bool player_won(BattleModel* battleModel);
+    
     /*
      * @brief Generates battle_over message depending on the battleModel
      * @param instance of BattleModel

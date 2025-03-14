@@ -5,6 +5,11 @@
 
 #include <random>
 
+#include <iostream>
+
+using namespace std;
+
+
 std::vector<EntityModel*> EntityLogic::get_all_entities() {
     std::vector<EntityModel*> entities;
     entities.push_back(new CyberGladiatorModel());
@@ -25,20 +30,31 @@ EntityModel* EntityLogic::get_random_entity() {
 
 
 int EntityLogic::get_hit_chance_normal(BattleModel* battleModel) {
+    int hit_chance;
+    int attacker_acc; // Attacker accuracy
+    int defender_evade; // Defender evade
+
+
     EntityModel *attacker = battleModel->get_attacker();
     EntityModel *defender = battleModel->get_defender();
-    int atk = attacker->get_atk();
-    int def_evade = defender->get_evade();
-    int hit_chance = (atk * 100) / (atk + def_evade);
+
+    attacker_acc = attacker->get_acc();
+    defender_evade = defender->get_evade();
+    
+    hit_chance = (attacker_acc - (defender_evade * 0.15));
+    // cout << "\n\nattacker_acc: " << attacker_acc << endl;
+    // cout << "defender_evade: " << defender_evade << endl;
+    // cout << "hit_chance: " << hit_chance << endl;
+    
+    if (hit_chance < 35) {
+        hit_chance = 35 + (rand() % 7 - 3); // Generates a value in range [32, 38]
+    } else if (hit_chance > 95) {
+        hit_chance = 92 + (rand() % 7 - 3); // Generates a value in range [89, 95]
+    }
+
     return hit_chance;
 }
 
 int EntityLogic::get_hit_chance_heavy(BattleModel* battleModel) {
-    EntityModel *attacker = battleModel->get_attacker();
-    EntityModel *defender = battleModel->get_defender();
-    // Adjust stats for heavy attack as in enemy_hit()
-    int heavy_atk = static_cast<int>(attacker->get_atk() * 1.25);
-    int heavy_evade = static_cast<int>(defender->get_evade() * 2);
-    int hit_chance = (heavy_atk * 100) / (heavy_atk + heavy_evade);
-    return hit_chance;
+    return (this->get_hit_chance_normal(battleModel) * 0.75);
 }

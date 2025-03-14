@@ -15,7 +15,8 @@ public:
             10,                 // def         
             5,                  // magic     
             10,                 // crit         
-            50,                 // evade     
+            60,                 // evade     
+            40,                 // acc (Accuracy)     
             {
                 "                                                                          ", 
                 "                                                                          ", 

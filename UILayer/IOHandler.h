@@ -78,6 +78,15 @@ public:
     int input_choose_index(int size);
     
    string input_choose_option(vector<string> options_list);
+
+
+    /*
+     * @brief Displays a prompt and waits for the user to press Enter.
+     * @param prompt: The message displayed to the user (e.g., "continue...")
+     */
+    void input_continue();
+    
+
    
    
     //==== STATIC METHODS ====//

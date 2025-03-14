@@ -100,9 +100,16 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
        
         bool player_starts = true;
         if (enemyModel->get_evade() > character->get_evade()) player_starts = false;
-        BattleModel* battleModel = new BattleModel(character, enemyModel, player_starts);
+        BattleModel* battleModel = new BattleModel(character, enemyModel, player_starts, overworldModel->get_party_model()->get_money());
 
         this->battleHandler->start_battle(battleModel);
+
+        // Remove bribed money from party if 
+        if(battleModel->bribed){
+            int bribe = battleModel->get_bribe_amount();
+            overworldModel->get_party_model()->decrease_money(bribe);
+        }
+        
         delete(battleModel);
         delete(enemyModel);
     } else if (action == "View Party") {
