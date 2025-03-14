@@ -1,12 +1,14 @@
 #include "LogicWrapper.h"
 
 #include "BattleLogic.h"
+#include "EncounterLogic.h"
 #include "EntityLogic.h"
 #include "GameLogic.h"
 #include "AttackLogic.h"
 
 
 LogicWrapper::LogicWrapper(){
+    this->encounterLogic = new EncounterLogic();
     this->entityLogic = new EntityLogic();
     this->gameLogic = new GameLogic();
     this->attackLogic = new AttackLogic(this->entityLogic);

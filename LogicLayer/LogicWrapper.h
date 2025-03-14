@@ -5,6 +5,7 @@
 
 
 #include "BattleLogic.h"
+#include "EncounterLogic.h"
 #include "EntityLogic.h"
 #include "GameLogic.h"
 #include "AttackLogic.h"
@@ -16,6 +17,7 @@ public:
     EntityLogic *entityLogic;
     GameLogic *gameLogic;
     AttackLogic *attackLogic;
+    EncounterLogic *encounterLogic;
 
     LogicWrapper();
 

@@ -1,6 +1,7 @@
 #include "OverworldHandler.h"
 #include "AsciiHandler.h"
 #include "BattleHandler.h"
+#include "EncounterHandler.h"
 #include "IOHandler.h"
 #include "../Models/AllEntities.h"      // For all entity models
 #include "../Models/BattleModel.h"
@@ -13,12 +14,10 @@
 #include <string>
 
 #include <cassert>
-#include <chrono>
-#include <thread>
 #include <vector>
 
-OverworldHandler::OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler *ioHandler, BattleHandler *battleHandler)
-    : logicWrapper(logicWrapper), asciiHandler(asciiHandler), ioHandler(ioHandler), battleHandler(battleHandler)
+OverworldHandler::OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler *ioHandler, BattleHandler *battleHandler, EncounterHandler* encounterHandler)
+    : logicWrapper(logicWrapper), asciiHandler(asciiHandler), ioHandler(ioHandler), battleHandler(battleHandler), encounterHandler(encounterHandler)
 {
     // this->ioHandler = IOHandler();
     // vector<string> game_options;
@@ -38,19 +37,6 @@ void OverworldHandler::initialize_overworld() {
     const std::string boldRed = "\033[1;31m";
     const std::string reset = "\033[0m";
     // Fancy type effect for intro
-//    string text = 
-//R"(Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-//Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-//when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-//It has survived not only five centuries, but also the leap into electronic typesetting, 
-//remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset 
-//sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like 
-//Aldus PageMaker including versions of Lorem Ipsum.)";
-//     for (const char c : text) {
-//        std::cout << c << std::flush;
-//        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-//    }
-
 
     //Initialize party model
     //Initialize overworld model
@@ -59,17 +45,19 @@ void OverworldHandler::initialize_overworld() {
 
     this->overworldModel = new OverworldModel(partyModel);
     string location = overworldModel->get_curr_location();
-    PartyModel *testPartyModel = overworldModel->get_party_model();
-    testPartyModel->get_party_member_1()->display_stats();
-    testPartyModel->get_party_member_2()->display_stats();
-    testPartyModel->get_party_member_3()->display_stats();
-    this->overworldModel->get_party_model()->increase_money(900000);
+    //PartyModel *testPartyModel = overworldModel->get_party_model();
+    //testPartyModel->get_party_member_1()->display_stats();
+    //testPartyModel->get_party_member_2()->display_stats();
+    //testPartyModel->get_party_member_3()->display_stats();
+    //this->overworldModel->get_party_model()->increase_money(900000);
     this->move(this->overworldModel, location);
     // display options for curr location initaly hub
 }
 
 void OverworldHandler::move(OverworldModel *overworldModel,string location){
-     location = this->logicWrapper->gameLogic->change_location(overworldModel, location);
+    this->handle_random_encounter(overworldModel);
+    this->handle_level_up(overworldModel);
+    location = this->logicWrapper->gameLogic->change_location(overworldModel, location);
     //string new_location = overworldModel->set_curr_location(location);
     vector<string> locations = overworldModel->get_routes(location);
     this->ioHandler->output_options(location, locations);
@@ -90,33 +78,48 @@ void OverworldHandler::move(OverworldModel *overworldModel,string location){
 }
 
 void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
+    this->handle_level_up(overworldModel);
     ioHandler->clear_terminal();
     cout << "Action time" << endl;
     if (action == "Battle") {
         //Choose our dude to fight
         EntityModel *character = this->choose_party_member(overworldModel);
-        // could be temp, might be in prod as the old song goes
         EntityModel* enemyModel = this->logicWrapper->entityLogic->get_random_entity();
        
-        bool player_starts = true;
-        if (enemyModel->get_evade() > character->get_evade()) player_starts = false;
-        BattleModel* battleModel = new BattleModel(character, enemyModel, player_starts, overworldModel->get_party_model()->get_money());
+        // bool player_starts = true;
+        // if (enemyModel->get_evade() > character->get_evade()) player_starts = false;
+        BattleModel* battleModel = new BattleModel(character, enemyModel, true, overworldModel->get_party_model()->get_money());
+
+        // this->battleHandler->start_battle(battleModel);
+
+        
+        // BattleModel* battleModel = new BattleModel(character, enemyModel, true);
+        unsigned int xp = 0;
+        unsigned int money = 0;
+        unsigned int bribe = 0;
 
         this->battleHandler->start_battle(battleModel);
 
         // Remove bribed money from party if 
         if(battleModel->bribed){
-            int bribe = battleModel->get_bribe_amount();
+            bribe = battleModel->get_bribe_amount();
             overworldModel->get_party_model()->decrease_money(bribe);
+            money -= bribe;
         }
-        
+        // If the player did not flee, then add xp and money
+        if(!battleModel->fled){
+            xp = this->logicWrapper->gameLogic->deligate_post_battle_xp(overworldModel);
+            money = this->logicWrapper->gameLogic->deligate_post_battle_money(overworldModel);
+        }   
+        if(bribe > 0){
+            cout << "You Recieved: " << xp << " xp and: " << money << " eddies and bribed for " << bribe << " eddies" << endl;    
+        } 
+        else {
+            cout << "You Recieved: " << xp << " xp and: " << money << " eddies" << endl;
+        }
         delete(battleModel);
         delete(enemyModel);
     } else if (action == "View Party") {
-        //std::vector<WeaponModel*>*weapons = overworldModel->get_equipment_factory()->get_weapons();
-        //WeaponModel* weapon = (*weapons)[0];
-        //overworldModel->get_party_model()->get_party_member_3()->equip_item("Weapon", weapon);
-
 
         overworldModel->get_party_model()->display_party();
         ioHandler->glitch_sleep(3);
@@ -175,7 +178,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         this->ioHandler->glitch_sleep(3);
 
     } else if (action == "Apply For Job") {
-
+        cout << DENY_JOB_LETTER << endl;
     }
 
     
@@ -190,3 +193,24 @@ EntityModel* OverworldHandler::choose_party_member(OverworldModel *overworldMode
         ind = this->ioHandler->input_choose_index(party_members.size());
         return party_members[ind];
     }
+
+void OverworldHandler::handle_level_up(OverworldModel *overworldModel){
+    if (!this->logicWrapper->gameLogic->can_level_up(overworldModel)) return;
+    overworldModel->get_party_model()->display_party();
+    this->ioHandler->output_title("You Leveled Up!");
+    unsigned int new_level = this->overworldModel->get_party_model()->get_level()+1; 
+    cout << "Your Party is Now Level: " << new_level << endl;
+    cout << "Select One Character to Give a +"<< new_level <<" To Each Stat!" << endl;
+    EntityModel* character = this->choose_party_member(overworldModel);
+    this->logicWrapper->gameLogic->level_up(overworldModel, character);
+    }
+
+void OverworldHandler::handle_random_encounter(OverworldModel *overworldModel){
+    bool encounter = this->logicWrapper->encounterLogic->will_get_encounter();
+    if (encounter){ 
+        cout << "You Hear something behind you..." << endl;
+        cout << "Who responds?" << endl;
+        EntityModel *entityModel = this->choose_party_member(overworldModel);
+        this->encounterHandler->get_random_encounter(overworldModel->get_party_model(), entityModel);
+    }
+}

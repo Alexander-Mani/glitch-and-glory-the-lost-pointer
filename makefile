@@ -14,14 +14,16 @@ LOGICFILES = \
 	LogicLayer/GameLogic.cpp \
 	LogicLayer/BattleLogic.cpp \
 	LogicLayer/AttackLogic.cpp \
-	LogicLayer/LogicWrapper.cpp
+	LogicLayer/LogicWrapper.cpp \
+	LogicLayer/EncounterLogic.cpp
 
 UIFILES = \
 	UILayer/UIHandler.cpp \
 	UILayer/IOHandler.cpp \
 	UILayer/BattleHandler.cpp \
 	UILayer/AsciiHandler.cpp \
-	UILayer/OverworldHandler.cpp
+	UILayer/OverworldHandler.cpp \
+	UILayer/EncounterHandler.cpp
 
 # Combine all source files
 CXXFILES = main.cpp $(MODELFILES) $(LOGICFILES) $(UIFILES)

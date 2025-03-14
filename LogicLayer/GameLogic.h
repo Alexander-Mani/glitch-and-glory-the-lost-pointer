@@ -16,6 +16,11 @@ class GameLogic{
     string change_location(OverworldModel *overworldModel, string location);
     bool is_action(vector<string> actions, string option);
     string action_resolver(string action);
+    unsigned int deligate_post_battle_xp(OverworldModel *overworldModel);
+    bool can_level_up(OverworldModel *overworldModel);
+    void level_up(OverworldModel *overworldModel, EntityModel* selected_party_member);
+    unsigned int deligate_post_battle_money(OverworldModel *overworldModel);
+    unsigned int get_random_from_range(unsigned int min, unsigned int max);
 
 
     

@@ -86,7 +86,7 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
     while (!this->logicWrapper->battleLogic->battle_over(battleModel) && !battleModel->fled && !battleModel->bribed) {
         this->ioHandler->glitch_sleep(3);
         
-        // this->ioHandler->clear_terminal();
+        this->ioHandler->clear_terminal();
         this->asciiHandler->display_turn(battleModel);
         // if(!battleModel->player_turn){
             // this->ioHandler->input_continue();
@@ -113,7 +113,7 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
         
         
         // Display the results of the action that was taken
-        // this->ioHandler->clear_terminal();
+        this->ioHandler->clear_terminal();
         this->asciiHandler->display_battle_entities(battleModel);
         this->asciiHandler->display_battle_stats(battleModel);
         this->asciiHandler->display_hud(hud_msg, '*', terminal_length);

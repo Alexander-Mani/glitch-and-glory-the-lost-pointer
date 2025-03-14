@@ -41,6 +41,12 @@ public:
     void increase_money(int money) { this->party_money += money; } 
     void decrease_money(int money) { this->party_money -= money; } 
     void increase_xp(int xp){ this->party_xp += xp; } 
+    void set_xp(size_t xp) { this->party_xp =xp; } 
+    void set_level_threshold(size_t level_threshold) {this->party_xp_level_up_threshold = level_threshold; }
+    size_t get_xp() const { return this->party_xp; }
+    size_t get_level() const { return this->level; }
+    void increment_level(){this->level++; }
+    size_t get_level_threshold() const { return this->party_xp_level_up_threshold; }
     //virtual void take_damage(int damage) {
     //    hp -= damage;
     //    if(hp < 0) hp = 0;

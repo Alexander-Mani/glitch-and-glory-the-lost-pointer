@@ -87,6 +87,9 @@ string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action
     else if (action == "B") {
         string ret_msg;
         int bribe_amount = battleModel->add_bribe();
+        if(bribe_amount == 0){
+            return "BRIBE TIME! [fail] Bro u need more money to bribe...";
+        }
 
         ret_msg = "BRIBE TIME! Bribe for " + to_string(bribe_amount) + " moneys. ";
 
@@ -97,7 +100,7 @@ string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action
             ret_msg += "Bribe was not successful";
         }
 
-        return ret_msg;
+        // return ret_msg;
     } 
     // HACK ATTACK
     else if (action == "S") {

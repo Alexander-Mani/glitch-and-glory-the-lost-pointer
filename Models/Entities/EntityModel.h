@@ -52,6 +52,12 @@ public:
     int get_acc() const { return acc; }
 
     // int get_crit_chance(BattleModel* battleModel);
+    void set_hp(int val) { this->hp=val; }
+    void set_atk(int val) { this->hp=val; }
+    void set_def(int val) { this->hp=val; }
+    void set_magic(int val) { this->hp=val; }
+    void set_crit(int val) { this->hp=val; }
+    void set_evade(int val) { this->hp=val; }
 
     std::vector<int> get_battle_stats() const {
         return {hp, atk, def, magic, crit, evade};
@@ -94,6 +100,17 @@ public:
         if(magic < 0) magic = 0;
     }
 
+
+    void level_up(unsigned int level) {
+        this->max_hp+= (level*2);
+        this->hp += level;
+        this->atk += level;
+        this->def += level;
+        this->magic += level;
+        this->crit += level;
+        this->evade += level;
+    
+    }
     /*
      * @brief Simply gets the weapon for Entity
      */
