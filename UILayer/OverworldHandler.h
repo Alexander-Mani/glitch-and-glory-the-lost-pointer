@@ -38,6 +38,7 @@ public:
     void do_action(OverworldModel *overworldModel, string action);
     void handle_level_up(OverworldModel *overworldModel);
     void handle_random_encounter(OverworldModel *overworldModel);
+    string battle(OverworldModel* overworldModel, EntityModel *playerModel, EntityModel *enemyModel, bool is_boss);
 
     /*
     * @brief [in progress] Starts battle with provided parameters

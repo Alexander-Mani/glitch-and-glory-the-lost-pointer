@@ -243,7 +243,7 @@ bool BattleLogic::player_won(BattleModel* battleModel){
 
     // There should never be a tie
     assert(!(player_hp == 0 && opponent_hp == 0));
-
+    
     // Player lost
     if (player_hp == 0 && opponent_hp != 0){
         return false;
@@ -254,7 +254,7 @@ bool BattleLogic::player_won(BattleModel* battleModel){
     } 
     // This should never happen
     else {
-        assert(false); 
+        return false;
     }
 }
 

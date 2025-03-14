@@ -9,8 +9,8 @@
 
 LogicWrapper::LogicWrapper(){
     this->encounterLogic = new EncounterLogic();
-    this->entityLogic = new EntityLogic();
     this->gameLogic = new GameLogic();
+    this->entityLogic = new EntityLogic(this->gameLogic);
     this->attackLogic = new AttackLogic(this->entityLogic);
     this->battleLogic = new BattleLogic(this->attackLogic);
 }

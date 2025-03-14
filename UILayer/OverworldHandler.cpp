@@ -82,45 +82,11 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
     ioHandler->clear_terminal();
     cout << "Action time" << endl;
     if (action == "Battle") {
-        //Choose our dude to fight
         EntityModel *character = this->choose_party_member(overworldModel);
-        EntityModel* enemyModel = this->logicWrapper->entityLogic->get_random_entity();
-       
-        // bool player_starts = true;
-        // if (enemyModel->get_evade() > character->get_evade()) player_starts = false;
-        BattleModel* battleModel = new BattleModel(character, enemyModel, true, overworldModel->get_party_model()->get_money());
+        //EntityModel* enemyModel = this->logicWrapper->entityLogic->get_random_entity();
+        EntityModel* enemyModel = this->logicWrapper->entityLogic->generate_enemy_entity(character);
+        cout << this->battle(overworldModel,character, enemyModel, false) << endl;
 
-        // this->battleHandler->start_battle(battleModel);
-
-        
-        // BattleModel* battleModel = new BattleModel(character, enemyModel, true);
-        unsigned int xp = 0;
-        unsigned int money = 0;
-        unsigned int bribe = 0;
-
-        this->battleHandler->start_battle(battleModel);
-
-        // Remove bribed money from party if 
-        if(battleModel->bribed){
-            bribe = battleModel->get_bribe_amount();
-            overworldModel->get_party_model()->decrease_money(bribe);
-            money -= bribe;
-        }
-        // If the player did not flee, then add xp and money
-        if(!battleModel->fled){
-            xp = this->logicWrapper->gameLogic->deligate_post_battle_xp(overworldModel);
-            money = this->logicWrapper->gameLogic->deligate_post_battle_money(overworldModel);
-        }   
-        // if(bribe > 0){
-        //     cout << "You Recieved: " << xp << " xp and: " << money << " eddies and bribed for " << bribe << " eddies" << endl;    
-        // } 
-        // else {
-        //     cout << "You Recieved: " << xp << " xp and: " << money << " eddies" << endl;
-        // }
-
-        this->asciiHandler->display_end_of_battle(battleModel, xp, money);
-        delete(battleModel);
-        delete(enemyModel);
     } else if (action == "View Party") {
 
         this->asciiHandler->display_hud(overworldModel->get_party_model()->display_party(), '|', 150);
@@ -174,6 +140,11 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
 
     } else if (action == "Fight Boss") {
         cout << "Fight boss" << endl;
+        EntityModel *character = this->choose_party_member(overworldModel);
+        EntityModel* bossPhase1Model = this->logicWrapper->entityLogic->get_boss_entity_phase_1();
+        this->battle(overworldModel, character, bossPhase1Model, true);
+        EntityModel* bossPhase2Model = this->logicWrapper->entityLogic->get_boss_entity_phase_2();
+        this->battle(overworldModel,character, bossPhase2Model, true);
         return;
     } else if (action == "Gamble") {
         cout << "You see an underground gathering of scum and villany" << endl;
@@ -216,4 +187,73 @@ void OverworldHandler::handle_random_encounter(OverworldModel *overworldModel){
         EntityModel *entityModel = this->choose_party_member(overworldModel);
         this->encounterHandler->get_random_encounter(overworldModel->get_party_model(), entityModel);
     }
+}
+
+string OverworldHandler::battle(OverworldModel* overworldModel, EntityModel *playerModel, EntityModel *enemyModel, bool is_boss){
+        //Choose our dude to fight
+        string ret_str = "";
+       
+        // bool player_starts = true;
+        // if (enemyModel->get_evade() > character->get_evade()) player_starts = false;
+        BattleModel* battleModel = new BattleModel(playerModel, enemyModel, true, overworldModel->get_party_model()->get_money());
+
+        // this->battleHandler->start_battle(battleModel);
+        
+        // BattleModel* battleModel = new BattleModel(character, enemyModel, true);
+        unsigned int xp = 0;
+        unsigned int money = 0;
+        unsigned int bribe = 0;
+
+        this->battleHandler->start_battle(battleModel);
+
+        // BattleModel* battleModel = new BattleModel(character, enemyModel, true);
+        // unsigned int xp = 0;
+        // unsigned int money = 0;
+        // unsigned int bribe = 0;
+
+        // this->battleHandler->start_battle(battleModel);
+
+        // Remove bribed money from party if 
+        if(battleModel->bribed){
+            bribe = battleModel->get_bribe_amount();
+            overworldModel->get_party_model()->decrease_money(bribe);
+            money -= bribe;
+        }
+        // If the player did not flee, then add xp and money
+        // if(!battleModel->fled){
+        //     xp = this->logicWrapper->gameLogic->deligate_post_battle_xp(overworldModel);
+        //     money = this->logicWrapper->gameLogic->deligate_post_battle_money(overworldModel);
+        // }   
+        if((!battleModel->fled || !is_boss) && this->logicWrapper->battleLogic->player_won(battleModel)){
+            xp = this->logicWrapper->gameLogic->deligate_post_battle_xp(overworldModel);
+            money = this->logicWrapper->gameLogic->deligate_post_battle_money(overworldModel);
+        }   
+        // if(bribe > 0){
+        //     cout << "You Recieved: " << xp << " xp and: " << money << " eddies and bribed for " << bribe << " eddies" << endl;    
+        // } 
+        // else {
+        //     cout << "You Recieved: " << xp << " xp and: " << money << " eddies" << endl;
+        // }
+
+        this->asciiHandler->display_end_of_battle(battleModel, xp, money);
+        // delete(battleModel);
+        // delete(enemyModel);
+
+        // // Remove bribed money from party if 
+        // // if(battleModel->bribed){
+        // //     bribe = battleModel->get_bribe_amount();
+        // //     overworldModel->get_party_model()->decrease_money(bribe);
+        // //     money -= bribe;
+        // // }
+        // // If the player did not flee, then add xp and money
+        
+        // if (bribe > 0) {
+        //     ret_str = "You Received: +" + std::to_string(xp) + " xp and: +$" + std::to_string(money) + 
+        //               " eddies and bribed for -$" + std::to_string(bribe) + " eddies";
+        // } else {
+        //     ret_str = "You Received: +" + std::to_string(xp) + " xp and: +$" + std::to_string(money) + " eddies";
+        // }
+        // delete(battleModel);
+        // delete(enemyModel);
+        return ret_str;
 }

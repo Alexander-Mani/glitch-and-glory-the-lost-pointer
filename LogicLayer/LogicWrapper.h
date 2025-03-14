@@ -18,6 +18,7 @@ public:
     GameLogic *gameLogic;
     AttackLogic *attackLogic;
     EncounterLogic *encounterLogic;
+    EntityModel *get_boss_entity_phase_1;
 
     LogicWrapper();
 

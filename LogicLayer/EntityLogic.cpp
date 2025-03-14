@@ -2,6 +2,10 @@
 #include "../Models/Entities/CyberGladiatorModel.h"
 #include "../Models/Entities/TechnoOracleModel.h"
 #include "../Models/Entities/BioEnhancedBerserkerModel.h"
+#include "../Models/Entities/ElonoTronPhase1Model.h"
+#include "../Models/Entities/ElonoTronPhase2Model.h"
+#include "../Models/Entities/EnemyModel.h"
+#include "GameLogic.h"
 
 #include <random>
 
@@ -10,12 +14,49 @@
 using namespace std;
 
 
+EntityLogic::EntityLogic(GameLogic *gameLogic){
+    this->gameLogic = gameLogic;
+}
+
+
+// Keep this for player entites
 std::vector<EntityModel*> EntityLogic::get_all_entities() {
     std::vector<EntityModel*> entities;
     entities.push_back(new CyberGladiatorModel());
     entities.push_back(new TechnoOracleModel());
     entities.push_back(new BioEnhancedBerserkerModel());
     return entities;
+}
+
+EntityModel* EntityLogic::get_boss_entity_phase_1() {
+    return new ElonoTronPhase1Model();
+}
+
+EntityModel* EntityLogic::get_boss_entity_phase_2() {
+    return new ElonoTronPhase2Model();
+}
+EntityModel* EntityLogic::generate_enemy_entity(EntityModel *playerModel){
+    int img_number = this->enemy_ascii_matrix.size();
+    int rand_ascii_number = this->gameLogic->get_random_from_range(0, img_number-1); 
+    vector<string> ascii_art = enemy_ascii_matrix[rand_ascii_number];
+
+    vector<int> stats = playerModel->get_battle_stats();
+    int rand_stat_index = this->gameLogic->get_random_from_range(0, stats.size()-1); 
+    stats[rand_stat_index] *=2; 
+
+    vector<string> names = enemy_names;
+    int rand_name_index = this->gameLogic->get_random_from_range(0, names.size()-1); 
+
+    for(int& stat : stats){
+        stat = this->gameLogic->get_random_from_range(0.8*stat, 1.2*stat); 
+    }
+    int acc = playerModel->get_acc();
+    int enemy_acc = this->gameLogic->get_random_from_range(acc * 0.8, acc * 1.2); 
+    // acc > 100
+    if (enemy_acc > 100) enemy_acc = 100;
+
+    return new EnemyModel(names[rand_name_index], stats[0], stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], enemy_acc, ascii_art);
+
 }
 
 EntityModel* EntityLogic::get_random_entity() {

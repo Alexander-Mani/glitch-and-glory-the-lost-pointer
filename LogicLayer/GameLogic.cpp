@@ -46,11 +46,10 @@ unsigned int GameLogic::deligate_post_battle_xp(OverworldModel *overworldModel){
 
 unsigned int GameLogic::deligate_post_battle_money(OverworldModel *overworldModel){
     unsigned int level = overworldModel->get_party_model()->get_level();
-    unsigned int money = 100 * level;
+    unsigned int money = 125 * (level+1);
     unsigned int min = money * 0.8;
     unsigned int max = money * 1.2;
     money = this->get_random_from_range(min, max);
-    cout << money << endl;
     overworldModel->get_party_model()->increase_money(money);
     return money;
 
