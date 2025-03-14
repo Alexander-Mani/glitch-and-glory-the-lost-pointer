@@ -200,6 +200,8 @@ string BattleLogic::handle_computer_action(BattleModel* battleModel){
     string action = action_list[random_index];
     if (action == "F") action = "A";
     if (action == "B") action = "A";
+    if (action == "S" && battleModel->get_attacker()->get_magic() < 10) action = "A";
+    
 
     return action;    
 } 

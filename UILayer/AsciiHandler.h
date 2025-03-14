@@ -65,6 +65,14 @@ public:
     int get_battle_width(BattleModel* battleModel);
 
 
+
+
+    
+    string get_color_for_char(char c);
+    string colorize_line(string &line, string &neon_color);
+    string get_gradient_color(char c, string &neon_color);
+    string get_random_neon_color();
+
     // void display_attack_hud(BattleModel* battle_model);
 
     const string CITY =R"(
