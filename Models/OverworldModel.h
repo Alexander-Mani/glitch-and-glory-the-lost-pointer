@@ -26,13 +26,14 @@ protected:
     const string final_zone = "Fight Boss";
 
     unordered_map<string, vector<string>> location_map = {
-        {"Streets", {"View Party", "Arena", "Shop", "Ripper", "HQ", "Apartments", "Warehouse", "Union"}},
+        {"Streets", {"View Party", "Arena", "Shop", "Ripper", "HQ", "Apartments", "Warehouse", "Club", "Union"}},
         {"Arena", {"View Party", "Streets", "Duel"}},
         {"Shop", {"View Party", "Streets", "Browse Equipment"}},
         {"Ripper", {"View Party", "Streets", "Browse Implants"}},
         {"HQ", {"View Party", "Streets", "Fight Boss"}},
         {"Apartments", {"View Party", "Streets", "Stay Night"}},
-        {"Warehouse", {"View Party", "Streets", "Gamble"}},
+        {"Warehouse", {"View Party", "Streets", "Attempt Rat Communication"}},
+        {"Club", {"View Party", "Streets", "Gamble"}},
         {"Union", {"View Party", "Streets", "Apply For Job"}},
         {"Boss", {"View Party", "Win"}}
     };
@@ -44,7 +45,8 @@ protected:
         "Browse Implants",
         "Fight Boss",
         "Gamble",
-        "Apply For Job"
+        "Apply For Job",
+        "Stay Night"
 
     };
 
