@@ -88,7 +88,8 @@ string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action
         string ret_msg;
         int bribe_amount = battleModel->add_bribe();
         if(bribe_amount == 0){
-            return "BRIBE TIME! [fail] Bro u need more money to bribe...";
+            this->toggle_turn(battleModel);
+            return "BRIBE TIME! [fail] Tried to bribe but don't have enough money...";
         }
 
         ret_msg = "BRIBE TIME! Bribe for " + to_string(bribe_amount) + " moneys. ";
@@ -100,7 +101,6 @@ string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action
             ret_msg += "Bribe was not successful";
         }
 
-        // return ret_msg;
     } 
     // HACK ATTACK
     else if (action == "S") {

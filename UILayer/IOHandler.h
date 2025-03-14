@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 
 #include "../Models/BattleModel.h"
 #include "../Models/AllEntities.h"
@@ -13,6 +14,23 @@ using namespace std;
 
 class IOHandler{
 public:
+    // Mapping of characters to their ANSI escape color codes.
+    std::unordered_map<char, std::string> neon_color_map;
+    // ANSI reset code.
+    const std::string reset_code = "\033[0m";
+
+    // Constant mapping of all available neon colors.
+    const unordered_map<std::string, std::string> neon_colors = {
+        {"orange", "\033[38;2;255;165;0m"},
+        {"pink",   "\033[38;2;255;105;180m"},
+        {"yellow", "\033[38;2;255;255;0m"},
+        {"green",  "\033[38;2;0;255;0m"},
+        {"blue",   "\033[38;2;0;0;255m"},
+        {"white",  "\033[38;2;255;255;255m"}
+   };
+
+   
+
     int title_max_len = 70;     // Assigned here since it's a constant value
     int subtitle_max_len = 50;  // Assigned here since it's a constant value
     int msg_padding_len = 5;    // Assigned here since it's a constant value
@@ -87,10 +105,19 @@ public:
     void input_continue();
     
 
+    
+    //==== COLOR METHODS ====//
+
+    // Applies neon color mapping to the input text.
+    string apply_neon_colors(const string &text);
+
+    // Optionally, a setter to change the mapping at runtime.
+    void set_neon_color_for_char(char key, const string &ansi_code);
    
    
     //==== STATIC METHODS ====//
     static void clear_terminal_static();
+
 
 
 private:

@@ -6,6 +6,9 @@ using namespace std;
 //#include "../AllEquipment.h"
 //#include "../WeaponModel.h"
 
+#include <cassert> // For debuggin purposes
+
+
 //EntityModel::EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, vector<string> ascii_art, )
 //    : name(name), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade), ascii_art(move(ascii_art)), weapon(weapon) {}
 
@@ -42,6 +45,52 @@ void EntityModel::display_stats() const {
         << "| ACC: " << acc << "\n|\n"
         << "|---------------------------------|\n\n";
 }
+
+
+vector<string> EntityModel::get_stats_lines() {
+    vector<string> lines;
+    string name_l = "| " + name + " |";
+    int padding = name_l.size() - 1;
+
+    string wrapper = string(name_l.size(), '-');
+    string inner_wrapper = "| " + string(name_l.size()-4, '-') + " |";
+    
+    string hp_left = "| HP: " + to_string(hp);
+    string hp_l = hp_left + string(padding - hp_left.size(), ' ') + "|";
+    
+    string atk_left = "| ATK: " + to_string(atk);
+    string atk_l = atk_left + string(padding - atk_left.size(), ' ') + "|";
+
+    string def_left = "| DEF: " + to_string(def);
+    string def_l = def_left + string(padding - def_left.size(), ' ') + "|";
+    
+    // if(def_l.size() != name_l.size()){
+    //     string def_l = atk_left + string(padding - (def_left.size() - 4), ' ') + "|";
+    // }
+
+    if(!(name_l.size() == hp_l.size() && name_l.size() == atk_l.size() && name_l.size() == def_l.size())){
+        cout << "name_l.size() :" << name_l.size() << endl;  
+        cout << "hp_l.size():" << hp_l.size() << endl;  
+        cout << "atk_l.size():" << atk_l.size() << endl;  
+        cout << "def_l.size():" << def_l.size() << endl; 
+    }
+    // assert(name_l.size() == hp_l.size() == atk_l.size() == def_l.size());
+
+
+    lines.push_back(wrapper);
+    lines.push_back(name_l);
+    lines.push_back(inner_wrapper);
+    lines.push_back(hp_l);
+    lines.push_back(atk_l);
+    lines.push_back(def_l);
+    lines.push_back(wrapper);
+
+    // lines.push_back("| HP: " + to_string(hp) + " |");
+    // lines.push_back("| ATK: " + to_string(atk) + " |");
+    // lines.push_back("| DEF: " + to_string(def) + " |");
+    return lines;
+}
+
 bool EntityModel::equip_item(const std::string &slot, EquipmentModel *item) {
     if (inventory.find(slot) != inventory.end()) {
         if (inventory[slot]){

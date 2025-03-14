@@ -21,7 +21,7 @@ public:
     LogicWrapper *logicWrapper;
     IOHandler *ioHandler;
 
-    AsciiHandler(LogicWrapper *logicWrapper, IOHandler* ioHandler = nullptr);
+    AsciiHandler(LogicWrapper *logicWrapper, IOHandler* ioHandler);
     const size_t SPACES = 25;
     /*
     * @brief Displays ASCII art for a given entity name.
@@ -31,7 +31,7 @@ public:
     void display_character_selector(std::vector<EntityModel*>* entities);
     void display_start_of_battle(BattleModel* battleModel);
     void display_turn(BattleModel* battleModel);
-    void display_end_of_battle(BattleModel* batlle_model);
+    void display_end_of_battle(BattleModel* batlle_model, unsigned int xp, unsigned int money);
     void display_battle_stats(BattleModel* battleModel);
     size_t calculate_max_stat_length(const std::vector<std::string>& stat_names, const std::vector<int>& stats);
     
@@ -72,6 +72,10 @@ public:
     string colorize_line(string &line, string &neon_color);
     string get_gradient_color(char c, string &neon_color);
     string get_random_neon_color();
+    
+    
+    string colorize_box(string text, string color);
+    void display_box_layout(const std::string &title, const std::vector<std::string> &output, string outline_color="pink", string content_color="white");
 
     // void display_attack_hud(BattleModel* battle_model);
 

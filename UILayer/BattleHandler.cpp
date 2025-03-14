@@ -124,7 +124,7 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
 
     }
 
-    this->asciiHandler->display_end_of_battle(battleModel);
+    // this->asciiHandler->display_end_of_battle(battleModel);
 
 
 }

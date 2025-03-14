@@ -111,17 +111,20 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
             xp = this->logicWrapper->gameLogic->deligate_post_battle_xp(overworldModel);
             money = this->logicWrapper->gameLogic->deligate_post_battle_money(overworldModel);
         }   
-        if(bribe > 0){
-            cout << "You Recieved: " << xp << " xp and: " << money << " eddies and bribed for " << bribe << " eddies" << endl;    
-        } 
-        else {
-            cout << "You Recieved: " << xp << " xp and: " << money << " eddies" << endl;
-        }
+        // if(bribe > 0){
+        //     cout << "You Recieved: " << xp << " xp and: " << money << " eddies and bribed for " << bribe << " eddies" << endl;    
+        // } 
+        // else {
+        //     cout << "You Recieved: " << xp << " xp and: " << money << " eddies" << endl;
+        // }
+
+        this->asciiHandler->display_end_of_battle(battleModel, xp, money);
         delete(battleModel);
         delete(enemyModel);
     } else if (action == "View Party") {
 
-        overworldModel->get_party_model()->display_party();
+        this->asciiHandler->display_hud(overworldModel->get_party_model()->display_party(), '|', 150);
+        // overworldModel->get_party_model()->display_party();
         ioHandler->glitch_sleep(3);
 
     } else if (action == "Browse Equipment") {

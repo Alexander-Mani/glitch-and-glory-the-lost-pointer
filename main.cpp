@@ -9,7 +9,7 @@ using namespace std;
 
 
 int main(){
-    disable_stdout(); // Disable prints when using gdb
+    // disable_stdout(); // Disable prints when using gdb
     
     UIHandler uiHandler = UIHandler();
 

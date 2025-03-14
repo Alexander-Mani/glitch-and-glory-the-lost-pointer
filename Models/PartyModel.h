@@ -36,7 +36,7 @@ public:
     vector<string> get_party_member_names();
     vector<EntityModel*> get_party_members();
 
-    void display_party();
+    vector<string> display_party();
     size_t get_money() const { return this->party_money; }
     void increase_money(int money) { this->party_money += money; } 
     void decrease_money(int money) { this->party_money -= money; } 
