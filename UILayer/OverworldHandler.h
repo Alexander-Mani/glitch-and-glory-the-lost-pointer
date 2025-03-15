@@ -8,6 +8,7 @@
 
 #include "../Models/BattleModel.h"
 #include "AsciiHandler.h"
+#include "StoryHandler.h"
 
 #include <iostream>
 #include <vector>
@@ -36,7 +37,7 @@ public:
     void do_action(OverworldModel *overworldModel, string action);
     void handle_level_up(OverworldModel *overworldModel);
     void handle_random_encounter(OverworldModel *overworldModel);
-    string battle(OverworldModel* overworldModel, EntityModel *playerModel, EntityModel *enemyModel, bool is_boss);
+    bool battle(OverworldModel* overworldModel, EntityModel *playerModel, EntityModel *enemyModel, bool is_boss);
 
     /*
     * @brief [in progress] Starts battle with provided parameters
@@ -53,11 +54,6 @@ public:
 //remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset 
 //sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like 
 //Aldus PageMaker including versions of Lorem Ipsum.)";
-//     for (const char c : text) {
-//        std::cout << c << std::flush;
-//        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-//    }
-
 
 string DENY_JOB_LETTER = R"([ACCESS DENIED] Application Status Update
 

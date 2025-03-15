@@ -30,6 +30,8 @@ public:
     static void output_options(const string &options_title, const vector<string> &options_list);
     static void output_battle_info(const string &info);
 
+    static void write_dialoge(string dialog);
+    static void write_story(string dialog);
     // INPUT METHODS
     static int input_choose_index(int size);
     static string input_choose_option(const vector<string> &options_list);
@@ -99,7 +101,7 @@ private:
 
 //     //==== OUTPUT METHODS ====//
     
-//     void clear_terminal();
+//     static void clear_terminal();
 //     void glitch_sleep(unsigned int seconds);
 
     

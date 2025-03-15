@@ -82,6 +82,19 @@ void IOHandler::output_subtitle(const string &subtitle, string color) {
     AsciiHandler::display_box_layout("", content, color, "white", 50);
 
 }
+void IOHandler::write_dialoge(string dialog){
+     for (const char c : dialog) {
+        std::cout << c << std::flush;
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+}
+
+void IOHandler::write_story(string dialog){
+     for (const char c : dialog) {
+        std::cout << c << std::flush;
+        std::this_thread::sleep_for(std::chrono::milliseconds(25));
+    }
+}
 
 void IOHandler::output_msg(const string &msg) {
     string msg_padded = " " + msg + " ";
@@ -90,7 +103,7 @@ void IOHandler::output_msg(const string &msg) {
 }
 
 void IOHandler::output_options(const string &options_title, const vector<string> &options_list) {
-    output_subtitle(options_title);
+    IOHandler::output_subtitle(options_title);
     for (size_t i = 0; i < options_list.size(); i++) {
         cout << "[" << (i + 1) << "] " << options_list[i] << "\n";
     }
