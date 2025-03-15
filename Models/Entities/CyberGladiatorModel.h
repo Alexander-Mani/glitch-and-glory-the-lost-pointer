@@ -2,7 +2,6 @@
 #define CYBER_GLADIATOR_MODEL_H
 
 #include "EntityModel.h"
-//#include "../WeaponModel.h"
 
 class CyberGladiatorModel : public EntityModel {
 public:
@@ -67,13 +66,6 @@ public:
                 "                             ..    ....    ..-=+=:..                      ", 
                 "                                               .                          " 
             }
-            //new WeaponModel(
-            //    "Titan Protocol",               // Weapon Name
-            //    50,                             // Weapon Damage
-            //    100,                            // Hit Rate
-            //    "You have hit the enemy!",      // Hit message
-            //    "You missed the enemy homie!"   // Miss message
-            //)
         )
     { }
 };

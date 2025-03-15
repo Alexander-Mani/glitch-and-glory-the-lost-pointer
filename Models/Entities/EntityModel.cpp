@@ -3,14 +3,7 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-//#include "../AllEquipment.h"
-//#include "../WeaponModel.h"
 
-#include <cassert> // For debuggin purposes
-
-
-//EntityModel::EntityModel(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade, vector<string> ascii_art, )
-//    : name(name), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade), ascii_art(move(ascii_art)), weapon(weapon) {}
 
 EntityModel::EntityModel(const std::string &name, int max_hp, int hp, int atk, int def, int magic, int crit, int evade, int acc, vector<string> ascii_art)
     : name(name), max_hp(max_hp), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade), acc(acc), ascii_art(move(ascii_art)) {
@@ -64,9 +57,6 @@ vector<string> EntityModel::get_stats_lines() {
     string def_left = "| DEF: " + to_string(def);
     string def_l = def_left + string(padding - def_left.size(), ' ') + "|";
     
-    // if(def_l.size() != name_l.size()){
-    //     string def_l = atk_left + string(padding - (def_left.size() - 4), ' ') + "|";
-    // }
 
     if(!(name_l.size() == hp_l.size() && name_l.size() == atk_l.size() && name_l.size() == def_l.size())){
         cout << "name_l.size() :" << name_l.size() << endl;  
@@ -74,7 +64,6 @@ vector<string> EntityModel::get_stats_lines() {
         cout << "atk_l.size():" << atk_l.size() << endl;  
         cout << "def_l.size():" << def_l.size() << endl; 
     }
-    // assert(name_l.size() == hp_l.size() == atk_l.size() == def_l.size());
 
 
     lines.push_back(wrapper);
@@ -85,9 +74,6 @@ vector<string> EntityModel::get_stats_lines() {
     lines.push_back(def_l);
     lines.push_back(wrapper);
 
-    // lines.push_back("| HP: " + to_string(hp) + " |");
-    // lines.push_back("| ATK: " + to_string(atk) + " |");
-    // lines.push_back("| DEF: " + to_string(def) + " |");
     return lines;
 }
 
@@ -133,8 +119,6 @@ EquipmentModel* EntityModel::get_equipped_item(const std::string &slot) const {
     return nullptr;
 }
 
-//vector<int> EntityModel:: 
-
 void EntityModel::display_inventory() const {
     cout << "\n|----------------------------|"
          << "\n|----| Inventory Items |----|"
@@ -165,65 +149,3 @@ void EntityModel::display_inventory() const {
     cout << "|----------------------------|\n";
 }
 
-
-//WeaponModel *EntityModel::get_weapon(){
-//    return this->weapon;
-//}
-
-
-
-
-
-    
-//============================================//
-//======= TOMMI OLD CODE FOR REFERENCE =======//
-//============================================//
-
-// #include "EntityParentModel.h"
-// #include <iostream>
-
-// // Constructor for base class Entity
-// Entity::Entity(const std::string &name, int hp, int atk, int def, int magic, int crit, int evade)
-//     : name(name), hp(hp), atk(atk), def(def), magic(magic), crit(crit), evade(evade) {}
-
-// // TechnoOracle implementation
-// TechnoOracle::TechnoOracle()
-//     : Entity("Techno Oracle", 60, 10, 5, 70, 15, 10) {}
-
-// void TechnoOracle::display_stats() const {
-//     std::cout << name << "\n"
-//               << "HP: " << hp << "\n"
-//               << "ATK: " << atk << "\n"
-//               << "DEF: " << def << "\n"
-//               << "MAGIC: " << magic << "\n"
-//               << "CRIT: " << crit << "\n"
-//               << "EVADE: " << evade << "\n\n";
-// }
-
-// // CyberGladiator implementation
-// CyberGladiator::CyberGladiator()
-//     : Entity("Cyber Gladiator", 100, 50, 50, 5, 10, 10) {}
-
-// void CyberGladiator::display_stats() const {
-//     std::cout << name << "\n"
-//               << "HP: " << hp << "\n"
-//               << "ATK: " << atk << "\n"
-//               << "DEF: " << def << "\n"
-//               << "MAGIC: " << magic << "\n"
-//               << "CRIT: " << crit << "\n"
-//               << "EVADE: " << evade << "\n\n";
-// }
-
-// // BioEnhancedBerserker implementation
-// BioEnhancedBerserker::BioEnhancedBerserker()
-//     : Entity("Bio-Enhanced Berserker", 150, 30, 60, 5, 5, 5) {}
-
-// void BioEnhancedBerserker::display_stats() const {
-//     std::cout << name << "\n"
-//               << "HP: " << hp << "\n"
-//               << "ATK: " << atk << "\n"
-//               << "DEF: " << def << "\n"
-//               << "MAGIC: " << magic << "\n"
-//               << "CRIT: " << crit << "\n"
-//               << "EVADE: " << evade << "\n\n";
-// }

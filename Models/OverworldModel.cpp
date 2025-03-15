@@ -7,14 +7,6 @@
 #include <unordered_map>
 
 
-
-//OverworldModel::OverworldModel(const std::string &current_location, unsigned int &ascii_location_pointer, const std::string &ascii_art)
-//    : current_location(current_location), 
-//      ascii_location_pointer(ascii_location_pointer), 
-//      ascii_art(ascii_art) {
-//    // You can put any additional initialization code here
-//}
-// Default constructor in case you want to initalize without params such as in the begining
 OverworldModel::OverworldModel(PartyModel* partyModel)
     : current_location("Streets"), 
       ascii_art(""),

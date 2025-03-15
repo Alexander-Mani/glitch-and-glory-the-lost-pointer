@@ -2,7 +2,6 @@
 #define ELONO_TRON_PHASE_2_MODEL_H
 
 #include "EntityModel.h"
-//#include "../WeaponModel.h"
 
 class ElonoTronPhase2Model : public EntityModel {
 public:
@@ -66,13 +65,6 @@ public:
 "              .@@@@@@@@@@%+     :+*#%#*:    .:=*##=.     @@@@@@@@@@@%             ",
 "              .@@@@@@@@@@%+       .-:.      .-+*#*+:     %@@@@@@@@@@@             ",
             }
-            //new WeaponModel(
-            //    "Singularity Codex",            // Weapon Name
-            //    100,                             // Weapon Damage
-            //    90,                             // Hit Rate
-            //    "You have hit the enemy!",      // Hit message
-            //    "You missed the enemy homie!"   // Miss message
-            //)
         )
     { }
 };

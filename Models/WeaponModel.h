@@ -9,7 +9,7 @@ class WeaponModel {
 private:
     string name;
     int damage;
-    int hit_rate; // Chance will be calulated elsewhere [most likely BattleLogic.cpp]
+    int hit_rate; 
     string success_msg;
     string fail_msg;
 
