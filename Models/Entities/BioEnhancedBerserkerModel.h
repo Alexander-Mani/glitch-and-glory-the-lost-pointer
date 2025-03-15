@@ -16,7 +16,7 @@ public:
             1000005,                          // magic
             50,                          // crit
             50,                        // evade
-            80,                        // acc (Accuracy)
+            65,                        // acc (Accuracy)
             {
                 "           +=*++#*                                      ", 
                 "        +######%%%###*+==-                              ", 

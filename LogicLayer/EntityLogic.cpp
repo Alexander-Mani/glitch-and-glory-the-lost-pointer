@@ -48,7 +48,7 @@ EntityModel* EntityLogic::generate_enemy_entity(EntityModel *playerModel){
     int rand_name_index = this->gameLogic->get_random_from_range(0, names.size()-1); 
 
     for(int& stat : stats){
-        stat = this->gameLogic->get_random_from_range(0.8*stat, 1.2*stat); 
+        stat = this->gameLogic->get_random_from_range(0.6*stat, 0.9*stat); 
     }
     int acc = playerModel->get_acc();
     int enemy_acc = this->gameLogic->get_random_from_range(acc * 0.8, acc * 1.2); 
