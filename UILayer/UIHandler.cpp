@@ -46,8 +46,6 @@ void UIHandler::initialize_game() {
 
 void UIHandler::activate_encounter() {
     EntityModel* player = new CyberGladiatorModel();
-    // Use the persistent player for encounters.
-    //this->encounterHandler->get_random_encounter(player);
     // Print the player's updated stats after the encounter.
     player->display_stats();
 }

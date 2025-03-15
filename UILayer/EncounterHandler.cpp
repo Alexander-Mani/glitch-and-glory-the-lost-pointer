@@ -1,8 +1,8 @@
-// UILayer/EncounterHandler.cpp
+
 #include "EncounterHandler.h"
 #include "../LogicLayer/EncounterLogic.h"
 #include "../Models/Entities/EntityModel.h"
-#include "../Models/Entities/CyberGladiatorModel.h"  // Example player entity
+#include "../Models/Entities/CyberGladiatorModel.h"  
 #include "IOHandler.h"
 #include "AsciiHandler.h"
 #include <cmath>
@@ -19,9 +19,6 @@ void EncounterHandler::get_random_encounter(PartyModel* partyModel, EntityModel 
     size_t max_line_width = 100; 
     Encounter encounter = this->logicWrapper->encounterLogic->get_random_encounter();
     
-    
-    
-    // IOHandler::output_msg(encounter.description);
     
     vector<string> description_lines;
     vector<string> description = IOHandler::wrap_text(encounter.description, max_line_width);

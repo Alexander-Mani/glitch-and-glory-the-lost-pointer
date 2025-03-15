@@ -14,7 +14,6 @@ public:
     EncounterHandler(LogicWrapper *logicWrapper);
 
     // Updated declaration with a parameter
-    //void initialize_encounter(PartyModel* partyModel);
     void get_random_encounter(PartyModel* partyModel, EntityModel *entityModel);
 private:
 };

@@ -34,7 +34,6 @@ public:
      * @param Param-Placeholder
      * @returns A message indicating the outcome of the action, or "-1" if the action is invalid
      */
-    // string perform_action(string action, EntityModel* attacker, EntityModel* defender, WeaponModel* weapon=nullptr);
     string perform_action(string action, BattleModel* battleModel);
 
 
@@ -61,30 +60,6 @@ public:
      * @retuns Game over message in string
      */
     string battle_over_msg(BattleModel* battleModel);
-
-    
-private:
-
-    // int calculate_damage(BattleModel* battleModel);
-
-    // int calculate_weapon_damage(BattleModel* battleModel);
-
-    /* 
-     * @brief Performs a normal attack within a battle
-     */
-    // int attack(BattleModel* battleModel);
-    
-    /* 
-     * @brief Performs a normal attack within a battle
-     */
-    // int heavy_attack(BattleModel* battleModel);
-
-    /*
-     * @brief Calculates the chance of a hit
-     * @param attacker The BattleModel of the active battle
-     */
-    // bool _enemy_hit(BattleModel* battleModel, int percentage_decrease=0);
-
 
     
 };

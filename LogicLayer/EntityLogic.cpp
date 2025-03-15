@@ -56,7 +56,7 @@ EntityModel* EntityLogic::generate_enemy_entity(EntityModel *playerModel){
     max_hp = this->gameLogic->get_random_from_range(0.6*max_hp, 0.9*max_hp); 
     int acc = playerModel->get_acc();
     int enemy_acc = this->gameLogic->get_random_from_range(acc * 0.6, acc * 0.9); 
-    // acc > 100
+
     if (enemy_acc > 100) enemy_acc = 100;
 
     return new EnemyModel(names[rand_name_index], max_hp, max_hp, atk, stats[2], stats[3], stats[4], stats[5], enemy_acc, ascii_art);
@@ -76,7 +76,7 @@ EntityModel* EntityLogic::get_random_entity() {
 
 int EntityLogic::get_hit_chance_normal(BattleModel* battleModel) {
     int hit_chance;
-    int attacker_acc; // Attacker accuracy
+    int attacker_acc;   // Attacker accuracy
     int defender_evade; // Defender evade
 
 
@@ -87,9 +87,6 @@ int EntityLogic::get_hit_chance_normal(BattleModel* battleModel) {
     defender_evade = defender->get_evade();
     
     hit_chance = (attacker_acc - (defender_evade * 0.15));
-    // cout << "\n\nattacker_acc: " << attacker_acc << endl;
-    // cout << "defender_evade: " << defender_evade << endl;
-    // cout << "hit_chance: " << hit_chance << endl;
     
     if (hit_chance < 35) {
         hit_chance = 35 + (rand() % 7 - 3); // Generates a value in range [32, 38]

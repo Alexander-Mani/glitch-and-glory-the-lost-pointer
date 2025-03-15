@@ -81,7 +81,6 @@ string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action
     else if (action == "F") {
         battleModel->flee();
         return "You have fled the scene";
-        // return "Fleeing has yet to be implemented!";
     } 
     // BRIBE
     else if (action == "B") {
@@ -193,19 +192,6 @@ string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action
             }
         }
     }
-    
-    // else if (action == "S") {
-    //     EntityModel *attacker = battleModel->get_attacker();
-    //     int atk_magic_pts = attacker->get_magic();
-    //     if(atk_magic_pts < 10)
-    //         return "You need 10 hacking points to perform a Special Ability Attack.";
-        
-    //     // Removing magic (hack points) that will be used
-    //     attacker->decrease_magic(10);
-
-    //     ret_msg = "HACK ATTACK: You hacked the enemy! Only messages found, you did no damage.";
-        
-    // } 
     // Invalid action
     else {
         return "Invalid action: " + action;
@@ -271,9 +257,6 @@ bool BattleLogic::player_won(BattleModel* battleModel){
 
     int player_hp = player->get_hp();
     int opponent_hp = opponent->get_hp();
-
-    // There should never be a tie
-    // assert(!(player_hp == 0 && opponent_hp == 0));
     
     // Player lost
     if (player_hp == 0 && opponent_hp != 0){

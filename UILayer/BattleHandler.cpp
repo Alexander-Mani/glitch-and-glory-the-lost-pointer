@@ -1,9 +1,9 @@
 #include "BattleHandler.h"
 #include "AsciiHandler.h"
 #include "IOHandler.h"
-#include "../Models/AllEntities.h"      // For all entity models
+#include "../Models/AllEntities.h"      
 #include "../Models/BattleModel.h"
-#include "../LogicLayer/EntityLogic.h"    // For EntityLogic
+#include "../LogicLayer/EntityLogic.h"    
 #include <string>
 
 #include <cassert>
@@ -97,7 +97,7 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
         } else {
             action = IOHandler::input_choose_option(action_list);
         }
-        // string 
+        
         vector<string> hud_msg;
         if(!battleModel->player_turn){
             hud_msg.push_back("Computer Action");

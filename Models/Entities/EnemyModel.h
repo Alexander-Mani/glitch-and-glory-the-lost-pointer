@@ -3,7 +3,7 @@
 
 #include "EntityModel.h"
 #include <vector>
-//#include "../WeaponModel.h"
+
 
 class EnemyModel : public EntityModel {
 public:
@@ -19,13 +19,6 @@ public:
             evade,                 // evade     
             acc,                 // acc (Accuracy)     
             ascii_art
-            //new WeaponModel(
-            //    "Titan Protocol",               // Weapon Name
-            //    50,                             // Weapon Damage
-            //    100,                            // Hit Rate
-            //    "You have hit the enemy!",      // Hit message
-            //    "You missed the enemy homie!"   // Miss message
-            //)
         )
     { }
 };

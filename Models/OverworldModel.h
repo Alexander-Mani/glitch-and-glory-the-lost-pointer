@@ -6,7 +6,6 @@
 #include <unordered_map>
 #include <iostream>
 #include "Equipment/EquipmentFactory.h"
-//#include "AllEquipment.h"
 
 #include "PartyModel.h"
 
@@ -82,16 +81,13 @@ protected:
 
 public:
     EquipmentFactory* equipmentFactory;
-    //OverworldModel(const std::string &current_location, unsigned int &ascii_location_pointer,const std::string &ascii_art);
-    // OverworldModel(const std::string &current_location = "HUB", 
-    // In OverworldModel.h
+
     // Default Constructor
     OverworldModel(PartyModel* partyModel);
 
     virtual ~OverworldModel() = default;
 
     // Default implementation prints the common stats.
-    
     vector<string> get_locations();
     vector<string> get_actions();
     unsigned int get_ascii_location_pointer(string location);
@@ -108,25 +104,11 @@ public:
     PartyModel* get_party_model();
     EquipmentFactory* get_equipment_factory();
 
-    //set
-    //const string& set_curr_location(const string& location){
-    //    current_location = location;
-    //    return get_curr_location();
-    //}
+
     const string& set_curr_location(string location) {
         this->current_location = location;
         return this->get_curr_location();
     }
-
-    
-    //virtual void take_damage(int damage) {
-    //    hp -= damage;
-    //    if(hp < 0) hp = 0;
-    //}
-
-    /*
-     * @brief Simply gets the weapon for Entity
-     */
 
 
 };

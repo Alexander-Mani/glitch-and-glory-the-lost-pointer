@@ -1,4 +1,4 @@
-// EquipmentFactory.cpp
+
 #include "EquipmentFactory.h"
 #include "../../UILayer/IOHandler.h"
 #include "../../UILayer/AsciiHandler.h"
@@ -74,7 +74,7 @@ void EquipmentFactory::show_combat_gear() {
         content.push_back("CRIT: " + to_string(weapon->get_crit()));
         content.push_back("EVA: " + to_string(weapon->get_evade()));
         content.push_back("Price: " + to_string(weapon->get_price()));
-        // Prepend the numeric option to the title
+
         string title = to_string(option++) + ". " + weapon->get_name();
         weapon_boxes.push_back(create_box(title, content, box_width));
     }
@@ -90,7 +90,7 @@ void EquipmentFactory::show_combat_gear() {
         content.push_back("CRIT: " + to_string(armor->get_crit()));
         content.push_back("EVA: " + to_string(armor->get_evade()));
         content.push_back("Price: " + to_string(armor->get_price()));
-        // Continue numbering from weapons
+
         string title = to_string(option++) + ". " + armor->get_name();
         armor_boxes.push_back(create_box(title, content, box_width));
     }
@@ -104,25 +104,6 @@ void EquipmentFactory::show_combat_gear() {
 }
 
 
-// void EquipmentFactory::show_cyber_augments() {
-//     cout << "=== Implants ===\n";
-//     int ind = 1;
-//     for (const auto* implant : this->implants) {
-//         cout
-//             << ind++
-//             << ". Name: "   << implant->get_name()
-//             << " | HP: "  << implant->get_max_hp()
-//             << " | ATK: " << implant->get_atk()
-//             << " | DEF: " << implant->get_def()
-//             << " | MGK: " << implant->get_magic()
-//             << " | CRIT: "<< implant->get_crit()
-//             << " | EVA: " << implant->get_evade()
-//             << " | Price: " << implant->get_price()
-//             << "\n";
-//     }
-//     cout << to_string(ind++)+". " << "Leave" << endl;
-//     cout << endl;
-// }
 
 void EquipmentFactory::show_cyber_augments() {
     const int box_width = 30;
@@ -147,7 +128,7 @@ void EquipmentFactory::show_cyber_augments() {
     int pad = box_width - 2 - go_back_title.size();
     int pad_left = pad / 2;
     int pad_right = pad - pad_left;
-    // string top_border = "┌" + string(box_width - 2, '─') + "┐";
+
     string top_border;
     string bottom_border;
     string mid_border_line;
@@ -162,9 +143,6 @@ void EquipmentFactory::show_cyber_augments() {
     bottom_border = "└" + mid_border_line + "┘";
     
     
-    
-    // string bottom_border = "└" + string(box_width - 2, '─') + "┘";
-    
     vector<string> go_back_box;
     go_back_box.push_back(top_border);
     go_back_box.push_back(title_line);
@@ -172,7 +150,7 @@ void EquipmentFactory::show_cyber_augments() {
     
     vector<vector<string>> go_back_boxes;
     go_back_boxes.push_back(go_back_box);
-    // IOHandler::output_subtitle("");
+
     print_boxes_side_by_side(go_back_boxes, 4);
 }
 
@@ -195,7 +173,7 @@ vector<string> EquipmentFactory::create_box(const string &title, const vector<st
 
     top = AsciiHandler::colorize_box(top, box_color);
     bottom = AsciiHandler::colorize_box(bottom, box_color);
-    // string bottom = "└" + string(width - 2, '─') + "┘";
+
     vector<string> box;
     box.push_back(top);
 
@@ -231,7 +209,7 @@ vector<string> EquipmentFactory::create_box(const string &title, const vector<st
 
 // Helper function that prints several boxes (each as a vector<string>) side by side.
 void EquipmentFactory::print_boxes_side_by_side(const vector<vector<string>> &boxes, int spacing) {
-    // First, determine the maximum number of lines among all boxes and record each box’s width.
+
     size_t max_lines = 0;
     vector<size_t> widths;
     for (const auto &box : boxes) {
@@ -244,7 +222,7 @@ void EquipmentFactory::print_boxes_side_by_side(const vector<vector<string>> &bo
         }
     }
     
-    // For each line index, print that line from each box side by side.
+
     for (size_t i = 0; i < max_lines; i++) {
         for (size_t b = 0; b < boxes.size(); b++) {
             if (i < boxes[b].size()) {
@@ -252,18 +230,18 @@ void EquipmentFactory::print_boxes_side_by_side(const vector<vector<string>> &bo
             } else {
                 cout << string(widths[b], ' ');
             }
-            // Print a spacer between boxes.
+
             cout << string(spacing, ' ');
         }
         cout << endl;
     }
 }
 
-// Suppose you already have a method that returns the weapon attributes as a vector of unordered maps.
+
 vector<unordered_map<string, string>> EquipmentFactory::get_weapon_attributes() {
     vector<unordered_map<string, string>> weaponData;
 
-    // For example, we simulate five weapons.
+
     weaponData.push_back({
         {"name", "Neons Edge"},
         {"max_hp", "0"},
@@ -294,7 +272,7 @@ vector<unordered_map<string, string>> EquipmentFactory::get_weapon_attributes() 
         {"evade", "0"},
         {"price", "1600"}
     });
-    // … add more as needed
+
 
     return weaponData;
 }

@@ -2,7 +2,7 @@
 #define BATTLEHANDLER_H
 
 #include "IOHandler.h"
-#include "../LogicLayer/LogicWrapper.h"  // Include LogicWrapper
+#include "../LogicLayer/LogicWrapper.h"  
 
 #include "../Models/BattleModel.h"
 #include "AsciiHandler.h"
@@ -15,7 +15,7 @@ using namespace std;
 
 class BattleHandler {
 public:
-    LogicWrapper* logicWrapper; // Pointer to the LogicWrapper
+    LogicWrapper* logicWrapper; 
 
 
     // Pass a pointer to LogicWrapper so we can access EntityLogic
