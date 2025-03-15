@@ -53,32 +53,12 @@ void IOHandler::output_title(const string &title, string color) {
     content.push_back(" ");
 
 
-    
-    // int max_len = (title_max_len - 4 >= (int)title.length()) ? title_max_len : (int)title.length() + 4;
-    // string wrapper(max_len, '=');
-    // string title_padded = " " + title + " ";
-    // int symbol_len = max_len - title_padded.length();
-    // string symbols(symbol_len / 2, '=');
-    // cout << "\n" << wrapper << "\n";
-    // cout << symbols + title_padded + symbols << "\n";
-    // cout << wrapper << "\n\n";
-
-
-
     AsciiHandler::display_box_layout("", content, color);
 }
 
 void IOHandler::output_subtitle(const string &subtitle, string color) {
     vector<string> content;
     content.push_back(subtitle);
-    // int max_len = (subtitle_max_len - 4 >= (int)subtitle.length()) ? subtitle_max_len : (int)subtitle.length() + 4;
-    // string wrapper(max_len, '-');
-    // string subtitle_padded = " " + subtitle + " ";
-    // int symbol_len = max_len - subtitle_padded.length();
-    // string symbols(symbol_len / 2, '-');
-    // cout << wrapper << "\n";
-    // cout << symbols + subtitle_padded + symbols << "\n";
-    // cout << wrapper << "\n\n";
 
     AsciiHandler::display_box_layout("", content, color, "white", 50);
 
@@ -86,16 +66,14 @@ void IOHandler::output_subtitle(const string &subtitle, string color) {
 void IOHandler::write_dialoge(string dialog){
      for (const char c : dialog) {
         std::cout << c << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        // std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
 void IOHandler::write_story(string dialog){
      for (const char c : dialog) {
         std::cout << c << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        // std::this_thread::sleep_for(std::chrono::milliseconds(5));
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
 }
 
