@@ -97,5 +97,5 @@ int EntityLogic::get_hit_chance_normal(BattleModel* battleModel) {
 }
 
 int EntityLogic::get_hit_chance_heavy(BattleModel* battleModel) {
-    return (this->get_hit_chance_normal(battleModel) * 0.75);
+    return (EntityLogic::get_hit_chance_normal(battleModel) * 0.75);
 }

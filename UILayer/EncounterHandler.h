@@ -11,9 +11,7 @@
 class EncounterHandler {
 public:
     LogicWrapper *logicWrapper;
-    IOHandler *ioHandler;
-    AsciiHandler *asciiHandler;
-    EncounterHandler(LogicWrapper *logicWrapper,IOHandler *ioHandler, AsciiHandler *asciiHandler);
+    EncounterHandler(LogicWrapper *logicWrapper);
 
     // Updated declaration with a parameter
     //void initialize_encounter(PartyModel* partyModel);

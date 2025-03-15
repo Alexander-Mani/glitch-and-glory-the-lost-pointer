@@ -61,7 +61,7 @@ deb:
 	gdb ./debug.out
 
 clean:
-	rm -f ./glitch-and-glory.out ./debug.out
+	rm -f $(OBJFILES) ./glitch-and-glory.out ./debug.out
 	$(info Cleaned project)
 
 fresh:

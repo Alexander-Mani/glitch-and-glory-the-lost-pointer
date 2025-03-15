@@ -13,22 +13,20 @@
 #include <vector>
 
 
-
-
 using namespace std;
+
+
 
 class OverworldHandler {
 public:
     LogicWrapper *logicWrapper; // Pointer to the LogicWrapper
-    AsciiHandler *asciiHandler;
-    IOHandler *ioHandler;
     BattleHandler *battleHandler;
     OverworldModel *overworldModel;
     EncounterHandler* encounterHandler;
 
 
     // Pass a pointer to LogicWrapper so we can access EntityLogic
-    OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler* ioHandler, BattleHandler* battleHandler, EncounterHandler* encounterHandler);
+    OverworldHandler(LogicWrapper* logicWrapper, BattleHandler* battleHandler, EncounterHandler* encounterHandler);
 
     /*
     * @brief Asks the user for Entity for player and for opponent. Then starts the battle.

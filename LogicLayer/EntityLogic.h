@@ -25,10 +25,10 @@ public:
     EntityModel* generate_enemy_entity(EntityModel *entityModel);
     
     // Calculates hit chance for normal attack
-    int get_hit_chance_normal(BattleModel* battleModel);
+    static int get_hit_chance_normal(BattleModel* battleModel);
     
     // Calculates hit chance for heavy attack
-    int get_hit_chance_heavy(BattleModel* battleModel);
+    static int get_hit_chance_heavy(BattleModel* battleModel);
     #include <vector>
     
     vector<string> enemy_names = {
