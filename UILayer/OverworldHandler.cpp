@@ -3,9 +3,9 @@
 #include "BattleHandler.h"
 #include "EncounterHandler.h"
 #include "IOHandler.h"
-#include "../Models/AllEntities.h"      // For all entity models
+#include "../Models/AllEntities.h"      
 #include "../Models/BattleModel.h"
-#include "../LogicLayer/EntityLogic.h"    // For EntityLogic
+#include "../LogicLayer/EntityLogic.h"    
 #include "../Models/OverworldModel.h"
 #include "../Models/PartyModel.h"
 #include "../Models/AllEquipment.h"
@@ -86,15 +86,14 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
     IOHandler::clear_terminal();
     if (action == "Battle") {
         EntityModel *character = this->choose_party_member(overworldModel);
-        //EntityModel* enemyModel = this->logicWrapper->entityLogic->get_random_entity();
+
         EntityModel* enemyModel = this->logicWrapper->entityLogic->generate_enemy_entity(character);
         this->battle(overworldModel,character, enemyModel, false);
-        // cout << this->battle(overworldModel,character, enemyModel, false) << endl;
+
 
     } else if (action == "View Party") {
 
         AsciiHandler::display_hud(overworldModel->get_party_model()->display_party(), '*', 150);
-        // overworldModel->get_party_model()->display_party();
         IOHandler::glitch_sleep(3);
         IOHandler::clear_terminal();
 
@@ -109,7 +108,6 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
             WeaponModel* weapon = (*weapons)[index];
             if ((unsigned int)weapon->get_price() > overworldModel->get_party_model()->get_money()) { 
                 IOHandler::output_subtitle("You can't afford that", "pink");
-                // cout << "You can't afford that" << endl;
                 IOHandler::glitch_sleep(1);
                 return move(overworldModel, overworldModel->get_curr_location());
             }
@@ -121,7 +119,6 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
             ArmorModel* armor = (*armors)[index];
             if ((unsigned int)armor->get_price() > overworldModel->get_party_model()->get_money()) { 
                 IOHandler::output_subtitle("You can't afford that", "pink");
-                // cout << "You can't afford that" << endl;
                 IOHandler::glitch_sleep(1);
                 return move(overworldModel, overworldModel->get_curr_location());
             }
@@ -138,7 +135,6 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         if(index == implants->size()) return move(overworldModel, overworldModel->get_curr_location());
         ImplantModel* implant = (*implants)[index];
         if ((unsigned int)implant->get_price() > overworldModel->get_party_model()->get_money()) { 
-            // cout << "You can't afford that" << endl;
             IOHandler::output_subtitle("You can't afford that", "pink");
 
             IOHandler::glitch_sleep(1);
@@ -204,7 +200,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         
         if (chance == 1){
             cout << "You Succeed, You gain the mark of the rat!, gain one level!";
-            // AsciiHandler::display_box_layout();
+
             int xp = overworldModel->get_party_model()->get_level_threshold();
             overworldModel->get_party_model()->increase_xp(xp);
             IOHandler::glitch_sleep(2);
@@ -249,7 +245,7 @@ void OverworldHandler::handle_level_up(OverworldModel *overworldModel){
 
     if (!this->logicWrapper->gameLogic->can_level_up(overworldModel)) return;
     overworldModel->get_party_model()->display_party();
-    // IOHandler::output_title("You Leveled Up!");
+
     unsigned int new_level = this->overworldModel->get_party_model()->get_level()+1; 
 
     content.push_back("");
@@ -259,14 +255,12 @@ void OverworldHandler::handle_level_up(OverworldModel *overworldModel){
     content.push_back("");
 
     AsciiHandler::display_box_layout(title, content, "yellow", "white");
-    // cout << "Your Party is Now Level: " << new_level << endl;
-    // cout << "Select One Character to Give a +"<< new_level <<" To Each Stat!" << endl;
+
     EntityModel* character = this->choose_party_member(overworldModel);
     this->logicWrapper->gameLogic->level_up(overworldModel, character);
 
 
     // After applying 
-    // vector<string> next_content;
     string next_title = "Leveled Up Successfully!";
 
     IOHandler::output_subtitle(next_title, "green");
@@ -285,8 +279,6 @@ void OverworldHandler::handle_random_encounter(OverworldModel *overworldModel){
 
         AsciiHandler::display_box_layout("Encounter", description_lines, "yellow", "yellow");
 
-        // cout << "You Hear something behind you..." << endl;
-        // cout << "Who responds?" << endl;
         EntityModel *entityModel = this->choose_party_member(overworldModel);
         //turn to bool will be battle, and make the guy fight you
         this->encounterHandler->get_random_encounter(overworldModel->get_party_model(), entityModel);
@@ -297,25 +289,14 @@ bool OverworldHandler::battle(OverworldModel* overworldModel, EntityModel *playe
         //Choose our dude to fight
         bool status = false;
        
-        // bool player_starts = true;
-        // if (enemyModel->get_evade() > character->get_evade()) player_starts = false;
         BattleModel* battleModel = new BattleModel(playerModel, enemyModel, true, overworldModel->get_party_model()->get_money());
 
-        // this->battleHandler->start_battle(battleModel);
         
-        // BattleModel* battleModel = new BattleModel(character, enemyModel, true);
         unsigned int xp = 0;
         unsigned int money = 0;
         unsigned int bribe = 0;
 
         this->battleHandler->start_battle(battleModel);
-
-        // BattleModel* battleModel = new BattleModel(character, enemyModel, true);
-        // unsigned int xp = 0;
-        // unsigned int money = 0;
-        // unsigned int bribe = 0;
-
-        // this->battleHandler->start_battle(battleModel);
 
         // Remove bribed money from party if 
         if(battleModel->bribed){
@@ -324,40 +305,16 @@ bool OverworldHandler::battle(OverworldModel* overworldModel, EntityModel *playe
             money -= bribe;
         }
         // If the player did not flee, then add xp and money
-        // if(!battleModel->fled){
-        //     xp = this->logicWrapper->gameLogic->deligate_post_battle_xp(overworldModel);
-        //     money = this->logicWrapper->gameLogic->deligate_post_battle_money(overworldModel);
-        // }   
         if((!battleModel->fled || !is_boss) && this->logicWrapper->battleLogic->player_won(battleModel)){
             xp = this->logicWrapper->gameLogic->deligate_post_battle_xp(overworldModel);
             money = this->logicWrapper->gameLogic->deligate_post_battle_money(overworldModel);
         }   
-        // if(bribe > 0){
-        //     cout << "You Recieved: " << xp << " xp and: " << money << " eddies and bribed for " << bribe << " eddies" << endl;    
-        // } 
-        // else {
-        //     cout << "You Recieved: " << xp << " xp and: " << money << " eddies" << endl;
-        // }
+
         if (!is_boss) AsciiHandler::display_end_of_battle(battleModel, xp, money);
 
-        // delete(battleModel);
-        // delete(enemyModel);
         if (this->logicWrapper->battleLogic->player_won(battleModel)) status = true;
 
-        // // Remove bribed money from party if 
-        // // if(battleModel->bribed){
-        // //     bribe = battleModel->get_bribe_amount();
-        // //     overworldModel->get_party_model()->decrease_money(bribe);
-        // //     money -= bribe;
-        // // }
-        // // If the player did not flee, then add xp and money
-        
-        // if (bribe > 0) {
-        //     ret_str = "You Received: +" + std::to_string(xp) + " xp and: +$" + std::to_string(money) + 
-        //               " eddies and bribed for -$" + std::to_string(bribe) + " eddies";
-        // } else {
-        //     ret_str = "You Received: +" + std::to_string(xp) + " xp and: +$" + std::to_string(money) + " eddies";
-        // }
+
         delete(battleModel);
         delete(enemyModel);
         return status;

@@ -47,15 +47,6 @@ public:
     size_t get_level() const { return this->level; }
     void increment_level(){this->level++; }
     size_t get_level_threshold() const { return this->party_xp_level_up_threshold; }
-    //virtual void take_damage(int damage) {
-    //    hp -= damage;
-    //    if(hp < 0) hp = 0;
-    //}
-
-    /*
-     * @brief Simply gets the weapon for Entity
-     */
-
 
 };
 #endif // ENTITY_MODEL_H

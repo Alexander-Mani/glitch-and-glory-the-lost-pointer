@@ -4,7 +4,7 @@
 #include "BattleHandler.h"
 #include "EncounterHandler.h"
 #include "IOHandler.h"
-#include "../LogicLayer/LogicWrapper.h"  // Include LogicWrapper
+#include "../LogicLayer/LogicWrapper.h"  
 
 #include "../Models/BattleModel.h"
 #include "AsciiHandler.h"
@@ -20,7 +20,7 @@ using namespace std;
 
 class OverworldHandler {
 public:
-    LogicWrapper *logicWrapper; // Pointer to the LogicWrapper
+    LogicWrapper *logicWrapper; 
     BattleHandler *battleHandler;
     OverworldModel *overworldModel;
     EncounterHandler* encounterHandler;
@@ -46,14 +46,6 @@ public:
     protected:
     EntityModel* choose_party_member(OverworldModel *overworldModel);
 
-    //    string text = 
-//R"(Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-//Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-//when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-//It has survived not only five centuries, but also the leap into electronic typesetting, 
-//remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset 
-//sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like 
-//Aldus PageMaker including versions of Lorem Ipsum.)";
 
 string DENY_JOB_LETTER = R"([ACCESS DENIED] Application Status Update
 

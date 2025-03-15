@@ -19,9 +19,6 @@ public:
     // Performs a normal attack on the defender.
     int attack(BattleModel* battleModel, int attack_type);
 
-    // Performs a heavy attack on the defender.
-    int heavy_attack(BattleModel* battleModel);
-
     // Calculates the damage dealt during an attack.
     int calculate_damage(BattleModel* battleModel, int attack_type);
 

@@ -20,7 +20,6 @@ int AttackLogic::attack(BattleModel *battleModel, int attack_type)
     }
 
     int calc_damage = calculate_damage(battleModel, attack_type);
-    assert(calc_damage >= 0); // This should never be 0 or lower
 
     // Decrease defender's HP.
     battleModel->get_defender()->decrease_hp(calc_damage);
