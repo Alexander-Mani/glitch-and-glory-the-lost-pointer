@@ -89,6 +89,15 @@ vector<EntityModel*> PartyModel::get_party_members(){
     
 //  }
 
+//vector<string> PartyModel::display_inventories(){
+//    vector<string> output;
+//    for (auto member : members) {
+//
+//        //member->display_inventory();
+//    }
+//
+//}
+
 vector<string> PartyModel::display_party() {
     vector<string> output;
 
@@ -106,6 +115,7 @@ vector<string> PartyModel::display_party() {
         vector<string> lines = member->get_stats_lines();
         maxLines = max(maxLines, static_cast<int>(lines.size()));
         statsLines.push_back(lines);
+        //member->display_inventory();
     }
 
     // Build each line of member stats side by side

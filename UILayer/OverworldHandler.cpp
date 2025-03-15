@@ -94,13 +94,14 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
     } else if (action == "View Party") {
 
         AsciiHandler::display_hud(overworldModel->get_party_model()->display_party(), '*', 150);
+        IOHandler::output_options("Continue", {"Continue"});
+        IOHandler::input_choose_option({"Continue"});
         // overworldModel->get_party_model()->display_party();
-        IOHandler::glitch_sleep(3);
         IOHandler::clear_terminal();
 
     } else if (action == "Browse Equipment") {
         bool purchase;
-        overworldModel->get_party_model()->display_party();
+        AsciiHandler::display_hud(overworldModel->get_party_model()->display_party(), '*', 150);
         vector<WeaponModel*>* weapons = overworldModel->get_equipment_factory()->get_weapons();
         vector<ArmorModel*>* armors = overworldModel->get_equipment_factory()->get_armors();
         overworldModel->get_equipment_factory()->show_combat_gear();
@@ -131,7 +132,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         } 
     } else if (action == "Browse Implants") {
         bool purchase;
-        overworldModel->get_party_model()->display_party();
+        AsciiHandler::display_hud(overworldModel->get_party_model()->display_party(), '*', 150);
         vector<ImplantModel*>* implants = overworldModel->get_equipment_factory()->get_implants();
         overworldModel->get_equipment_factory()->show_cyber_augments();
         unsigned int index = IOHandler::input_choose_index(implants->size()+1);

@@ -1,6 +1,7 @@
 #include "EntityModel.h"
 
 #include <iostream>
+#include <string>
 #include <vector>
 using namespace std;
 //#include "../AllEquipment.h"
@@ -135,34 +136,36 @@ EquipmentModel* EntityModel::get_equipped_item(const std::string &slot) const {
 
 //vector<int> EntityModel:: 
 
-void EntityModel::display_inventory() const {
-    cout << "\n|----------------------------|"
-         << "\n|----| Inventory Items |----|"
-         << "\n|----------------------------|\n";
-
+vector<string> EntityModel::get_inventory() const {
+    //cout << "\n|----------------------------|"
+    //     << "\n|----| Inventory Items |----|"
+    //     << "\n|----------------------------|\n";
+    vector<string> inventory_vect;
+    string item;
     for (const auto &pair : inventory) {
-        cout << "| " << pair.first << ": ";
+        item = "";
+        item+= "| " + pair.first +": ";
         if (pair.second) {
-            cout << pair.second->get_name();
+            item+= pair.second->get_name();
             if (pair.second->get_max_hp())
-                cout << " Max hp: +"<<pair.second->get_max_hp();
+                item+= " Max hp: +"+to_string(pair.second->get_max_hp());
             if (pair.second->get_atk())
-                cout << " | Attack: +"<<pair.second->get_atk();
+                item+= " | Attack: +"+to_string(pair.second->get_atk());
             if (pair.second->get_def())
-                cout << " | Defence: +"<<pair.second->get_def();
+                item+= " | Defence: +"+to_string(pair.second->get_def());
             if (pair.second->get_magic())
-                cout << " | Hacking: +"<<pair.second->get_magic();
+                item+= " | Hacking: +"+to_string(pair.second->get_magic());
             if (pair.second->get_crit())
-                cout << " | Critical: +"<<pair.second->get_crit();
+                item+= " | Critical: +"+to_string(pair.second->get_crit());
             if (pair.second->get_evade()) 
-                    cout << " | Evasion: +"<<pair.second->get_evade();
+                item+= " | Evasion: +"+to_string(pair.second->get_evade());
         } else {
-            cout << "None";
+            item+= "None";
         }
-        cout << "\n";
+        inventory_vect.push_back(item);
     }
 
-    cout << "|----------------------------|\n";
+return inventory_vect;
 }
 
 
