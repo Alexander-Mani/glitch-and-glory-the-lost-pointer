@@ -162,6 +162,8 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
             if(this->battle(overworldModel,character, bossPhase2Model, true)){
                 IOHandler::clear_terminal();
                 IOHandler::write_story(StoryHandler::FINAL_LORE_DUMP);
+
+                IOHandler::output_title("You have won! Thanks for playing.", "green");
                 return;
             }
         }
