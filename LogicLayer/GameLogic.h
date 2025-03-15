@@ -25,6 +25,7 @@ class GameLogic{
     unsigned int get_stay_night_price(OverworldModel* overworldModel);
     bool won_gamble(OverworldModel* overworldModel, int amount);
     bool check_game_over(OverworldModel* overworldModel);
+    string change_map_location(OverworldModel* overworldModel ,string map, string location); 
 
 
     

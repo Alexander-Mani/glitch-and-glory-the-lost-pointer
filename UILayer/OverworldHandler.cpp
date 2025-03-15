@@ -27,13 +27,11 @@ OverworldHandler::OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asc
 void OverworldHandler::initialize_overworld() {
     this->ioHandler->clear_terminal();
     string city = this->asciiHandler->CITY;
-    string map = this->asciiHandler->GAME_MAP;
     string title = this->asciiHandler->TITLE;
     string subtitle = this->asciiHandler->SUBTITLE;
     cout << title << endl;
     cout << subtitle << endl;
     cout << city << endl;
-    cout << map << endl;
     const std::string boldRed = "\033[1;31m";
     const std::string reset = "\033[0m";
     // Fancy type effect for intro
@@ -55,18 +53,20 @@ void OverworldHandler::initialize_overworld() {
 }
 
 void OverworldHandler::move(OverworldModel *overworldModel,string location){
+    string map = this->logicWrapper->gameLogic->change_map_location(overworldModel, asciiHandler->GAME_MAP, location);
+    cout << map << endl;
     if (this->logicWrapper->gameLogic->check_game_over(overworldModel)){
         cout << "You lost" << endl;
         return;
     } 
     this->handle_level_up(overworldModel);
-    string new_location = this->logicWrapper->gameLogic->change_location(overworldModel, location);
-    //string new_location = overworldModel->set_curr_location(location);
-    vector<string> locations = overworldModel->get_routes(new_location);
-    if (location != new_location){
+    if (location != overworldModel->get_curr_location()){
         this->handle_random_encounter(overworldModel);
     }
-    this->ioHandler->output_options(new_location, locations);
+    location = this->logicWrapper->gameLogic->change_location(overworldModel, location);
+    //string location = overworldModel->set_curr_location(location);
+    vector<string> locations = overworldModel->get_routes(location);
+    this->ioHandler->output_options(location, locations);
     string option = this->ioHandler->input_choose_option(locations);
     vector<string> actions = overworldModel->get_actions();
     bool is_action = this->logicWrapper->gameLogic->is_action(actions, option);
@@ -131,6 +131,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         vector<ImplantModel*>* implants = overworldModel->get_equipment_factory()->get_implants();
         overworldModel->get_equipment_factory()->show_cyber_augments();
         unsigned int index = this->ioHandler->input_choose_index(implants->size()+1);
+        if(index == implants->size()) return move(overworldModel, overworldModel->get_curr_location());
         ImplantModel* implant = (*implants)[index];
         if ((unsigned int)implant->get_price() > overworldModel->get_party_model()->get_money()) { 
             cout << "You can't afford that" << endl;

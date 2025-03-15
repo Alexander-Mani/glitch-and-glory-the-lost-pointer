@@ -17,11 +17,11 @@
 // Default constructor in case you want to initalize without params such as in the begining
 OverworldModel::OverworldModel(PartyModel* partyModel)
     : current_location("Streets"), 
-      ascii_location_pointer(0),  // Note: this assigns a value, not a reference
       ascii_art(""),
       partyModel(partyModel)
     {
-    equipmentFactory = new EquipmentFactory();
+    this->equipmentFactory = new EquipmentFactory();
+    this->ascii_location_pointer = this->index_map["Streets"];
     }
 
 PartyModel* OverworldModel::get_party_model(){
