@@ -21,7 +21,7 @@ const std::string StoryHandler::INTRO_MISSION = R"(
 
 The Mission
 
-Your crew has been hired to recover the lost wages—but the credits aren’t just sitting in a vault. 
+Your crew has been hired to recover the lost wages—but the Eddies($) aren’t just sitting in a vault. 
 They've been minted onto a blockchain pointer, locked within the neural interface of Samherji’s CEO. 
 To complete your contract, you’ll have to fight him and extract the data straight from his brain.
 )";
@@ -52,7 +52,7 @@ const std::string StoryHandler::ELON_ATMO_2 = "(He gestures, activating an energ
 const std::string StoryHandler::ELON_ATMO_3 = "(Elontron stumbles back, his body failing. He chuckles—distorted, digital, inhuman.)\n";
 
 const std::string StoryHandler::ELON_DIALOGUE_2 = R"("Did you really think you were fighting me? Flesh is a liability. 
-    I left that behind long ago."
+I left that behind long ago."
 )";
 
 const std::string StoryHandler::ELON_ATMO_4 = R"(
@@ -74,7 +74,7 @@ const std::string StoryHandler::FINAL_LORE_DUMP = R"(
 Your crew’s hacker extracts the pointer, decrypting its payload. The truth unravels before you like a virus spreading through the network…
 
 The Rise of Samherji’s Digital Tyranny
-The credits weren’t just wages. They were proof—irrefutable proof—that Samherji had been laundering billions through black-market neural exchanges, funneling stolen wealth into secret off-world colonies.
+The Eddies($) weren’t just wages. They were proof—irrefutable proof—that Samherji had been laundering billions through black-market neural exchanges, funneling stolen wealth into secret off-world colonies.
 
 The fishermen’s wages? Just a fraction of what had been siphoned. When the workers resisted, they weren’t just cast aside—they were erased, their biometric data scrubbed from the system, rendering them legally nonexistent.
 

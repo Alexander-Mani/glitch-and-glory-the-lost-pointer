@@ -278,7 +278,7 @@ string BattleLogic::battle_over_msg(BattleModel* battleModel){
     bool bribed = battleModel->bribed;
     bool fled = battleModel->fled;
 
-    if(fled) return "You have fled the battle, you gained no XP or Eddies";
+    if(fled) return "You have fled the battle, you gained no XP or Eddies($)";
     if(bribed) return "You bribed your way out of this one!";
     if(!game_won) return "You have not won yet...";
 
