@@ -39,7 +39,7 @@ int AttackLogic::calculate_damage(BattleModel *battleModel, int attack_type)
     defender_def = defender->get_def();
     defender_max_hp = defender->get_max_hp();
 
-    int dmg_dealt = (attacker_atk * 50 / defender_def) * 0.3;
+    int dmg_dealt = (attacker_atk * 30 / defender_def) * 0.3;
 
     // Make sure damage doesn't become negative
     if (dmg_dealt > 0 && attack_type == this->ATTACK_HEAVY)
