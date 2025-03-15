@@ -19,10 +19,12 @@ AsciiHandler::AsciiHandler(LogicWrapper *logicWrapper, IOHandler* ioHandler)
     : logicWrapper(logicWrapper), ioHandler(ioHandler)
 {}
 
+
 void AsciiHandler::display_ascii(const string& entity_name) {
     cout << "Displaying ASCII art for: " << entity_name << endl;
     // Placeholder for actual ASCII art retrieval and rendering
 }
+
 
 void AsciiHandler::display_character_selector(vector<EntityModel*>* entities){
     (void) entities;
@@ -93,6 +95,7 @@ string AsciiHandler::get_random_neon_color() {
     
     return neonColors[dist(gen)];
 }
+
 
 // Helper: Returns an ANSI escape sequence based on the symbol and chosen neon color.
 string AsciiHandler::get_gradient_color(char c, string &neon_color) {
@@ -169,6 +172,7 @@ string AsciiHandler::get_gradient_color(char c, string &neon_color) {
     }
 }
 
+
 // Helper: Colorizes a single line using the provided neon color name.
 string AsciiHandler::colorize_line(string &line, string &neon_color) {
     const string reset = "\033[0m";
@@ -178,6 +182,7 @@ string AsciiHandler::colorize_line(string &line, string &neon_color) {
     }
     return colored;
 }
+
 
 void AsciiHandler::display_battle_entities(BattleModel* battleModel) {
     vector<string> player_ascii = battleModel->playerEntityModel->get_ascii();
@@ -229,12 +234,12 @@ void AsciiHandler::display_battle_entities(BattleModel* battleModel) {
 }
 
 
-
 void AsciiHandler::display_turn(BattleModel* battleModel){
     this->display_battle_entities(battleModel);
     this->display_battle_stats(battleModel);
     this->display_attack_hud(battleModel);
 }
+
 
 int AsciiHandler::get_battle_width(BattleModel* battleModel){
     // Fetch Entity sizes to determine total_width
@@ -244,6 +249,7 @@ int AsciiHandler::get_battle_width(BattleModel* battleModel){
 
     return total_width;
 }
+
 
 void AsciiHandler::display_hud(const vector<string> &custom_msg, char padding_symbol, size_t total_width) {
     // Top border without colors
@@ -274,40 +280,6 @@ void AsciiHandler::display_hud(const vector<string> &custom_msg, char padding_sy
     // Bottom border
     cout << this->ioHandler->apply_neon_colors(string(total_width, padding_symbol) + "\n");
 }
-
-
-// void AsciiHandler::display_hud(const vector<string> &custom_msg, char padding_symbol, size_t total_width){
-//     // ANSI escape codes for neon color (bright cyan) and reset
-//     const string neon = "\033[1;36m"; // bright cyan
-//     const string reset = "\033[0m";
-
-//     // Top border in neon color
-//     cout << neon << string(total_width, padding_symbol) << reset << endl;
-
-//     // Top padding row
-//     cout << neon << padding_symbol << reset << string(total_width-2, ' ') 
-//          << neon << padding_symbol << reset << endl;
-
-//     // For each message, center it and print neon border on both sides
-//     for(const string &msg : custom_msg){
-//         assert(msg.size() < total_width);
-//         int msg_total_padding = total_width - msg.size();
-//         int msg_left_padding = msg_total_padding / 2;
-//         int msg_right_padding = msg_total_padding - msg_left_padding;
-//         cout << neon << padding_symbol << reset 
-//              << string(msg_left_padding-1, ' ') << msg 
-//              << string(msg_right_padding-1, ' ') 
-//              << neon << padding_symbol << reset << endl;
-//     }
-
-//     // Bottom padding row
-//     cout << neon << padding_symbol << reset << string(total_width-2, ' ') 
-//          << neon << padding_symbol << reset << endl;
-
-//     // Bottom border in neon color
-//     cout << neon << string(total_width, padding_symbol) << reset << endl;
-// }
-
 
 
 void AsciiHandler::display_attack_hud(BattleModel* battleModel){
@@ -343,6 +315,7 @@ void AsciiHandler::display_attack_hud(BattleModel* battleModel){
     // Display the hud message
     this->display_hud(hud_msg, '*', total_width);
 }
+
 
 void AsciiHandler::display_battle_stats(BattleModel* battleModel){
 
@@ -402,6 +375,7 @@ void AsciiHandler::display_battle_stats(BattleModel* battleModel){
     }
 }
 
+
 size_t AsciiHandler::calculate_max_stat_length(const vector<string>& stat_names, const vector<int>& stats) {
     size_t max_length = 0;
     for (size_t i = 0; i < stat_names.size() && i < stats.size(); ++i) {
@@ -411,69 +385,6 @@ size_t AsciiHandler::calculate_max_stat_length(const vector<string>& stat_names,
     return max_length;
 }
 
-
-// void AsciiHandler::display_box_layout(const string &title, const vector<string> &output) {
-//     const int inner_width = 148; // Number of characters between the vertical borders
-    
-//     string left_filler;
-//     string right_filler;
-//     string bottom_filler;
-
-    
-//     // Adjust the title if it is too long (reserve 2 spaces for padding)
-//     string display_title = title;
-//     if (static_cast<int>(display_title.size()) > inner_width - 2) {
-//         display_title = display_title.substr(0, inner_width - 2);
-//     }
-    
-//     int title_len = display_title.size();
-//     int total_filler = inner_width - (title_len + 2);
-//     int left_filler_count = total_filler / 2;
-//     int right_filler_count = total_filler - left_filler_count;
-    
-//     for (int i = 0; i < left_filler_count; ++i) {
-//         left_filler += u8"─";
-//     }
-//     for (int i = 0; i < right_filler_count; ++i) {
-//         right_filler += u8"─";
-//     }
-
-//     for (int i = 0; i < inner_width; ++i) {
-//         bottom_filler += u8"─";
-//     }
-
-    
-
-
-
-//     // Build the top border with the centered title.
-//     string top_border = u8"┌" 
-//                            + left_filler 
-//                            + " " + display_title + " " 
-//                            + right_filler
-//                            + u8"┐\n";
-    
-//     // Build the content lines.
-//     string content;
-//     for (const auto &line : output) {
-//         string adjusted_line = line;
-//         // Ensure the line is exactly 'inner_width' characters: truncate if too long or pad with spaces if too short.
-//         if (static_cast<int>(adjusted_line.size()) > inner_width) {
-//             adjusted_line = adjusted_line.substr(0, inner_width);
-//         } else if (static_cast<int>(adjusted_line.size()) < inner_width) {
-//             adjusted_line.append(inner_width - adjusted_line.size(), ' ');
-//         }
-//         content += u8"│" + adjusted_line + u8"│\n";
-//     }
-
-
-    
-//     // Build the bottom border.
-//     string bottom_border = u8"└" + bottom_filler + u8"┘\n";
-    
-//     // Output the complete box.
-//     cout << this->ioHandler->apply_neon_colors(top_border + content + bottom_border);
-// }
 
 string AsciiHandler::colorize_box(string text, string color){
     string color_code;
@@ -490,6 +401,7 @@ string AsciiHandler::colorize_box(string text, string color){
     return color_code + text + this->ioHandler->reset_code;
     
 }
+
 
 void AsciiHandler::display_box_layout(const std::string &title, const std::vector<std::string> &output, string outline_color, string content_color) {
     const int inner_width = 135; // Number of characters between the vertical borders

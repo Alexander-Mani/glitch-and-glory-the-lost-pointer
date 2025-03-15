@@ -56,7 +56,16 @@ void OverworldHandler::initialize_overworld() {
 
 void OverworldHandler::move(OverworldModel *overworldModel,string location){
     if (this->logicWrapper->gameLogic->check_game_over(overworldModel)){
-        cout << "You lost" << endl;
+        this->ioHandler->clear_terminal();
+        vector<string> gameover_msg;
+        gameover_msg.push_back("");
+        gameover_msg.push_back("All Entities in your party have died.");
+        gameover_msg.push_back("");
+        gameover_msg.push_back("Thanks for playing!");
+        gameover_msg.push_back("");
+
+
+        this->asciiHandler->display_box_layout("Game over", gameover_msg);
         return;
     } 
     this->handle_level_up(overworldModel);
@@ -161,7 +170,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
             if (won) status_msg = "You won! " + to_string(gamble_amount);
             else status_msg = "You lost " + to_string(gamble_amount);
         }else status_msg = "You can't afford that";
-        ioHandler->output_title(status_msg);
+        this->ioHandler->output_title(status_msg);
         this->ioHandler->glitch_sleep(3);
 
     } else if (action == "Apply For Job") {

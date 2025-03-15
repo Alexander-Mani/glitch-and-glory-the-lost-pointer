@@ -52,7 +52,7 @@ debug: clean
 	$(CXX) $(CXXFLAGS) $(CXXDEBUGFLAGS) -o debug.out $(CXXFILES)
 	gdb ./debug.out
 
-run:
+run: clean
 	$(CXX) $(CXXFLAGS) -o glitch-and-glory.out $(CXXFILES)
 	./glitch-and-glory.out
 
