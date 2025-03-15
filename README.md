@@ -1,129 +1,217 @@
-# Glitch & Glory - The lost pointer
+# Glitch & Glory: 
+## The Lost Pointer
 
+A Cyberpunk JRPG.
 
+# For Players
 
+In this turn based JRPG inspired by the Cyberpunk genre and Swords And Sandals the objective is to storm the HQ and defeat the final boss.
 
----
-title: Naming Conventions
----
-# TODO / Work deligation
-*STANDARDS: [Task][User][branch][Affected files]*
+To achieve this the you will want to head to the arena to sharpen your game skills, gain EXP and Money so you can increase the parties stats
+and buy fancy new equipment from the Ripper and Shop.
 
-## Phase 1
-**FRANZ**
-1. [WIP] [Attack Logic][Franz][attack][AttackLogic, WeaponModel.h, EntityLogic(maybe), EntityModel (possibly other Entity models later on)]
-    a. Finna út hvernig við breytum stats á Entities þegar það er ehv attack/defence [done]
-        - Búum til methods fyrir entities sem getur breytt values
-    b. Búa til weapon class með mismunandi attack stats [done]
-        - EzPz
-    c. Gera ehv simple algo sem gerir þetta fair, mögulega hafa low, med, high attack eins og í sword and sandals, annars er leikurinn 100% random [semi-done]
-        - Fór aðeins aðra leið til að einfalda 
-            I.  WeaponModel.hit_rate segir til um hvort þú hittir á óvin og 
-            II.  WeaponModel.damage segir til um árásagetu þína. Damage er reiknað () 
-2. BATTLE 
-    a. Komast inn í bardaga [solved WIP]
-    b. Finna út hvernig við munum skiptast á milli characters [bool after actions][NOT Started]
-    c.  Controls, finna út hvað er hægt að gera í Battle [Attack, Special, Forfit... yet to be thought out][NOT Started]
-    d Prenta win/loss skilaboð og exita leik [NOT Started]
-    e. Add weaopons to attribute
-    
+The gameplay loop is simple but offers some depth Explore the maps many options while increasing your power all for the final goal
+of finally defeating the boss in hq.
 
-**ALEXANDER**
+On your journey you will get random encounters that can increase or decrease your stats, choose wisely how to deal with these.
 
-1. [ ] [ ]
-    1. Make a plan for  Currency, equipment and leveling
-    2. Make a overworld_map + game_loop
-        -
+If you need a rest and some health back stay a night at the appartments to refuel for the next day of grinding.
 
-## Phase 2
+The Combat it self is simple but does provide the Player with choices to maximize the chance of success, will you go for the swift
+high hit low damage attack or will you gamble on the heavy wind up to deal more damage but leave your self open to dodges and counters,
+the choice is yours, you can even try to outsmart your opponents by hacking into there bio-mechanics or you can flee like a coward, everything
+is fair play if it means achieving your goal of overthrowing the tyrant.
 
-1. [ ] [Map / Storyline ][Tommi][game-loop][...]
- a. Semja smá söguþráð, ehv start skilaboð kannski og svo hver er tilgangurinn með leiknum, hvað er að frétta
- b. Finna út hvernig mappið mun líta út, hvernig ætlum við að display-a það og hvort við ætlum
- c. Transition til og frá battles
- d. Hvað verður hægt að gera, kaupa potions, weapons or smth? Finna útúr því
+How fast can you beat the game?
 
+Go ahead give it your best shot!
 
-# Naming Conventions
+# For Devs
+Glitch & Glory: The Lost Pointer is a simple turn-based JRPG framework designed to demonstrate basic polymorphic gameplay. 
+The codebase allows multiple types of entities (both allies and foes), with inheritance or variants to create diversified characters and behaviors. 
+It also includes optional features for overworld travel, random encounters, leveling, and more.
 
-Consistent naming conventions improve code readability and maintainability. Below are the standard naming conventions to follow in C++ projects.
+## 1. Game Loop
+1. Taversal: Player navigates the overworld map with their party to duel, level and buy equipment, untill they are powerfull enough to beat the boss in hq.
 
-## General Conventions
+2. Dueling: Players select one mercenary character from their party to face off against an enemy. Each character has these stats:
+- Max Health (max_hp)
+- Health (hp)
+- Attack (atk)
+- Defense (def)
+- Accuracy (acc)
+- Evaasion (evade)
+- Magic / Hacking Points (magic)
+- Critical Hit Chance (crit)
 
-- **Classes**: Use `PascalCase`
-- **Variables**: Use `snake_case`
-- **Class Instances**: Use `camelCase`
-- **Methods**: Use `snake_case`
-- **Directories**: Use `PascalCase`
-- **Class Files**: Use `PascalCase`
-- **Other Files**: Use `snake_case`
+Once enemies are beaten, players gain experience points and money.
 
+## 2. Code Structure
+**Overview of the Layered Architecture**
 
-## Directory and File Naming
-
-Organize your directories and files using the proper naming conventions:
-
-```sh
-# Example directory and file structure
-ProjectRoot/
-└── UserManagement/  # Directory in PascalCase
-    ├── UserAccount.h  # Class file in PascalCase
-    ├── UserAccount.cpp
-    ├── user_helpers.h  # Other file in snake_case
-    └── user_helpers.cpp
-
+```bash
+├── Art
+│   └── (Contains art not directly used in the game but for devlopment, and a handy asciiflipper.py)
+├── data
+│   └── project_description.md
+├── debug.h
+├── glitch-and-glory.out
+├── LogicLayer
+│   ├── AttackLogic.cpp
+│   ├── AttackLogic.h
+│   ├── BattleLogic.cpp
+│   ├── BattleLogic.h
+│   ├── EncounterLogic.cpp
+│   ├── EncounterLogic.h
+│   ├── EntityLogic.cpp
+│   ├── EntityLogic.h
+│   ├── GameLogic.cpp
+│   ├── GameLogic.h
+│   ├── LogicWrapper.cpp
+│   └── LogicWrapper.h
+├── main.cpp
+├── makefile
+├── Models
+│   ├── AllEntities.h
+│   ├── AllEquipment.h
+│   ├── BattleModel.cpp
+│   ├── BattleModel.h
+│   ├── Entities
+│   │   ├── BioEnhancedBerserkerModel.h
+│   │   ├── CyberGladiatorModel.h
+│   │   ├── ElonoTronPhase1Model.h
+│   │   ├── ElonoTronPhase2Model.h
+│   │   ├── EnemyModel.h
+│   │   ├── EntityModel.cpp
+│   │   ├── EntityModel.h
+│   │   └── TechnoOracleModel.h
+│   ├── Equipment
+│   │   ├── ArmorModel.h
+│   │   ├── CyberGear
+│   │   ├── EquipmentFactory.cpp
+│   │   ├── EquipmentFactory.h
+│   │   ├── EquipmentModel.h
+│   │   ├── ImplantModel.h
+│   │   └── WeaponModel.h
+│   ├── OverworldModel.cpp
+│   ├── OverworldModel.h
+│   ├── PartyModel.cpp
+│   ├── PartyModel.h
+├── TODO.md
+└── UILayer
+    ├── AsciiHandler.cpp
+    ├── AsciiHandler.h
+    ├── BattleHandler.cpp
+    ├── BattleHandler.h
+    ├── EncounterHandler.cpp
+    ├── EncounterHandler.h
+    ├── IOHandler.cpp
+    ├── IOHandler.h
+    ├── OverworldHandler.cpp
+    ├── OverworldHandler.h
+    ├── StoryHandler.cpp
+    ├── StoryHandler.h
+    ├── UIHandler.cpp
+    └── UIHandler.h
 ```
 
-Following these conventions ensures a structured and maintainable C++ codebase.
+**Description classes**:
+
+**Logic Layer**
+
+### LogicWrapper
+- A container that instantiates and ties together various logic classes such as `BattleLogic`, `EntityLogic`, `GameLogic`, etc.
+- Provides high-level access to game logic from one place.
+
+### BattleLogic
+- Governs how battles are handled turn by turn.
+- Exposes methods for processing player/computer actions (e.g., Attack, Heavy Attack, Flee, Special).
+- Manages turn toggling, battle completion checks, and outcomes.
+
+### AttackLogic
+- Specifically calculates damage, hit chance, critical hits and other attack specific logic.
+- Contains `attack()`, `heavy_attack()`, `calculate_damage()`, and supporting methods for accuracy.
+
+### EncounterLogic
+- Handles random or scripted “encounters” outside of direct combat, allowing non-battle events or stat changes.
+- Each encounter has a accept and decline, triggered by user choice.
+
+### EntityLogic
+- Creates, retrieves, or modifies entity objects party members, enemies and the boss.
+- Manages stats, inheritance-based differences, and boss-phase transitions if desired.
+
+### GameLogic
+- Manages overworld-level activities: leveling up, awarding money or XP, and “stay the night” healing logic.
+
+**UI Layer**
+
+### IOHandler
+- Responsible for raw input/output operations.
+  - Reads user input from standard in (or other sources).
+  - Prints text to the console and structures the console interface.
+
+### ASCIIHandler
+- Specialized utility for loading, storing, and rendering ASCII art.
+  - Manages the ASCII strings or files for characters, maps, or special effects.
+  - May provide methods to stylize or position ASCII content in the terminal.
+
+### OverworldHandler
+- UI or logic helper specifically for overworld navigation and display.
+  - Handles user interactions while traveling across maps or exploring hubs.
+  - Displays or updates location-based information, including random encounters.
+
+### BattleHandler
+- UI for orchestrating battles from a front-end perspective.
+  - Interprets user decisions in combat, forwards them to `BattleLogic`, and displays battle states.
+  - Could manage turn prompts, show HP bars, or track ephemeral UI feedback (like damage pop-ups).
+
+**Model Layer/ Game data-structures**
+
+### BattleModel
+- Holds a single battle’s state.
+### PartyModel
+- Party composition, level, and XP threshold tracking.
+### OverworldModel
+- For location and progression details.
+- Traversal
+### EntityModel (and subclasses) 
+- Holds character’s stats and art.
+### EquipmentModel (and subclasses)
+- Eqiupment stats.
+### EquipmentFactory
+- Creates ingame armors, weapons and implants.
+
+## 3. Features
+1. **Turn-Based Battles:** Each turn, the active character may choose to do a normal attack, heavy attack, special/hack attack, flee, or bribe.
+2. **Multiple Entity Types:** CyberGladiator, TechnoOracle, BioEnhancedBerserker, custom enemies, and bosses, using inheritance for distinct stats and behaviors.
+3. **Random Encounters:** Optional triggers while traveling in the overworld that can modify stats or offer story flavor.
+4. **Leveling & XP:** Defeating foes awards XP and money; leveling up raises stats.
+5. **Simple CLI/TUI Interaction:** The game runs as a console application, so no heavy dependencies are needed.
+
+## 4. How to Build & Run
+1. Clone or Download the repository.
+2. Ensure a modern C++ compiler (C++17 or later).
+3. Compile all with make file in the root directory:
+```bash
+make
+```
+4. Execute the resulting binary:
+```bash
+./glitch_and_glory
+```
+
+- or Compile and run:
+```bash
+make run
+```
 
 
-
-
-# PA4 - Notes from class for development
-
-## Useful Header Libraries from class [10.03.2025]
-- [Github Repo with header-only c++ libraries](https://github.com/p-ranav/awesome-hpp)
-- [Github Repo fyrir TUI art (insane)](https://github.com/ArthurSonzogni/FTXUI)
-_____________________________________
-
-## Possibly Helpful
-- Templating (one of requirements)
-    - Type Alias
-- Variants (one of requirements)
-- Use compile-time checking such as `constexpr`
-_____________________________________
-
-## Project structure
-
-### Game Ideas
-- Maybe a final fantasy copy?
-- Leveling system?
-
-### Structure Ideas
-Franz:
-- Set up structure with templated values 
-    - This will help us to set up test
-    - Helps with unifying structure of program with all members
-    - Possibly saves time long term, reducing the need to refactor code
-_____________________________________
-
-## Project Instructions
-
-### Game Attributes
-- At least three entities
-    - The player should be able to choose from 3-7 entities
-    - Each entity should have their own stats, commands etc.
-
-
-### README requirements
-- Needs to be designed around the player and developer going over it
-- Player
-    - Needs to have a feel of the game and controls by reading the README.
-- Developer:
-    - Needs to understand the structure of the code from the README.
-
-
-### What can we use?
-- Any C++ version we like
-- We can include any library we want, but we need to state it in the README
-_____________________________________
+## 5. Standards
+- Naming
+    - **Classes**: Use `PascalCase`
+    - **Variables**: Use `snake_case`
+    - **Class Instances**: Use `camelCase`
+    - **Methods**: Use `snake_case`
+    - **Directories**: Use `PascalCase`
+    - **Class Files**: Use `PascalCase`
+    - **Other Files**: Use `snake_case`
