@@ -66,7 +66,7 @@ public:
     }
 
     std::vector<std::string> get_battle_stat_names() const{
-        return {"Health", "Attack", "Defence", "Magic", "Critical", "Evasion"};
+        return {"Health", "Attack", "Defence", "Hacking", "Critical", "Evasion"};
     }
 
     virtual void increase_hp(int amount) {
