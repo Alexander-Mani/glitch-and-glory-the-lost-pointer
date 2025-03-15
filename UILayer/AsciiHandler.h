@@ -77,6 +77,7 @@ public:
     string colorize_box(string text, string color);
     void display_box_layout(const std::string &title, const std::vector<std::string> &output, string outline_color="pink", string content_color="white");
 
+
     // void display_attack_hud(BattleModel* battle_model);
 
     const string CITY =R"(

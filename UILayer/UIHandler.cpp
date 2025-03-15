@@ -14,27 +14,14 @@ using namespace std;
 
 
 UIHandler::UIHandler() 
-    // : overworldHandler(&logicWrapper, &asciiHandler)
 {
     this->logicWrapper = new LogicWrapper();
     this->ioHandler = new IOHandler();
     this->asciiHandler = new AsciiHandler(this->logicWrapper, this->ioHandler);
     this->battleHandler = new BattleHandler(this->logicWrapper, this->asciiHandler, this->ioHandler);
-    this->encounterHandler = new EncounterHandler(this->logicWrapper, this->ioHandler);
+    this->encounterHandler = new EncounterHandler(this->logicWrapper, this->ioHandler, this->asciiHandler);
     this->overworldHandler = new OverworldHandler(this->logicWrapper, this->asciiHandler, this->ioHandler, this->battleHandler, this->encounterHandler);
     
-
-    
-    // Set up menu options and actions
-    // this->menu_options = {"Play Game [phase 2]", "Activate Battle", "Quit"};
-    // this->menu_actions["Play Game [phase 2]"] = [this]() { play_game(); };
-// UIHandler::UIHandler() 
-//     : logicWrapper(), 
-//       ioHandler(), 
-//       asciiHandler(),
-//       overworldHandler(&logicWrapper, &asciiHandler),
-//       battleHandler(&logicWrapper, &asciiHandler)   // Initialize battleHandler here with the pointer
-// {
     // Now you can set up your menu_options and menu_actions, etc.
     this->menu_options = {"Play Game", "Activate Battle", "Activate Encounter", "Quit"};
     this->menu_actions["Play Game"] = [this]() { play_game(); };

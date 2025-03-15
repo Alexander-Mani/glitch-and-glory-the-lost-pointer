@@ -32,6 +32,8 @@ TARGETS = debug main
 
 .PHONY: all fresh clean
 
+OBJFILES = $(CXXFILES:.cpp=.o)
+
 all: main
 
 main:
@@ -43,8 +45,13 @@ debug: clean
 	$(CXX) $(CXXFLAGS) $(CXXDEBUGFLAGS) -o debug.out $(CXXFILES)
 	gdb ./debug.out
 
-run:
+run: clean
 	$(CXX) $(CXXFLAGS) -o glitch-and-glory.out $(CXXFILES)
+	./glitch-and-glory.out
+# "short" target: incremental build that compiles only changed source files
+short: $(OBJFILES)
+	$(info Linking object files to create executable)
+	$(CXX) $(CXXFLAGS) -o glitch-and-glory.out $(OBJFILES)
 	./glitch-and-glory.out
 
 fast:
