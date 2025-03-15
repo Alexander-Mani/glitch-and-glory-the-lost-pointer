@@ -2,7 +2,6 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++17
 CXXDEBUGFLAGS = -ggdb -fsanitize=address -fsanitize=undefined
 
-# Source files
 MODELFILES = \
 	Models/Entities/EntityModel.cpp \
 	Models/BattleModel.cpp \
@@ -28,27 +27,19 @@ UIFILES = \
 
 # Combine all source files
 CXXFILES = main.cpp $(MODELFILES) $(LOGICFILES) $(UIFILES)
-# Create corresponding object file names
-OBJFILES = $(CXXFILES:.cpp=.o)
 
-.PHONY: all short main debug run fast deb clean fresh
+TARGETS = debug main
 
-# Default target – a full rebuild
+.PHONY: all fresh clean
+
 all: main
 
-# Full rebuild target (recompiles all sources)
 main:
-	$(info Building main target: full rebuild)
+	$(info Building $@)
 	$(CXX) $(CXXFLAGS) -o glitch-and-glory.out $(CXXFILES)
 
-# "short" target: incremental build that compiles only changed source files
-short: $(OBJFILES)
-	$(info Linking object files to create executable)
-	$(CXX) $(CXXFLAGS) -o glitch-and-glory.out $(OBJFILES)
-	./glitch-and-glory.out
-
 debug: clean
-	$(info Building debug target: full rebuild with debug flags)
+	$(info Building debug $@)
 	$(CXX) $(CXXFLAGS) $(CXXDEBUGFLAGS) -o debug.out $(CXXFILES)
 	gdb ./debug.out
 
@@ -63,14 +54,9 @@ deb:
 	gdb ./debug.out
 
 clean:
-	rm -f $(OBJFILES) glitch-and-glory.out debug.out
+	rm -f ./glitch-and-glory.out ./debug.out
 	$(info Cleaned project)
 
 fresh:
 	$(MAKE) clean
 	$(MAKE) all
-
-# Pattern rule: compile a .cpp file to a .o file if it’s newer than the .o
-%.o: %.cpp
-	$(info Compiling $<)
-	$(CXX) $(CXXFLAGS) -c $< -o $@

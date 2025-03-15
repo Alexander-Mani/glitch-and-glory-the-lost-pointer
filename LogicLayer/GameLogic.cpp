@@ -127,6 +127,19 @@ bool GameLogic::check_game_over(OverworldModel* overworldModel) {
     return true; 
 }
 
+string GameLogic::change_map_location(OverworldModel* overworldModel ,string map, string location) {
+    int curr_ind = overworldModel->get_curr_ascii_pointer();
+    overworldModel->set_curr_ascii_pointer(location);
+    int new_ind = overworldModel->get_curr_ascii_pointer();
+    if (curr_ind >= 0 && static_cast<size_t>(curr_ind + 5) <= map.size()) {
+        map.replace(curr_ind, 5, "     ");
+    }
+    if (new_ind >= 0 && static_cast<size_t>(new_ind + 5) <= map.size()) {
+        map.replace(new_ind, 5, "(YOU)");
+    }
+    return map;
+}
+
 
 unsigned int GameLogic::get_random_from_range(unsigned int min, unsigned int max){
     std::random_device rd;

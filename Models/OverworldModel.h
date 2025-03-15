@@ -34,9 +34,22 @@ protected:
         {"Apartments", {"Stay Night", "Streets", "View Party"}},
         {"Warehouse", {"Attempt Rat Communication", "Streets", "View Party"}},
         {"Club", {"Gamble", "Streets", "View Party"}},
-        {"Union", {"Apply For Job", "Streets", "View Party"}},
-        {"Boss", {"Win", "View Party"}}
+        {"Union", {"Apply For Job", "Streets", "View Party"}}
+        //{"Boss", {"Win", "View Party"}}
     };
+    unordered_map<string, int> index_map ={
+        {"Streets", 484},
+        {"Arena", 446},
+        {"Shop", 133},
+        {"Ripper", 740},
+        {"HQ", 101},
+        {"Apartments", 601},
+        {"Warehouse", 677},
+        {"Club", 711},
+        {"Union",752},
+
+
+   };
 
     vector<string> actions = {
         "View Party", 
@@ -88,6 +101,8 @@ public:
     const string& get_ascii() const { return ascii_art; }
 
     const string& get_curr_location() const { return current_location; }
+    int get_curr_ascii_pointer() const { return ascii_location_pointer; }
+    void set_curr_ascii_pointer(string location) { this->ascii_location_pointer = this->index_map[location]; }
     string get_hub() const { return hub; }
     string get_final_zone() const { return final_zone; }
     PartyModel* get_party_model();
