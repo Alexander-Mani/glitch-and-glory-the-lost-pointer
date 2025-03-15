@@ -162,10 +162,13 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         this->battle(overworldModel,character, bossPhase2Model, true);
         return;
     } else if (action == "Gamble") {
-        vector<string> gamble_options = {"100", "200", "500", "1000", "5000", "10000"};
+        vector<string> gamble_options = {"100", "200", "500", "1000", "5000", "10000", "Leave"};
         vector<int> gamble_amounts = {100, 200, 500, 1000, 5000, 10000};
+        // IOHandler::output_options("Want to Gamble like a Gamer?", gamble_options);
+        // int choice_ind = IOHandler::input_choose_index(gamble_amounts.size());
         IOHandler::output_options("Want to Gamble like a Gamer?", gamble_options);
-        int choice_ind = IOHandler::input_choose_index(gamble_amounts.size());
+        int choice_ind = IOHandler::input_choose_index(gamble_options.size());
+        if (choice_ind == gamble_amounts.size()) return move(overworldModel, overworldModel->get_curr_location());; 
         unsigned int gamble_amount = gamble_amounts[choice_ind];
         string status_msg = "";
         if (gamble_amount <= overworldModel->get_party_model()->get_money()){

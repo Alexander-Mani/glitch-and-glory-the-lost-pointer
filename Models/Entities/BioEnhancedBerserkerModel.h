@@ -9,7 +9,7 @@ public:
     BioEnhancedBerserkerModel()
         : EntityModel(
             "Bio-Enhanced Berserker",   // Name
-            1111250,                        // max_hp
+            250,                        // max_hp
             250,                         // hp
             150,                         // atk
             7,                          // def
