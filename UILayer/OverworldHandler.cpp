@@ -237,14 +237,32 @@ EntityModel* OverworldHandler::choose_party_member(OverworldModel *overworldMode
     }
 
 void OverworldHandler::handle_level_up(OverworldModel *overworldModel){
+    vector<string> content;
+    string title = "You Leveled Up!";
+
     if (!this->logicWrapper->gameLogic->can_level_up(overworldModel)) return;
     overworldModel->get_party_model()->display_party();
-    IOHandler::output_title("You Leveled Up!");
+    // IOHandler::output_title("You Leveled Up!");
     unsigned int new_level = this->overworldModel->get_party_model()->get_level()+1; 
-    cout << "Your Party is Now Level: " << new_level << endl;
-    cout << "Select One Character to Give a +"<< new_level <<" To Each Stat!" << endl;
+
+    content.push_back("");
+    content.push_back("Your Party is Now Level: " + to_string(new_level));
+    content.push_back("");
+    content.push_back("Select One Character to Give a " + to_string(new_level) + " To Each Stat!");
+    content.push_back("");
+
+    AsciiHandler::display_box_layout(title, content, "yellow", "white");
+    // cout << "Your Party is Now Level: " << new_level << endl;
+    // cout << "Select One Character to Give a +"<< new_level <<" To Each Stat!" << endl;
     EntityModel* character = this->choose_party_member(overworldModel);
     this->logicWrapper->gameLogic->level_up(overworldModel, character);
+
+
+    // After applying 
+    // vector<string> next_content;
+    string next_title = "Leveled Up Successfully!";
+
+    IOHandler::output_subtitle(next_title, "green");
     }
 
 void OverworldHandler::handle_random_encounter(OverworldModel *overworldModel){
