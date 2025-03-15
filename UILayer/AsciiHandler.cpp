@@ -40,7 +40,7 @@ const string AsciiHandler::GAME_MAP = R"(
 *                                             *
 *           /=====\      .=========.   .===.  *
 *          /       \     |MEGABLOCK|   | C |  *
-*  (YOU)   | ARENA |     |  SEVEN  |   | L |  *
+*          | ARENA |     |  SEVEN  |   | L |  *
 *          \       /     '====.    |   | U |  *
 *           \=====/           |    |   | B |  *
 *                             |    |   '==='  *
