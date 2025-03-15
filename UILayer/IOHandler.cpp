@@ -74,6 +74,19 @@ void IOHandler::output_subtitle(string subtitle){
     cout << symbols + subtitle_padded + symbols << endl;
     cout << wrapper << endl << endl;
 }
+void IOHandler::write_dialoge(string dialog){
+     for (const char c : dialog) {
+        std::cout << c << std::flush;
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+}
+
+void IOHandler::write_story(string dialog){
+     for (const char c : dialog) {
+        std::cout << c << std::flush;
+        std::this_thread::sleep_for(std::chrono::milliseconds(25));
+    }
+}
 
 
 

@@ -54,6 +54,8 @@ public:
     * @detail Padding can be modified by modifying the `title_max_len` value
     */
     void output_title(string title);
+    void write_dialoge(string dialog);
+    void write_story(string dialog);
     
     /*
     * @param subtitle: Takes in a string subtitle  

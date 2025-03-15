@@ -1,6 +1,6 @@
 #include "StoryHandler.h"
 
-const std::string StoryHandler::PRE_INTRO = "The year is 2089..";
+const std::string StoryHandler::PRE_INTRO = "The year is 2089 Reykjavik is not the city it once was...";
 
 const std::string StoryHandler::INTRO_CONTENT_1 = R"(
 Samherji PMC squads patrol the streets around the mega-skyscrapers of Borgartún, 
@@ -18,6 +18,7 @@ That’s where you come in.
 )";
 
 const std::string StoryHandler::INTRO_MISSION = R"(
+
 The Mission
 
 Your crew has been hired to recover the lost wages—but the credits aren’t just sitting in a vault. 
@@ -25,24 +26,33 @@ They've been minted onto a blockchain pointer, locked within the neural interfac
 To complete your contract, you’ll have to fight him and extract the data straight from his brain.
 )";
 
-const std::string StoryHandler::HOW_TO_PLAY = R"()";
+const std::string StoryHandler::HOW_TO_PLAY = R"(
+HOW TO PLAY
+
+* Go to the Arena to earn xp and money.
+* Go To the shop and ripper to buy equipment.
+* Once you think you are powerful enough, attempt to take on the boss in HQ 
+)";
 
 // Phase 1 - Human Elontron
 const std::string StoryHandler::ELON_ATMO_1 = R"(
 (Elontron stands tall, a man augmented beyond recognition, eyes glowing with neural data streams.)
-Elontron:)";
+Elontron:
+)";
 
 const std::string StoryHandler::ELON_DIALOGUE_1 = R"(
 "So, the rats finally crawl out of the sewers. Mercenaries, rebels, scavengers—you’re all the same. 
 You think you can steal from me? From Samherji? You don’t even understand what you’re meddling with."
 )";
 
-const std::string StoryHandler::ELON_ATMO_2 = "(He gestures, activating an energy blade at his wrist.)";
+const std::string StoryHandler::ELON_ATMO_2 = "(He gestures, activating an energy blade at his wrist.)\n";
 
 // Phase 2 - Elontron Prime (Starship Form)
-const std::string StoryHandler::ELON_ATMO_3 = "(Elontron stumbles back, his body failing. He chuckles—distorted, digital, inhuman.)";
+const std::string StoryHandler::ELON_ATMO_3 = "(Elontron stumbles back, his body failing. He chuckles—distorted, digital, inhuman.)\n";
 
-const std::string StoryHandler::ELON_DIALOGUE_2 = "Did you really think you were fighting me? Flesh is a liability. I left that behind long ago.";
+const std::string StoryHandler::ELON_DIALOGUE_2 = R"("Did you really think you were fighting me? Flesh is a liability. 
+    I left that behind long ago."
+)";
 
 const std::string StoryHandler::ELON_ATMO_4 = R"(
 (His body collapses, sparking. A deep hum fills the air. The walls tremble. 
