@@ -96,7 +96,7 @@ public:
 
     bool equip_item(const std::string &slot, EquipmentModel *item);
     EquipmentModel* get_equipped_item(const std::string &slot) const;
-    vector<string> get_inventory() const;
+    vector<string> get_inventory_lines(); 
     virtual void decrease_magic(int amount) {
         this->magic -= amount;
         if(magic < 0) magic = 0;

@@ -120,37 +120,52 @@ EquipmentModel* EntityModel::get_equipped_item(const std::string &slot) const {
     return nullptr;
 }
 
-//vector<int> EntityModel:: 
+vector<string> EntityModel::get_inventory_lines() {
+    vector<string> lines;
+    string inv_l = "| INVENTORY |";
+    int padding = inv_l.size() - 1;
+    string wrapper = string(inv_l.size(), '-');
+    string inner_wrapper = "| " + string(inv_l.size() - 4, '-') + " |";
 
-vector<string> EntityModel::get_inventory() const {
-    //cout << "\n|----------------------------|"
-    //     << "\n|----| Inventory Items |----|"
-    //     << "\n|----------------------------|\n";
-    vector<string> inventory_vect;
-    string item;
+    vector<string> item_lines;
     for (const auto &pair : inventory) {
-        item = "";
-        item+= "| " + pair.first +": ";
+        string line = "| " + pair.first + ": ";
         if (pair.second) {
-            item+= pair.second->get_name();
+            line += pair.second->get_name();
             if (pair.second->get_max_hp())
-                item+= " Max hp: +"+to_string(pair.second->get_max_hp());
+                line += " | +HP: " + to_string(pair.second->get_max_hp());
             if (pair.second->get_atk())
-                item+= " | Attack: +"+to_string(pair.second->get_atk());
+                line += " | +ATK: " + to_string(pair.second->get_atk());
             if (pair.second->get_def())
-                item+= " | Defence: +"+to_string(pair.second->get_def());
+                line += " | +DEF: " + to_string(pair.second->get_def());
             if (pair.second->get_magic())
-                item+= " | Hacking: +"+to_string(pair.second->get_magic());
+                line += " | +MAG: " + to_string(pair.second->get_magic());
             if (pair.second->get_crit())
-                item+= " | Critical: +"+to_string(pair.second->get_crit());
-            if (pair.second->get_evade()) 
-                item+= " | Evasion: +"+to_string(pair.second->get_evade());
+                line += " | +CRIT: " + to_string(pair.second->get_crit());
+            if (pair.second->get_evade())
+                line += " | +EVADE: " + to_string(pair.second->get_evade());
         } else {
-            item+= "None";
+            line += "None";
         }
-        inventory_vect.push_back(item);
+
+        // Safeguard to avoid negative length
+        int needed_spaces = (padding + 1) - static_cast<int>(line.size());
+        if (needed_spaces < 0) {
+            needed_spaces = 0;
+        }
+        line += string(needed_spaces, ' ') + "|";
+        item_lines.push_back(line);
     }
 
-return inventory_vect;
+    lines.push_back(wrapper);
+    lines.push_back(inv_l);
+    lines.push_back(inner_wrapper);
+
+    for (auto &item_line : item_lines) {
+        lines.push_back(item_line);
+    }
+    lines.push_back(wrapper);
+
+    return lines;
 }
 
