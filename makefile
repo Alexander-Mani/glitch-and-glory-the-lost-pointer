@@ -53,6 +53,7 @@ debug: clean
 	gdb ./debug.out
 
 run:
+	$(CXX) $(CXXFLAGS) -o glitch-and-glory.out $(CXXFILES)
 	./glitch-and-glory.out
 
 fast:
