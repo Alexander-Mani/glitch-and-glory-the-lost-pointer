@@ -55,6 +55,10 @@ void OverworldHandler::initialize_overworld() {
 }
 
 void OverworldHandler::move(OverworldModel *overworldModel,string location){
+    if (this->logicWrapper->gameLogic->check_game_over(overworldModel)){
+        cout << "You lost" << endl;
+        return;
+    } 
     this->handle_level_up(overworldModel);
     string new_location = this->logicWrapper->gameLogic->change_location(overworldModel, location);
     //string new_location = overworldModel->set_curr_location(location);
@@ -200,9 +204,20 @@ EntityModel* OverworldHandler::choose_party_member(OverworldModel *overworldMode
         int ind = 0;
         vector<string> party_member_names = overworldModel->get_party_model()->get_party_member_names();
         vector<EntityModel*> party_members = overworldModel->get_party_model()->get_party_members();
-        this->ioHandler->output_options("Choose party member", party_member_names);
-        ind = this->ioHandler->input_choose_index(party_members.size());
-        return party_members[ind];
+
+        vector<string> filtered_member_names;
+        vector<EntityModel*> filtered_members;
+        for (size_t i = 0; i < party_members.size(); i++) {
+            if (party_members[i]->get_hp() > 0) {
+                filtered_members.push_back(party_members[i]);
+                filtered_member_names.push_back(party_member_names[i]);
+            }
+        }
+
+
+        this->ioHandler->output_options("Choose party member", filtered_member_names);
+        ind = this->ioHandler->input_choose_index(filtered_members.size());
+        return filtered_members[ind];
     }
 
 void OverworldHandler::handle_level_up(OverworldModel *overworldModel){

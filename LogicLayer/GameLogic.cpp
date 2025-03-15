@@ -116,6 +116,17 @@ bool GameLogic::won_gamble(OverworldModel* overworldModel, int amount){
 
 
 }
+bool GameLogic::check_game_over(OverworldModel* overworldModel) {
+    vector<EntityModel*> party_members = overworldModel->get_party_model()->get_party_members();
+
+    for (const auto* member : party_members) {
+        if (member->get_hp() > 0) {
+            return false;
+        }
+    }
+    return true; 
+}
+
 
 unsigned int GameLogic::get_random_from_range(unsigned int min, unsigned int max){
     std::random_device rd;

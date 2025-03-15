@@ -24,6 +24,7 @@ class GameLogic{
     void pay_for_night_and_heal(OverworldModel* overworldModel);
     unsigned int get_stay_night_price(OverworldModel* overworldModel);
     bool won_gamble(OverworldModel* overworldModel, int amount);
+    bool check_game_over(OverworldModel* overworldModel);
 
 
     
