@@ -38,10 +38,7 @@ public:
     static string get_gradient_color(char c, string neon_color);
     static string get_random_neon_color();
     static string colorize_box(string text, string color);
-    static void display_box_layout(const string &title, const vector<string> &output,
-                                   const string &outline_color = "pink",
-                                   const string &content_color = "white", 
-                                   int size=135);
+    static void display_box_layout(const string &title, const vector<string> &output, const string &outline_color = "pink", const string &content_color = "white", int size=135);
 };
 
 #endif // ASCIIHANDLER_H

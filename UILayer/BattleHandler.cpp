@@ -89,16 +89,11 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
         if(battleModel->player_turn){            
             AsciiHandler::display_turn(battleModel);
         } 
-        // if(!battleModel->player_turn){
-            // IOHandler::input_continue();
-        // }
-        // IOHandler::input("continue...");
 
         string action;
 
         if(!battleModel->player_turn){
             action = this->logicWrapper->battleLogic->handle_computer_action(battleModel);
-            // continue;
         } else {
             action = IOHandler::input_choose_option(action_list);
         }
@@ -112,8 +107,6 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
         
         hud_msg.push_back(this->logicWrapper->battleLogic->handle_battle_action(battleModel, action));
         
-        
-        // Display the results of the action that was taken
 
         IOHandler::clear_terminal();
         AsciiHandler::display_battle_entities(battleModel);
@@ -121,13 +114,8 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
         AsciiHandler::display_hud(hud_msg, '*', terminal_length);
         
         IOHandler::glitch_sleep(2);
-        // cout << "NUMMIE 2!!!" << endl;
-        // IOHandler::input_continue();
 
     }
-
-    // AsciiHandler::display_end_of_battle(battleModel);
-
 
 }
 

@@ -2,10 +2,8 @@
 #ifndef UIHANDLER_H
 #define UIHANDLER_H
 
-
-
-#include <unordered_map>    // To create dictionary like objects
-#include <functional>       // To store functions within unordered maps
+#include <unordered_map>    
+#include <functional>       
 
 #include "../LogicLayer/LogicWrapper.h"
 #include "IOHandler.h"
@@ -17,17 +15,12 @@
 class UIHandler{
 public:
     LogicWrapper *logicWrapper;
-    AsciiHandler *asciiHandler; //AsciiHandler must come before BattleHandler
+    AsciiHandler *asciiHandler; 
     IOHandler *ioHandler;
     BattleHandler *battleHandler;
     OverworldHandler *overworldHandler;
     EncounterHandler *encounterHandler;
 
-    // LogicWrapper logicWrapper;
-    // IOHandler ioHandler;
-    // AsciiHandler asciiHandler; //AsciiHandler must come before BattleHandler
-    // OverworldHandler overworldHandler;
-    // BattleHandler battleHandler;
 
     // We will have the menu options in a vector<string> simply to control the order within the manu_actions
     vector<string> menu_options;
