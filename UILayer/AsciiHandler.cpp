@@ -40,7 +40,7 @@ const string AsciiHandler::GAME_MAP = R"(
 *                                             *
 *           /=====\      .=========.   .===.  *
 *          /       \     |MEGABLOCK|   | C |  *
-*  (YOU)   | ARENA |     |  SEVEN  |   | L |  *
+*          | ARENA |     |  SEVEN  |   | L |  *
 *          \       /     '====.    |   | U |  *
 *           \=====/           |    |   | B |  *
 *                             |    |   '==='  *
@@ -152,14 +152,13 @@ void AsciiHandler::display_end_of_battle(BattleModel* battleModel, unsigned int 
     output.push_back(xp_info);
     output.push_back("");
     output.push_back("");
-    output.push_back("");
     
     if(xp == 0){
         display_box_layout("BATTLE LOST", output, "pink");
     } else {
         display_box_layout("BATTLE WON", output, "green");
     }
-    IOHandler::glitch_sleep(2);
+    IOHandler::glitch_sleep(3);
     IOHandler::clear_terminal();
 }
 

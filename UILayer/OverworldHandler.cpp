@@ -45,7 +45,6 @@ void OverworldHandler::initialize_overworld() {
 
 void OverworldHandler::move(OverworldModel *overworldModel,string location){
     string map = this->logicWrapper->gameLogic->change_map_location(overworldModel, AsciiHandler::GAME_MAP, location);
-    cout << map << endl;
     if (this->logicWrapper->gameLogic->check_game_over(overworldModel)){
         IOHandler::clear_terminal();
         vector<string> gameover_msg;
@@ -64,6 +63,7 @@ void OverworldHandler::move(OverworldModel *overworldModel,string location){
         IOHandler::clear_terminal();
         this->handle_random_encounter(overworldModel);
     }
+    cout << map << endl;
     location = this->logicWrapper->gameLogic->change_location(overworldModel, location);
     //string location = overworldModel->set_curr_location(location);
     vector<string> locations = overworldModel->get_routes(location);
@@ -150,6 +150,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         IOHandler::write_story(StoryHandler::ELON_ATMO_2);
         EntityModel *character = this->choose_party_member(overworldModel);
         if (this->battle(overworldModel, character, bossPhase1Model, true)){
+            IOHandler::clear_terminal();
             EntityModel* bossPhase2Model = this->logicWrapper->entityLogic->get_boss_entity_phase_2();
             IOHandler::write_story(StoryHandler::ELON_ATMO_3);
             IOHandler::write_dialoge(StoryHandler::ELON_DIALOGUE_2);
@@ -162,6 +163,8 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
                 return;
             }
         }
+        IOHandler::clear_terminal();
+        IOHandler::write_story("ElonoTron's security escorts you back into the lobby..\n");
     } else if (action == "Gamble") {
         vector<string> gamble_options = {"100", "200", "500", "1000", "5000", "10000", "Leave"};
         vector<int> gamble_amounts = {100, 200, 500, 1000, 5000, 10000};

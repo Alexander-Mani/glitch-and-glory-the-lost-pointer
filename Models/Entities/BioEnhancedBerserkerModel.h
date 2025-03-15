@@ -13,10 +13,10 @@ public:
             250,                         // hp
             150,                         // atk
             7,                          // def
-            1000005,                          // magic
+            5,                          // magic
             50,                          // crit
             50,                        // evade
-            80,                        // acc (Accuracy)
+            65,                        // acc (Accuracy)
             {
                 "           +=*++#*                                      ", 
                 "        +######%%%###*+==-                              ", 
