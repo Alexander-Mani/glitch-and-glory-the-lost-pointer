@@ -17,24 +17,24 @@
 #include <cassert>
 #include <vector>
 
-OverworldHandler::OverworldHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler *ioHandler, BattleHandler *battleHandler, EncounterHandler* encounterHandler)
-    : logicWrapper(logicWrapper), asciiHandler(asciiHandler), ioHandler(ioHandler), battleHandler(battleHandler), encounterHandler(encounterHandler) {}
+OverworldHandler::OverworldHandler(LogicWrapper* logicWrapper, BattleHandler *battleHandler, EncounterHandler* encounterHandler)
+    : logicWrapper(logicWrapper), battleHandler(battleHandler), encounterHandler(encounterHandler) {}
 
 void OverworldHandler::initialize_overworld() {
-    this->ioHandler->clear_terminal();
-    this->ioHandler->write_dialoge(StoryHandler::PRE_INTRO);
-    this->ioHandler->write_story(StoryHandler::INTRO_CONTENT_1);
-    this->ioHandler->write_story(StoryHandler::INTRO_MISSION);
-    this->ioHandler->output_options("Continue", {"Continue"});
-    this->ioHandler->input_choose_option({"Continue"});
-    this->ioHandler->clear_terminal();
-    this->ioHandler->write_story(StoryHandler::HOW_TO_PLAY);
-    this->ioHandler->output_options("Continue", {"Continue"});
-    this->ioHandler->input_choose_option({"Continue"});
-    this->ioHandler->clear_terminal();
-    cout << this->asciiHandler->CITY << endl;
-    cout << this->asciiHandler->TITLE << endl;
-    cout << this->asciiHandler->SUBTITLE << endl;
+    IOHandler::clear_terminal();
+    IOHandler::write_dialoge(StoryHandler::PRE_INTRO);
+    IOHandler::write_story(StoryHandler::INTRO_CONTENT_1);
+    IOHandler::write_story(StoryHandler::INTRO_MISSION);
+    IOHandler::output_options("Continue", {"Continue"});
+    IOHandler::input_choose_option({"Continue"});
+    IOHandler::clear_terminal();
+    IOHandler::write_story(StoryHandler::HOW_TO_PLAY);
+    IOHandler::output_options("Continue", {"Continue"});
+    IOHandler::input_choose_option({"Continue"});
+    IOHandler::clear_terminal();
+    cout << AsciiHandler::CITY << endl;
+    cout << AsciiHandler::TITLE << endl;
+    cout << AsciiHandler::SUBTITLE << endl;
 
     vector<EntityModel*> entities = this->logicWrapper->entityLogic->get_all_entities();
     PartyModel* partyModel = new PartyModel(entities[0], entities[1], entities[2]);
@@ -44,10 +44,10 @@ void OverworldHandler::initialize_overworld() {
 }
 
 void OverworldHandler::move(OverworldModel *overworldModel,string location){
-    string map = this->logicWrapper->gameLogic->change_map_location(overworldModel, asciiHandler->GAME_MAP, location);
+    string map = this->logicWrapper->gameLogic->change_map_location(overworldModel, AsciiHandler::GAME_MAP, location);
     cout << map << endl;
     if (this->logicWrapper->gameLogic->check_game_over(overworldModel)){
-        this->ioHandler->clear_terminal();
+        IOHandler::clear_terminal();
         vector<string> gameover_msg;
         gameover_msg.push_back("");
         gameover_msg.push_back("All Entities in your party have died.");
@@ -56,19 +56,19 @@ void OverworldHandler::move(OverworldModel *overworldModel,string location){
         gameover_msg.push_back("");
 
 
-        this->asciiHandler->display_box_layout("Game over", gameover_msg);
+        AsciiHandler::display_box_layout("Game over", gameover_msg);
         return;
     } 
     this->handle_level_up(overworldModel);
     if (location != overworldModel->get_curr_location()){
-        this->ioHandler->clear_terminal();
+        IOHandler::clear_terminal();
         this->handle_random_encounter(overworldModel);
     }
     location = this->logicWrapper->gameLogic->change_location(overworldModel, location);
     //string location = overworldModel->set_curr_location(location);
     vector<string> locations = overworldModel->get_routes(location);
-    this->ioHandler->output_options(location, locations);
-    string option = this->ioHandler->input_choose_option(locations);
+    IOHandler::output_options(location, locations);
+    string option = IOHandler::input_choose_option(locations);
     vector<string> actions = overworldModel->get_actions();
     bool is_action = this->logicWrapper->gameLogic->is_action(actions, option);
      if (is_action) {
@@ -83,7 +83,7 @@ void OverworldHandler::move(OverworldModel *overworldModel,string location){
 
 void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
     this->handle_level_up(overworldModel);
-    ioHandler->clear_terminal();
+    IOHandler::clear_terminal();
     cout << "Action time" << endl;
     if (action == "Battle") {
         EntityModel *character = this->choose_party_member(overworldModel);
@@ -93,9 +93,9 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
 
     } else if (action == "View Party") {
 
-        this->asciiHandler->display_hud(overworldModel->get_party_model()->display_party(), '|', 150);
+        AsciiHandler::display_hud(overworldModel->get_party_model()->display_party(), '|', 150);
         // overworldModel->get_party_model()->display_party();
-        ioHandler->glitch_sleep(3);
+        IOHandler::glitch_sleep(3);
 
     } else if (action == "Browse Equipment") {
         bool purchase;
@@ -103,12 +103,12 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         vector<WeaponModel*>* weapons = overworldModel->get_equipment_factory()->get_weapons();
         vector<ArmorModel*>* armors = overworldModel->get_equipment_factory()->get_armors();
         overworldModel->get_equipment_factory()->show_combat_gear();
-        unsigned int index = this->ioHandler->input_choose_index(weapons->size()+armors->size()+1);
+        unsigned int index = IOHandler::input_choose_index(weapons->size()+armors->size()+1);
         if (index+1 <= weapons->size()){
             WeaponModel* weapon = (*weapons)[index];
             if ((unsigned int)weapon->get_price() > overworldModel->get_party_model()->get_money()) { 
                 cout << "You can't afford that" << endl;
-                this->ioHandler->glitch_sleep(1);
+                IOHandler::glitch_sleep(1);
                 return move(overworldModel, overworldModel->get_curr_location());
             }
             EntityModel* character = this->choose_party_member(overworldModel);
@@ -119,7 +119,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
             ArmorModel* armor = (*armors)[index];
             if ((unsigned int)armor->get_price() > overworldModel->get_party_model()->get_money()) { 
                 cout << "You can't afford that" << endl;
-                this->ioHandler->glitch_sleep(1);
+                IOHandler::glitch_sleep(1);
                 return move(overworldModel, overworldModel->get_curr_location());
             }
             EntityModel* character = this->choose_party_member(overworldModel);
@@ -131,12 +131,12 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         overworldModel->get_party_model()->display_party();
         vector<ImplantModel*>* implants = overworldModel->get_equipment_factory()->get_implants();
         overworldModel->get_equipment_factory()->show_cyber_augments();
-        unsigned int index = this->ioHandler->input_choose_index(implants->size()+1);
+        unsigned int index = IOHandler::input_choose_index(implants->size()+1);
         if(index == implants->size()) return move(overworldModel, overworldModel->get_curr_location());
         ImplantModel* implant = (*implants)[index];
         if ((unsigned int)implant->get_price() > overworldModel->get_party_model()->get_money()) { 
             cout << "You can't afford that" << endl;
-            this->ioHandler->glitch_sleep(1);
+            IOHandler::glitch_sleep(1);
             return move(overworldModel, overworldModel->get_curr_location());
         }
         EntityModel* character = this->choose_party_member(overworldModel);
@@ -144,30 +144,30 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         if (purchase) overworldModel->get_party_model()->decrease_money(implant->get_price());
 
     } else if (action == "Fight Boss") {
-        this->ioHandler->clear_terminal();
+        IOHandler::clear_terminal();
         EntityModel* bossPhase1Model = this->logicWrapper->entityLogic->get_boss_entity_phase_1();
-        ioHandler->write_story(StoryHandler::ELON_ATMO_1);
-        ioHandler->write_dialoge(StoryHandler::ELON_DIALOGUE_1);
-        ioHandler->write_story(StoryHandler::ELON_ATMO_2);
+        IOHandler::write_story(StoryHandler::ELON_ATMO_1);
+        IOHandler::write_dialoge(StoryHandler::ELON_DIALOGUE_1);
+        IOHandler::write_story(StoryHandler::ELON_ATMO_2);
         EntityModel *character = this->choose_party_member(overworldModel);
         if (this->battle(overworldModel, character, bossPhase1Model, true)){
             EntityModel* bossPhase2Model = this->logicWrapper->entityLogic->get_boss_entity_phase_2();
-            ioHandler->write_story(StoryHandler::ELON_ATMO_3);
-            ioHandler->write_dialoge(StoryHandler::ELON_DIALOGUE_2);
-            ioHandler->write_story(StoryHandler::ELON_ATMO_4);
-            ioHandler->write_dialoge(StoryHandler::ELON_DIALOGUE_3);
+            IOHandler::write_story(StoryHandler::ELON_ATMO_3);
+            IOHandler::write_dialoge(StoryHandler::ELON_DIALOGUE_2);
+            IOHandler::write_story(StoryHandler::ELON_ATMO_4);
+            IOHandler::write_dialoge(StoryHandler::ELON_DIALOGUE_3);
             character = this->choose_party_member(overworldModel);
             if(this->battle(overworldModel,character, bossPhase2Model, true)){
-                this->ioHandler->clear_terminal();
-                this->ioHandler->write_story(StoryHandler::FINAL_LORE_DUMP);
+                IOHandler::clear_terminal();
+                IOHandler::write_story(StoryHandler::FINAL_LORE_DUMP);
                 return;
             }
         }
     } else if (action == "Gamble") {
         vector<string> gamble_options = {"100", "200", "500", "1000", "5000", "10000", "Leave"};
         vector<int> gamble_amounts = {100, 200, 500, 1000, 5000, 10000};
-        this->ioHandler->output_options("Want to Gamble like a Gamer?", gamble_options);
-        unsigned int choice_ind = this->ioHandler->input_choose_index(gamble_options.size());
+        IOHandler::output_options("Want to Gamble like a Gamer?", gamble_options);
+        unsigned int choice_ind = IOHandler::input_choose_index(gamble_options.size());
         if (choice_ind == gamble_amounts.size()) return move(overworldModel, overworldModel->get_curr_location());; 
         unsigned int gamble_amount = gamble_amounts[choice_ind];
         string status_msg = "";
@@ -176,8 +176,8 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
             if (won) status_msg = "You won! " + to_string(gamble_amount);
             else status_msg = "You lost " + to_string(gamble_amount);
         }else status_msg = "You can't afford that";
-        this->ioHandler->output_title(status_msg);
-        this->ioHandler->glitch_sleep(3);
+        IOHandler::output_title(status_msg);
+        IOHandler::glitch_sleep(3);
 
     } else if (action == "Apply For Job") {
         cout << DENY_JOB_LETTER << endl;
@@ -186,8 +186,8 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         string message = "Stay Night And Fully Heal Party For " + to_string(price);
         overworldModel->get_party_model()->display_party();
         vector<string> options = {"Stay Night", "Leave"};
-        this->ioHandler->output_options(message, options);
-        string choice = this->ioHandler->input_choose_option(options);
+        IOHandler::output_options(message, options);
+        string choice = IOHandler::input_choose_option(options);
         if (choice == options[0]) this->logicWrapper->gameLogic->pay_for_night_and_heal(overworldModel);
     } else if (action == "Attempt Rat Communication"){
         int chance = logicWrapper->gameLogic->get_random_from_range(0, 6);
@@ -199,7 +199,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
             cout << "You failed" << endl;
             cout << "A loyal member of the children of the rat aproaches you" << endl;
             cout << "Prepare to fight" << endl;
-            this->ioHandler->glitch_sleep(2);
+            IOHandler::glitch_sleep(2);
             EntityModel *character = this->choose_party_member(overworldModel);
             EntityModel* enemyModel = this->logicWrapper->entityLogic->generate_enemy_entity(character);
             cout << this->battle(overworldModel,character, enemyModel, false) << endl;
@@ -225,15 +225,15 @@ EntityModel* OverworldHandler::choose_party_member(OverworldModel *overworldMode
         }
 
 
-        this->ioHandler->output_options("Choose party member", filtered_member_names);
-        ind = this->ioHandler->input_choose_index(filtered_members.size());
+        IOHandler::output_options("Choose party member", filtered_member_names);
+        ind = IOHandler::input_choose_index(filtered_members.size());
         return filtered_members[ind];
     }
 
 void OverworldHandler::handle_level_up(OverworldModel *overworldModel){
     if (!this->logicWrapper->gameLogic->can_level_up(overworldModel)) return;
     overworldModel->get_party_model()->display_party();
-    this->ioHandler->output_title("You Leveled Up!");
+    IOHandler::output_title("You Leveled Up!");
     unsigned int new_level = this->overworldModel->get_party_model()->get_level()+1; 
     cout << "Your Party is Now Level: " << new_level << endl;
     cout << "Select One Character to Give a +"<< new_level <<" To Each Stat!" << endl;
@@ -297,7 +297,8 @@ bool OverworldHandler::battle(OverworldModel* overworldModel, EntityModel *playe
         // else {
         //     cout << "You Recieved: " << xp << " xp and: " << money << " eddies" << endl;
         // }
-        if (!is_boss) this->asciiHandler->display_end_of_battle(battleModel, xp, money);
+        if (!is_boss) AsciiHandler::display_end_of_battle(battleModel, xp, money);
+
         // delete(battleModel);
         // delete(enemyModel);
         if (this->logicWrapper->battleLogic->player_won(battleModel)) status = true;

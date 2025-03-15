@@ -8,13 +8,13 @@
 
 #include <cassert>
 
-BattleHandler::BattleHandler(LogicWrapper* logicWrapper, AsciiHandler* asciiHandler, IOHandler *ioHandler)
-    : logicWrapper(logicWrapper), asciiHandler(asciiHandler), ioHandler(ioHandler)
+BattleHandler::BattleHandler(LogicWrapper* logicWrapper)
+    : logicWrapper(logicWrapper)
 {}
 
 
 void BattleHandler::initialize_battle() {
-    this->ioHandler->output_title("Welcome to battle arena!");
+    IOHandler::output_title("Welcome to battle arena!");
     
     //--- Selecting Entity For Player ---//
     EntityModel* player_entity = this->select_entity(true);
@@ -50,8 +50,8 @@ EntityModel* BattleHandler::select_entity(bool for_player) {
     }
 
     // Display the menu of available entities with custom msg depending on for_player value
-    this->ioHandler->output_options(menu_msg, entity_options);
-    string selected = this->ioHandler->input_choose_option(entity_options);
+    IOHandler::output_options(menu_msg, entity_options);
+    string selected = IOHandler::input_choose_option(entity_options);
 
     //--- Find the chosen entity ---//
     EntityModel* chosen_entity = nullptr;
@@ -64,12 +64,12 @@ EntityModel* BattleHandler::select_entity(bool for_player) {
     }
 
     if(chosen_entity) {
-        this->ioHandler->output_msg("You selected: " + chosen_entity->get_name());
+        IOHandler::output_msg("You selected: " + chosen_entity->get_name());
         chosen_entity->display_stats();
-        this->asciiHandler->display_ascii(chosen_entity->get_name());
+        AsciiHandler::display_ascii(chosen_entity->get_name());
         return chosen_entity;
     } else {
-        this->ioHandler->output_msg("Entity not found.");
+        IOHandler::output_msg("Entity not found.");
         // Since no entity was found, we recursively call the same function
         return select_entity(for_player);
     }
@@ -77,21 +77,21 @@ EntityModel* BattleHandler::select_entity(bool for_player) {
 
 
 void BattleHandler::start_battle(BattleModel *battleModel) {
-    int terminal_length = this->asciiHandler->get_battle_width(battleModel);
+    int terminal_length = AsciiHandler::get_battle_width(battleModel);
 
-    this->ioHandler->clear_terminal();
-    this->asciiHandler->display_start_of_battle(battleModel);
+    IOHandler::clear_terminal();
+    AsciiHandler::display_start_of_battle(battleModel);
     vector<string> action_list = battleModel->get_battle_actions();
-    this->ioHandler->glitch_sleep(3);
+    // IOHandler::glitch_sleep(3);
     while (!this->logicWrapper->battleLogic->battle_over(battleModel) && !battleModel->fled && !battleModel->bribed) {
-        this->ioHandler->glitch_sleep(3);
+        // IOHandler::glitch_sleep(3);
         
-        this->ioHandler->clear_terminal();
-        this->asciiHandler->display_turn(battleModel);
+        IOHandler::clear_terminal();
+        AsciiHandler::display_turn(battleModel);
         // if(!battleModel->player_turn){
-            // this->ioHandler->input_continue();
+            // IOHandler::input_continue();
         // }
-        // this->ioHandler->input("continue...");
+        // IOHandler::input("continue...");
 
         string action;
 
@@ -99,7 +99,7 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
             action = this->logicWrapper->battleLogic->handle_computer_action(battleModel);
             // continue;
         } else {
-            action = this->ioHandler->input_choose_option(action_list);
+            action = IOHandler::input_choose_option(action_list);
         }
         // string 
         vector<string> hud_msg;
@@ -113,18 +113,18 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
         
         
         // Display the results of the action that was taken
-        this->ioHandler->clear_terminal();
-        this->asciiHandler->display_battle_entities(battleModel);
-        this->asciiHandler->display_battle_stats(battleModel);
-        this->asciiHandler->display_hud(hud_msg, '*', terminal_length);
+        IOHandler::clear_terminal();
+        AsciiHandler::display_battle_entities(battleModel);
+        AsciiHandler::display_battle_stats(battleModel);
+        AsciiHandler::display_hud(hud_msg, '*', terminal_length);
         
-        this->ioHandler->glitch_sleep(3);
+        // IOHandler::glitch_sleep(3);
         // cout << "NUMMIE 2!!!" << endl;
-        // this->ioHandler->input_continue();
+        // IOHandler::input_continue();
 
     }
 
-    // this->asciiHandler->display_end_of_battle(battleModel);
+    // AsciiHandler::display_end_of_battle(battleModel);
 
 
 }
