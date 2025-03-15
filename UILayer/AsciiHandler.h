@@ -37,7 +37,7 @@ public:
     static string colorize_line(const string &line, string neon_color);
     static string get_gradient_color(char c, string neon_color);
     static string get_random_neon_color();
-    static string colorize_box(const string &text, const string &color);
+    static string colorize_box(string text, string color);
     static void display_box_layout(const string &title, const vector<string> &output,
                                    const string &outline_color = "pink",
                                    const string &content_color = "white");

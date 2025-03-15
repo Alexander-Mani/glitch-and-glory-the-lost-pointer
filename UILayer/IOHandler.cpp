@@ -11,7 +11,7 @@ const unordered_map<string, string> IOHandler::neon_colors = {
     {"pink",   "\033[38;2;255;105;180m"},
     {"yellow", "\033[38;2;255;255;0m"},
     {"green",  "\033[38;2;0;255;0m"},
-    {"blue",   "\033[38;2;0;0;255m"},
+    {"blue", "\033[38;2;0;191;255m"},
     {"white",  "\033[38;2;255;255;255m"}
 };
 unordered_map<char, string> IOHandler::neon_color_map = {
