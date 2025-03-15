@@ -45,6 +45,7 @@ void IOHandler::glitch_sleep_static(unsigned int seconds) {
 }
 
 void IOHandler::output_title(const string &title, string color) {
+    IOHandler::clear_terminal();
     vector<string> content;
 
     content.push_back(" ");
@@ -85,14 +86,16 @@ void IOHandler::output_subtitle(const string &subtitle, string color) {
 void IOHandler::write_dialoge(string dialog){
      for (const char c : dialog) {
         std::cout << c << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        // std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
 void IOHandler::write_story(string dialog){
      for (const char c : dialog) {
         std::cout << c << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        // std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
 }
 
@@ -207,7 +210,6 @@ bool IOHandler::validate_index_input(int user_input, int size) {
     return false;
 }
 
-#include <cctype>
 
 
 vector<string> IOHandler::wrap_text(const string &text, size_t maxWidth) {

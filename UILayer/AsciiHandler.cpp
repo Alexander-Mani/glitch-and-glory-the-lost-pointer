@@ -134,6 +134,7 @@ void AsciiHandler::display_turn(BattleModel* battleModel) {
 
 
 void AsciiHandler::display_end_of_battle(BattleModel* battleModel, unsigned int xp, unsigned int money) {
+    IOHandler::clear_terminal();
     int bribe = battleModel->get_bribe_amount();
     string xp_info;
     if (bribe > 0)
@@ -145,9 +146,11 @@ void AsciiHandler::display_end_of_battle(BattleModel* battleModel, unsigned int 
     // In a complete game, you might call a function like battle_over_msg; here we use a placeholder.
     string battle_msg = "Battle Over";
     output.push_back("");
+    output.push_back("");
     output.push_back(battle_msg);
     output.push_back("");
     output.push_back(xp_info);
+    output.push_back("");
     output.push_back("");
     
     if(xp == 0){
@@ -155,6 +158,8 @@ void AsciiHandler::display_end_of_battle(BattleModel* battleModel, unsigned int 
     } else {
         display_box_layout("BATTLE WON", output, "green");
     }
+    IOHandler::glitch_sleep(3);
+    IOHandler::clear_terminal();
 }
 
 void AsciiHandler::display_battle_stats(BattleModel* battleModel){
@@ -270,17 +275,65 @@ void AsciiHandler::display_attack_hud(BattleModel* battleModel) {
 }
 
 
+// void AsciiHandler::display_battle_entities(BattleModel* battleModel) {
+//     vector<string> player_ascii = battleModel->playerEntityModel->get_ascii();
+//     vector<string> opponent_ascii = battleModel->compEntityModel->get_ascii();
+//     for (auto &line : player_ascii) {
+//         std::reverse(line.begin(), line.end());
+//     }
+//     size_t max_length = std::max(player_ascii.size(), opponent_ascii.size());
+//     for (size_t i = 0; i < max_length; ++i) {
+//         string player_line = (i < player_ascii.size()) ? player_ascii[i] : "";
+//         string opponent_line = (i < opponent_ascii.size()) ? opponent_ascii[i] : "";
+//         cout << player_line << string(SPACES, ' ') << opponent_line << "\n";
+//     }
+// }
 void AsciiHandler::display_battle_entities(BattleModel* battleModel) {
     vector<string> player_ascii = battleModel->playerEntityModel->get_ascii();
     vector<string> opponent_ascii = battleModel->compEntityModel->get_ascii();
+
+    string player_color = "neon green";
+    string opponent_color = "random";
+    
+    // If needed, reverse player ASCII art.
     for (auto &line : player_ascii) {
-        std::reverse(line.begin(), line.end());
+        reverse(line.begin(), line.end());
     }
-    size_t max_length = std::max(player_ascii.size(), opponent_ascii.size());
+    
+    // Use your existing logic to determine layout.
+    size_t stat_length = max(
+        battleModel->playerEntityModel->get_battle_stats().size(),
+        battleModel->compEntityModel->get_battle_stats().size()
+    );
+    size_t max_length = max(player_ascii.size(), opponent_ascii.size());
+    if(max_length > stat_length + 5)
+        max_length = max_length - stat_length - 5;
+    
     for (size_t i = 0; i < max_length; ++i) {
-        string player_line = (i < player_ascii.size()) ? player_ascii[i] : "";
-        string opponent_line = (i < opponent_ascii.size()) ? opponent_ascii[i] : "";
-        cout << player_line << string(SPACES, ' ') << opponent_line << "\n";
+         string player_line = (i < player_ascii.size()) ? player_ascii[i] : "";
+         string opponent_line = (i < opponent_ascii.size()) ? opponent_ascii[i] : "";
+         
+         int total_padding = SPACES;
+         if (total_padding < 0) {
+              cout << "Some content being passed into ascii handler 'display_turn' is too long";
+              return;
+         }
+         int left_padding = total_padding / 2;
+         int right_padding = total_padding - left_padding;
+         
+         // Colorize lines using the provided neon color.
+         string colored_player_line = colorize_line(player_line, player_color);
+         string colored_opponent_line = colorize_line(opponent_line, opponent_color);
+         
+         cout << colored_player_line 
+                   << string(left_padding, ' ')
+                   << string(right_padding, ' ')
+                   << colored_opponent_line
+                   << "\n";
+         
+         if (i == max_length - 1) {
+              cout << IOHandler::apply_neon_colors(string(left_padding + player_line.size(), '=') + string(right_padding + opponent_line.size(), '=') + "\n");
+         }
     }
 }
 
