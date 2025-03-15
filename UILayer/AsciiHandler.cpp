@@ -416,35 +416,32 @@ string AsciiHandler::colorize_box(string text, string color){
 }
 
 
-void AsciiHandler::display_box_layout(const string &title, const vector<string> &output, const string &outline_color, const string &content_color) {
-    // cout << endl;
-    // cout << endl;
-    // cout << endl;
-    // cout << title << endl;
-    // cout << outline_color << endl;
-    // cout << outline_color << endl;
-    // cout << outline_color << endl;
-    // cout << outline_color << endl;
-    // cout << endl;
-    // cout << endl;
-    // cout << endl;
-    const int inner_width = 135; // Fixed inner width.
-    string left_filler, right_filler, bottom_filler;
+void AsciiHandler::display_box_layout(const string &title, const vector<string> &output, const string &outline_color, const string &content_color, int size) {
+    const int inner_width = size; // Fixed inner width.
+    string left_filler, right_filler, bottom_filler, mid_filler, top_border;
     string display_title = title;
     if ((int)display_title.size() > inner_width - 2)
-        display_title = display_title.substr(0, inner_width - 2);
+    display_title = display_title.substr(0, inner_width - 2);
     int title_len = display_title.size();
     int total_filler = inner_width - (title_len + 2);
     int left_filler_count = total_filler / 2;
     int right_filler_count = total_filler - left_filler_count;
     for (int i = 0; i < left_filler_count; ++i)
-        left_filler += u8"─";
+    left_filler += u8"─";
     for (int i = 0; i < right_filler_count; ++i)
-        right_filler += u8"─";
+    right_filler += u8"─";
     for (int i = 0; i < inner_width; ++i)
-        bottom_filler += u8"─";
+    bottom_filler += u8"─";
     
-    string top_border = colorize_box(u8"┌" + left_filler + " " + display_title + " " + right_filler + u8"┐", outline_color) + "\n";
+    if(title != ""){
+        top_border = colorize_box(u8"┌" + left_filler + " " + display_title + " " + right_filler + u8"┐", outline_color) + "\n";
+        (void) mid_filler;
+    } else {
+        for (int i = 0; i < (total_filler - left_filler_count - right_filler_count + 2); ++i)
+            mid_filler += u8"─";
+        
+        top_border = colorize_box(u8"┌" + left_filler + mid_filler + right_filler + u8"┐", outline_color) + "\n";
+    }
     string content;
     for (const auto &line : output) {
         string adjusted_line = line;

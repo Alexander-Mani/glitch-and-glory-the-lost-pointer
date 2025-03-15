@@ -1,4 +1,5 @@
 #include "IOHandler.h"
+#include "AsciiHandler.h"
 #include <limits>
 #include <cstdlib>
 #include <chrono>
@@ -29,57 +30,71 @@ int IOHandler::msg_padding_len = 5;
 
 void IOHandler::clear_terminal() {
 #ifdef _WIN32
-    std::system("cls");
+    system("cls");
 #else
-    std::system("clear");
+    system("clear");
 #endif
 }
 
 void IOHandler::glitch_sleep(unsigned int seconds) {
-    std::this_thread::sleep_for(std::chrono::seconds(seconds));
+    this_thread::sleep_for(chrono::seconds(seconds));
 }
 
 void IOHandler::glitch_sleep_static(unsigned int seconds) {
-    std::this_thread::sleep_for(std::chrono::seconds(seconds));
+    this_thread::sleep_for(chrono::seconds(seconds));
 }
 
-void IOHandler::output_title(const string &title) {
+void IOHandler::output_title(const string &title, string color) {
+    vector<string> content;
+
+    content.push_back(" ");
+    content.push_back(title);
+    content.push_back(" ");
+
+
     
+    // int max_len = (title_max_len - 4 >= (int)title.length()) ? title_max_len : (int)title.length() + 4;
+    // string wrapper(max_len, '=');
+    // string title_padded = " " + title + " ";
+    // int symbol_len = max_len - title_padded.length();
+    // string symbols(symbol_len / 2, '=');
+    // cout << "\n" << wrapper << "\n";
+    // cout << symbols + title_padded + symbols << "\n";
+    // cout << wrapper << "\n\n";
 
 
-    int max_len = (title_max_len - 4 >= (int)title.length()) ? title_max_len : (int)title.length() + 4;
-    string wrapper(max_len, '=');
-    string title_padded = " " + title + " ";
-    int symbol_len = max_len - title_padded.length();
-    string symbols(symbol_len / 2, '=');
-    std::cout << "\n" << wrapper << "\n";
-    std::cout << symbols + title_padded + symbols << "\n";
-    std::cout << wrapper << "\n\n";
+
+    AsciiHandler::display_box_layout("", content, color);
 }
 
-void IOHandler::output_subtitle(const string &subtitle) {
-    int max_len = (subtitle_max_len - 4 >= (int)subtitle.length()) ? subtitle_max_len : (int)subtitle.length() + 4;
-    string wrapper(max_len, '-');
-    string subtitle_padded = " " + subtitle + " ";
-    int symbol_len = max_len - subtitle_padded.length();
-    string symbols(symbol_len / 2, '-');
-    std::cout << wrapper << "\n";
-    std::cout << symbols + subtitle_padded + symbols << "\n";
-    std::cout << wrapper << "\n\n";
+void IOHandler::output_subtitle(const string &subtitle, string color) {
+    vector<string> content;
+    content.push_back(subtitle);
+    // int max_len = (subtitle_max_len - 4 >= (int)subtitle.length()) ? subtitle_max_len : (int)subtitle.length() + 4;
+    // string wrapper(max_len, '-');
+    // string subtitle_padded = " " + subtitle + " ";
+    // int symbol_len = max_len - subtitle_padded.length();
+    // string symbols(symbol_len / 2, '-');
+    // cout << wrapper << "\n";
+    // cout << symbols + subtitle_padded + symbols << "\n";
+    // cout << wrapper << "\n\n";
+
+    AsciiHandler::display_box_layout("", content, color, "white", 50);
+
 }
 
 void IOHandler::output_msg(const string &msg) {
     string msg_padded = " " + msg + " ";
     string symbols(msg_padding_len, '-');
-    std::cout << symbols + msg_padded + symbols << "\n";
+    cout << symbols + msg_padded + symbols << "\n";
 }
 
 void IOHandler::output_options(const string &options_title, const vector<string> &options_list) {
     output_subtitle(options_title);
     for (size_t i = 0; i < options_list.size(); i++) {
-        std::cout << "[" << (i + 1) << "] " << options_list[i] << "\n";
+        cout << "[" << (i + 1) << "] " << options_list[i] << "\n";
     }
-    std::cout << "\n";
+    cout << "\n";
 }
 
 void IOHandler::output_battle_info(const string &info) {
@@ -88,23 +103,23 @@ void IOHandler::output_battle_info(const string &info) {
     string info_padded = " " + info + " ";
     int symbol_len = max_len - info_padded.length();
     string symbols(symbol_len / 2, '*');
-    std::cout << "\n" << wrapper << "\n";
-    std::cout << symbols + info_padded + symbols << "\n";
-    std::cout << wrapper << "\n\n";
+    cout << "\n" << wrapper << "\n";
+    cout << symbols + info_padded + symbols << "\n";
+    cout << wrapper << "\n\n";
 }
 
 // INPUT METHODS
 
 int IOHandler::input_choose_index(int size) {
-    if (std::cin.fail()) {
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     int user_input;
-    std::cout << "Select option: ";
-    std::cin >> user_input;
+    cout << "Select option: ";
+    cin >> user_input;
     if (validate_index_input(user_input, size)) {
-        std::cout << "\n";
+        cout << "\n";
         return user_input - 1; // convert to 0-based index
     } else {
         return input_choose_index(size);
@@ -112,15 +127,15 @@ int IOHandler::input_choose_index(int size) {
 }
 
 string IOHandler::input_choose_option(const vector<string> &options_list) {
-    if (std::cin.fail()) {
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     int user_input;
-    std::cout << "Select option: ";
-    std::cin >> user_input;
+    cout << "Select option: ";
+    cin >> user_input;
     if (validate_option_input(user_input, options_list)) {
-        std::cout << "\n";
+        cout << "\n";
         return options_list[user_input - 1];
     } else {
         return input_choose_option(options_list);
@@ -128,9 +143,9 @@ string IOHandler::input_choose_option(const vector<string> &options_list) {
 }
 
 void IOHandler::input_continue() {
-    std::cout << "Press Enter to continue...";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cin.get();
+    cout << "Press Enter to continue...";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 // COLOR METHODS
@@ -160,25 +175,93 @@ void IOHandler::clear_terminal_static() {
 // VALIDATION METHODS
 
 bool IOHandler::validate_option_input(int user_input, const vector<string> &options_list) {
-    if ((1 <= user_input && user_input <= (int)options_list.size()) && (!std::cin.fail())) {
+    if ((1 <= user_input && user_input <= (int)options_list.size()) && (!cin.fail())) {
         return true;
     }
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cout << "Invalid input, enter a number between 1 and " << options_list.size() << "\n\n";
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Invalid input, enter a number between 1 and " << options_list.size() << "\n\n";
     return false;
 }
 
 bool IOHandler::validate_index_input(int user_input, int size) {
-    if ((1 <= user_input && user_input <= size) && !std::cin.fail()) {
+    if ((1 <= user_input && user_input <= size) && !cin.fail()) {
         return true;
     }
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cout << "Invalid input, enter a number between 1 and " << size << "\n\n";
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Invalid input, enter a number between 1 and " << size << "\n\n";
     return false;
 }
 
+#include <cctype>
+
+
+vector<string> IOHandler::wrap_text(const string &text, size_t maxWidth) {
+    vector<string> lines;
+    vector<string> words;
+    
+    // Manually split text into words.
+    size_t i = 0;
+    while (i < text.length()) {
+        // Skip any whitespace characters.
+        while (i < text.length() && isspace(text[i])) {
+            ++i;
+        }
+        if (i >= text.length())
+            break;
+        // Mark the start of the word.
+        size_t start = i;
+        // Move to the end of the word.
+        while (i < text.length() && !isspace(text[i])) {
+            ++i;
+        }
+        words.push_back(text.substr(start, i - start));
+    }
+    
+    // Build lines by adding words until the maxWidth is exceeded.
+    string line;
+    for (const string &word : words) {
+        // If the current line is empty.
+        if (line.empty()) {
+            // If the word itself is longer than maxWidth, split the word.
+            if (word.size() > maxWidth) {
+                size_t pos = 0;
+                while (pos < word.size()) {
+                    lines.push_back(word.substr(pos, maxWidth));
+                    pos += maxWidth;
+                }
+            } else {
+                line = word;
+            }
+        } else {
+            // Check if adding the word (with a space) would exceed maxWidth.
+            if (line.size() + 1 + word.size() > maxWidth) {
+                lines.push_back(line);
+                // If the new word is too long for a single line, break it up.
+                if (word.size() > maxWidth) {
+                    size_t pos = 0;
+                    while (pos < word.size()) {
+                        lines.push_back(word.substr(pos, maxWidth));
+                        pos += maxWidth;
+                    }
+                    line = "";
+                } else {
+                    line = word;
+                }
+            } else {
+                line += " " + word;
+            }
+        }
+    }
+    
+    // Add any remaining text as the last line.
+    if (!line.empty()) {
+        lines.push_back(line);
+    }
+    
+    return lines;
+}
 
 // #include "IOHandler.h"
 
@@ -207,18 +290,18 @@ bool IOHandler::validate_index_input(int user_input, int size) {
 // //=========== OUTPUT METHODS ===========//
 
 // void IOHandler::glitch_sleep(unsigned int seconds){
-//     std::this_thread::sleep_for(std::chrono::seconds(seconds));
+//     this_thread::sleep_for(chrono::seconds(seconds));
 // }
 
 // void IOHandler::glitch_sleep_static(unsigned int seconds){
-//     std::this_thread::sleep_for(std::chrono::seconds(seconds));
+//     this_thread::sleep_for(chrono::seconds(seconds));
 // }
 
 // void IOHandler::clear_terminal() {
 //     #ifdef _WIN32
-//         std::system("cls");
+//         system("cls");
 //     #else
-//         std::system("clear");
+//         system("clear");
 //     #endif
 // }
 
@@ -338,14 +421,14 @@ bool IOHandler::validate_index_input(int user_input, int size) {
 // }
 
 // //=========== COLOR METHODS ===========//
-// std::string IOHandler::apply_neon_colors(const std::string &text) {
-//     std::string result;
+// string IOHandler::apply_neon_colors(const string &text) {
+//     string result;
 //     // Process each character.
-//     // std::cout << "neon_color_map size: " << neon_color_map.size() << std::endl;
+//     // cout << "neon_color_map size: " << neon_color_map.size() << endl;
 //     for (char c : text) {
 //         // If the character is one we want to colorize...
 //         if (neon_color_map.find(c) != neon_color_map.end()) {
-//             result += neon_color_map[c] + std::string(1, c) + reset_code;
+//             result += neon_color_map[c] + string(1, c) + reset_code;
 //         } else {
 //             result.push_back(c);
 //         }
@@ -353,7 +436,7 @@ bool IOHandler::validate_index_input(int user_input, int size) {
 //     return result;
 // }
 
-// void IOHandler::set_neon_color_for_char(char key, const std::string &ansi_code) {
+// void IOHandler::set_neon_color_for_char(char key, const string &ansi_code) {
 //     neon_color_map[key] = ansi_code;
 // }
 
