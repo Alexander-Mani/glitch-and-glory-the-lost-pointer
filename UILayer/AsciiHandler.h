@@ -40,7 +40,8 @@ public:
     static string colorize_box(string text, string color);
     static void display_box_layout(const string &title, const vector<string> &output,
                                    const string &outline_color = "pink",
-                                   const string &content_color = "white");
+                                   const string &content_color = "white", 
+                                   int size=135);
 };
 
 #endif // ASCIIHANDLER_H

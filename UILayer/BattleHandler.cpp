@@ -82,12 +82,14 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
     IOHandler::clear_terminal();
     AsciiHandler::display_start_of_battle(battleModel);
     vector<string> action_list = battleModel->get_battle_actions();
-    // IOHandler::glitch_sleep(3);
+    IOHandler::glitch_sleep(2);
     while (!this->logicWrapper->battleLogic->battle_over(battleModel) && !battleModel->fled && !battleModel->bribed) {
-        // IOHandler::glitch_sleep(3);
         
         IOHandler::clear_terminal();
-        AsciiHandler::display_turn(battleModel);
+        if(battleModel->player_turn){            
+            AsciiHandler::display_turn(battleModel);
+            IOHandler::glitch_sleep(2);
+        }
         // if(!battleModel->player_turn){
             // IOHandler::input_continue();
         // }
@@ -113,12 +115,13 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
         
         
         // Display the results of the action that was taken
+
         IOHandler::clear_terminal();
         AsciiHandler::display_battle_entities(battleModel);
         AsciiHandler::display_battle_stats(battleModel);
         AsciiHandler::display_hud(hud_msg, '*', terminal_length);
         
-        // IOHandler::glitch_sleep(3);
+        IOHandler::glitch_sleep(2);
         // cout << "NUMMIE 2!!!" << endl;
         // IOHandler::input_continue();
 

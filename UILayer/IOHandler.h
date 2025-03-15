@@ -24,8 +24,8 @@ public:
     static void clear_terminal();
     static void glitch_sleep(unsigned int seconds);
     static void glitch_sleep_static(unsigned int seconds);
-    static void output_title(const string &title);
-    static void output_subtitle(const string &subtitle);
+    static void output_title(const string &title, string color="orange");
+    static void output_subtitle(const string &subtitle, string color="blue");
     static void output_msg(const string &msg);
     static void output_options(const string &options_title, const vector<string> &options_list);
     static void output_battle_info(const string &info);
@@ -43,6 +43,9 @@ public:
 
     // Additional static utility method
     static void clear_terminal_static();
+
+    static vector<string> wrap_text(const std::string &text, size_t maxWidth);
+
 
 private:
     // VALIDATION METHODS
