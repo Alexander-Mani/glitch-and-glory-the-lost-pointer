@@ -88,7 +88,8 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
 
     } else if (action == "View Party") {
 
-        overworldModel->get_party_model()->display_party();
+        this->asciiHandler->display_hud(overworldModel->get_party_model()->display_party(), '|', 150);
+        // overworldModel->get_party_model()->display_party();
         ioHandler->glitch_sleep(3);
 
     } else if (action == "Browse Equipment") {
@@ -243,6 +244,13 @@ string OverworldHandler::battle(OverworldModel* overworldModel, EntityModel *pla
 
         this->battleHandler->start_battle(battleModel);
 
+        // BattleModel* battleModel = new BattleModel(character, enemyModel, true);
+        // unsigned int xp = 0;
+        // unsigned int money = 0;
+        // unsigned int bribe = 0;
+
+        // this->battleHandler->start_battle(battleModel);
+
         // Remove bribed money from party if 
         if(battleModel->bribed){
             bribe = battleModel->get_bribe_amount();
@@ -250,17 +258,40 @@ string OverworldHandler::battle(OverworldModel* overworldModel, EntityModel *pla
             money -= bribe;
         }
         // If the player did not flee, then add xp and money
+        // if(!battleModel->fled){
+        //     xp = this->logicWrapper->gameLogic->deligate_post_battle_xp(overworldModel);
+        //     money = this->logicWrapper->gameLogic->deligate_post_battle_money(overworldModel);
+        // }   
         if((!battleModel->fled || !is_boss) && this->logicWrapper->battleLogic->player_won(battleModel)){
             xp = this->logicWrapper->gameLogic->deligate_post_battle_xp(overworldModel);
             money = this->logicWrapper->gameLogic->deligate_post_battle_money(overworldModel);
         }   
-        if (bribe > 0) {
-            ret_str = "You Received: +" + std::to_string(xp) + " xp and: +$" + std::to_string(money) + 
-                      " eddies and bribed for -$" + std::to_string(bribe) + " eddies";
-        } else {
-            ret_str = "You Received: +" + std::to_string(xp) + " xp and: +$" + std::to_string(money) + " eddies";
-        }
-        delete(battleModel);
-        delete(enemyModel);
+        // if(bribe > 0){
+        //     cout << "You Recieved: " << xp << " xp and: " << money << " eddies and bribed for " << bribe << " eddies" << endl;    
+        // } 
+        // else {
+        //     cout << "You Recieved: " << xp << " xp and: " << money << " eddies" << endl;
+        // }
+
+        this->asciiHandler->display_end_of_battle(battleModel, xp, money);
+        // delete(battleModel);
+        // delete(enemyModel);
+
+        // // Remove bribed money from party if 
+        // // if(battleModel->bribed){
+        // //     bribe = battleModel->get_bribe_amount();
+        // //     overworldModel->get_party_model()->decrease_money(bribe);
+        // //     money -= bribe;
+        // // }
+        // // If the player did not flee, then add xp and money
+        
+        // if (bribe > 0) {
+        //     ret_str = "You Received: +" + std::to_string(xp) + " xp and: +$" + std::to_string(money) + 
+        //               " eddies and bribed for -$" + std::to_string(bribe) + " eddies";
+        // } else {
+        //     ret_str = "You Received: +" + std::to_string(xp) + " xp and: +$" + std::to_string(money) + " eddies";
+        // }
+        // delete(battleModel);
+        // delete(enemyModel);
         return ret_str;
 }

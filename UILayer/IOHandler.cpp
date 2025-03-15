@@ -14,7 +14,12 @@
 using namespace std;
 
 //=========== CONSTRUCTER METHODS ===========//
-IOHandler::IOHandler(){}
+IOHandler::IOHandler(){
+    neon_color_map['|'] = neon_colors.at("pink"); 
+    neon_color_map['-'] = neon_colors.at("pink"); 
+    neon_color_map['='] = neon_colors.at("orange"); 
+    neon_color_map['*'] = neon_colors.at("blue"); 
+}
 
 
 //=========== OUTPUT METHODS ===========//
@@ -122,8 +127,8 @@ string IOHandler::input_choose_option(vector<string> options_list){
     cout << "Select option: "; 
     cin >> user_input;
     bool input_valid = this->validate_option_input(user_input, options_list);
-
-
+    
+    
     if(input_valid){
         cout << endl; 
         return options_list[user_input-1];
@@ -150,16 +155,25 @@ int IOHandler::input_choose_index(int size) {
     }
 }
 
+//=========== COLOR METHODS ===========//
+std::string IOHandler::apply_neon_colors(const std::string &text) {
+    std::string result;
+    // Process each character.
+    // std::cout << "neon_color_map size: " << neon_color_map.size() << std::endl;
+    for (char c : text) {
+        // If the character is one we want to colorize...
+        if (neon_color_map.find(c) != neon_color_map.end()) {
+            result += neon_color_map[c] + std::string(1, c) + reset_code;
+        } else {
+            result.push_back(c);
+        }
+    }
+    return result;
+}
 
-// void IOHandler::input(const std::string &prompt) {
-//     std::cout << prompt << std::endl;
-//     std::cout.flush();
-//     // Clear any leftover newline from previous input
-//     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-//     std::string dummy;
-//     std::getline(std::cin, dummy);
-// }
-
+void IOHandler::set_neon_color_for_char(char key, const std::string &ansi_code) {
+    neon_color_map[key] = ansi_code;
+}
 
 
 //=========== VALIDATION METHODS ===========//

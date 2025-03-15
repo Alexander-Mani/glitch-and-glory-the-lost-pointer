@@ -38,6 +38,8 @@ public:
     virtual void display_stats() const;
     
     void display_ascii() const;
+
+    virtual vector<string> get_stats_lines();
     
     const std::vector<std::string>& get_ascii() const { return ascii_art; }
 

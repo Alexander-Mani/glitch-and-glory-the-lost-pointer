@@ -80,36 +80,6 @@ void AsciiHandler::display_start_of_battle(BattleModel* battleModel) {
     }
 }
 
-// void AsciiHandler::display_battle_entities(BattleModel* battleModel){
-//     vector<string> player_ascii = battleModel->playerEntityModel->get_ascii();
-//     vector<string> opponent_ascii = battleModel->compEntityModel->get_ascii();
-//     size_t stat_length = max(battleModel->playerEntityModel->get_battle_stats().size(), battleModel->compEntityModel->get_battle_stats().size()); 
-//     for (auto &line : player_ascii) {
-//         reverse(line.begin(), line.end());
-//     }
-    
-//     size_t max_length = max(player_ascii.size(), opponent_ascii.size());
-//     max_length = max_length - stat_length - 5;
-//     //minus max_length from size of stats then replace them
-//     //after print stats so the appear in padding of width
-//     for (size_t i = 0; i < max_length; ++i) {
-//         string player_line = (i < player_ascii.size()) ? player_ascii[i] : "";
-//         string opponent_line = (i < opponent_ascii.size()) ? opponent_ascii[i] : "";
-    
-//         int total_padding = SPACES;
-//         if (total_padding < 0){
-//             cout << "Some content being passed into ascii handler 'display_turn' is too long";
-//             return; //if this happens increase the SPACES constant in AsciiHandler.h
-//         }
-//         int left_padding = total_padding / 2;
-//         int right_padding = total_padding - left_padding;
-    
-//         cout << player_line << string(left_padding, ' ')  << string(right_padding, ' ') << opponent_line << '\n';
-//         if(max_length-1 ==i){
-//             cout << string(left_padding+player_line.size(), '=')  << string(right_padding+opponent_line.size(), '=')<< '\n';
-//         }
-//     }
-// }
 
 string AsciiHandler::get_random_neon_color() {
     vector<string> neonColors = {
@@ -253,9 +223,7 @@ void AsciiHandler::display_battle_entities(BattleModel* battleModel) {
                    << "\n";
          
          if (i == max_length - 1) {
-              cout << string(left_padding + player_line.size(), '=')  
-                        << string(right_padding + opponent_line.size(), '=') 
-                        << "\n";
+              cout << this->ioHandler->apply_neon_colors(string(left_padding + player_line.size(), '=') + string(right_padding + opponent_line.size(), '=') + "\n");
          }
     }
 }
@@ -277,54 +245,68 @@ int AsciiHandler::get_battle_width(BattleModel* battleModel){
     return total_width;
 }
 
+void AsciiHandler::display_hud(const vector<string> &custom_msg, char padding_symbol, size_t total_width) {
+    // Top border without colors
+    cout << this->ioHandler->apply_neon_colors(string(total_width, padding_symbol) + "\n");
 
-// void AsciiHandler::display_hud(const vector<string> &custom_msg, char padding_symbol, size_t total_width){
-//     cout << string(total_width, padding_symbol)<< endl;
-//     cout << padding_symbol << string(total_width-2, ' ') << padding_symbol << endl;
-//     for(string msg : custom_msg){
-//         assert(msg.size() < total_width);
+    // cout << styled_text;
+    cout << this->ioHandler->apply_neon_colors(padding_symbol + string(total_width - 2, ' ') + padding_symbol + "\n");
 
-//         int msg_total_padding = total_width - msg.size();
-//         int msg_left_padding = msg_total_padding / 2;
-//         int msg_right_padding = msg_total_padding - msg_left_padding;
-
-//         cout << padding_symbol << string(msg_left_padding-1, ' ') << msg << string(msg_right_padding-1, ' ') << padding_symbol << endl;
-//     }
-//     cout << padding_symbol << string(total_width-2, ' ') << padding_symbol << endl;
-//     cout << string(total_width, padding_symbol)<< endl;
-// }
-
-void AsciiHandler::display_hud(const vector<string> &custom_msg, char padding_symbol, size_t total_width){
-    // ANSI escape codes for neon color (bright cyan) and reset
-    const string neon = "\033[1;36m"; // bright cyan
-    const string reset = "\033[0m";
-
-    // Top border in neon color
-    cout << neon << string(total_width, padding_symbol) << reset << endl;
-
-    // Top padding row
-    cout << neon << padding_symbol << reset << string(total_width-2, ' ') 
-         << neon << padding_symbol << reset << endl;
-
-    // For each message, center it and print neon border on both sides
-    for(const string &msg : custom_msg){
+    // For each message, center it and print border on both sides
+    for (const string &msg : custom_msg) {
         assert(msg.size() < total_width);
         int msg_total_padding = total_width - msg.size();
         int msg_left_padding = msg_total_padding / 2;
         int msg_right_padding = msg_total_padding - msg_left_padding;
-        cout << neon << padding_symbol << reset 
-             << string(msg_left_padding-1, ' ') << msg 
-             << string(msg_right_padding-1, ' ') 
-             << neon << padding_symbol << reset << endl;
+        cout << this->ioHandler->apply_neon_colors(
+                padding_symbol 
+                + string(msg_left_padding - 1, ' ') 
+                + msg 
+                + string(msg_right_padding - 1, ' ') 
+                + padding_symbol 
+                + "\n"
+            );
     }
 
     // Bottom padding row
-    cout << neon << padding_symbol << reset << string(total_width-2, ' ') 
-         << neon << padding_symbol << reset << endl;
+    cout << this->ioHandler->apply_neon_colors(padding_symbol + string(total_width - 2, ' ') + padding_symbol + "\n");
 
-    // Bottom border in neon color
-    cout << neon << string(total_width, padding_symbol) << reset << endl;
+    // Bottom border
+    cout << this->ioHandler->apply_neon_colors(string(total_width, padding_symbol) + "\n");
 }
+
+
+// void AsciiHandler::display_hud(const vector<string> &custom_msg, char padding_symbol, size_t total_width){
+//     // ANSI escape codes for neon color (bright cyan) and reset
+//     const string neon = "\033[1;36m"; // bright cyan
+//     const string reset = "\033[0m";
+
+//     // Top border in neon color
+//     cout << neon << string(total_width, padding_symbol) << reset << endl;
+
+//     // Top padding row
+//     cout << neon << padding_symbol << reset << string(total_width-2, ' ') 
+//          << neon << padding_symbol << reset << endl;
+
+//     // For each message, center it and print neon border on both sides
+//     for(const string &msg : custom_msg){
+//         assert(msg.size() < total_width);
+//         int msg_total_padding = total_width - msg.size();
+//         int msg_left_padding = msg_total_padding / 2;
+//         int msg_right_padding = msg_total_padding - msg_left_padding;
+//         cout << neon << padding_symbol << reset 
+//              << string(msg_left_padding-1, ' ') << msg 
+//              << string(msg_right_padding-1, ' ') 
+//              << neon << padding_symbol << reset << endl;
+//     }
+
+//     // Bottom padding row
+//     cout << neon << padding_symbol << reset << string(total_width-2, ' ') 
+//          << neon << padding_symbol << reset << endl;
+
+//     // Bottom border in neon color
+//     cout << neon << string(total_width, padding_symbol) << reset << endl;
+// }
 
 
 
@@ -393,7 +375,8 @@ void AsciiHandler::display_battle_stats(BattleModel* battleModel){
         left_left_padding = left_total_padding / 2;
         left_right_padding = left_total_padding - left_left_padding;
         if (i == 0){
-            cout << string(left_left_padding, ' ') << string(player_content.size(),'-') + string(left_right_padding, ' ');
+            // cout << string(left_left_padding, ' ') << string(player_content.size(),'-') + string(left_right_padding, ' ');
+            cout << this->ioHandler->apply_neon_colors(string(left_left_padding, ' ') + string(player_content.size(),'-') + string(left_right_padding, ' '));
         }
         output_left = string(left_left_padding, ' ') + player_content + string(left_right_padding, ' ');
 
@@ -407,13 +390,13 @@ void AsciiHandler::display_battle_stats(BattleModel* battleModel){
         right_right_padding = right_total_padding - right_left_padding;
         output_right = string(right_left_padding, ' ') + opponent_content + string(right_right_padding, ' ');
         if (i == 0){
-            cout << string(SPACES, ' ') <<string(right_left_padding, ' ') << string(opponent_content.size(),'-') + string(right_right_padding, ' ') << endl;
+            cout << this->ioHandler->apply_neon_colors(string(SPACES, ' ') + string(right_left_padding, ' ') + string(opponent_content.size(),'-') + string(right_right_padding, ' ') + "\n");
         }
 
-        cout << output_left << string(SPACES, ' ') << output_right << endl; 
+        cout << this->ioHandler->apply_neon_colors(output_left + string(SPACES, ' ') + output_right + "\n"); 
         if (i == max_length-1){
-            cout << string(left_left_padding, ' ') << string(player_content.size(),'-') + string(left_right_padding, ' ');
-            cout << string(SPACES, ' ') <<string(right_left_padding, ' ') << string(opponent_content.size(),'-') + string(right_right_padding, ' ') << endl;
+            cout << this->ioHandler->apply_neon_colors(string(left_left_padding, ' ') + string(player_content.size(),'-') + string(left_right_padding, ' '));
+            cout << this->ioHandler->apply_neon_colors(string(SPACES, ' ') + string(right_left_padding, ' ') + string(opponent_content.size(),'-') + string(right_right_padding, ' ') + "\n");
 
         }
     }
@@ -428,10 +411,168 @@ size_t AsciiHandler::calculate_max_stat_length(const vector<string>& stat_names,
     return max_length;
 }
 
-void AsciiHandler::display_end_of_battle(BattleModel* battleModel){
-    (void)battleModel;
-    string battle_msg = this->logicWrapper->battleLogic->battle_over_msg(battleModel);
-    cout << "=== BATTLE OVER ===" << endl << battle_msg << endl;
 
+// void AsciiHandler::display_box_layout(const string &title, const vector<string> &output) {
+//     const int inner_width = 148; // Number of characters between the vertical borders
+    
+//     string left_filler;
+//     string right_filler;
+//     string bottom_filler;
+
+    
+//     // Adjust the title if it is too long (reserve 2 spaces for padding)
+//     string display_title = title;
+//     if (static_cast<int>(display_title.size()) > inner_width - 2) {
+//         display_title = display_title.substr(0, inner_width - 2);
+//     }
+    
+//     int title_len = display_title.size();
+//     int total_filler = inner_width - (title_len + 2);
+//     int left_filler_count = total_filler / 2;
+//     int right_filler_count = total_filler - left_filler_count;
+    
+//     for (int i = 0; i < left_filler_count; ++i) {
+//         left_filler += u8"─";
+//     }
+//     for (int i = 0; i < right_filler_count; ++i) {
+//         right_filler += u8"─";
+//     }
+
+//     for (int i = 0; i < inner_width; ++i) {
+//         bottom_filler += u8"─";
+//     }
+
+    
+
+
+
+//     // Build the top border with the centered title.
+//     string top_border = u8"┌" 
+//                            + left_filler 
+//                            + " " + display_title + " " 
+//                            + right_filler
+//                            + u8"┐\n";
+    
+//     // Build the content lines.
+//     string content;
+//     for (const auto &line : output) {
+//         string adjusted_line = line;
+//         // Ensure the line is exactly 'inner_width' characters: truncate if too long or pad with spaces if too short.
+//         if (static_cast<int>(adjusted_line.size()) > inner_width) {
+//             adjusted_line = adjusted_line.substr(0, inner_width);
+//         } else if (static_cast<int>(adjusted_line.size()) < inner_width) {
+//             adjusted_line.append(inner_width - adjusted_line.size(), ' ');
+//         }
+//         content += u8"│" + adjusted_line + u8"│\n";
+//     }
+
+
+    
+//     // Build the bottom border.
+//     string bottom_border = u8"└" + bottom_filler + u8"┘\n";
+    
+//     // Output the complete box.
+//     cout << this->ioHandler->apply_neon_colors(top_border + content + bottom_border);
+// }
+
+string AsciiHandler::colorize_box(string text, string color){
+    string color_code;
+    try{
+        color_code = this->ioHandler->neon_colors.at(color); 
+    }
+    catch(const std::out_of_range &e) {
+        color_code = "\033[38;2;255;165;0m";
+    }
+
+
+    
+    
+    return color_code + text + this->ioHandler->reset_code;
+    
+}
+
+void AsciiHandler::display_box_layout(const std::string &title, const std::vector<std::string> &output, string outline_color, string content_color) {
+    const int inner_width = 135; // Number of characters between the vertical borders
+    // string outline_color = "pink";
+    // string content_color = "orange";
+
+    std::string left_filler;
+    std::string right_filler;
+    std::string bottom_filler;
+
+    // Adjust the title if it is too long (reserve 2 spaces for padding)
+    std::string display_title = title;
+    if (static_cast<int>(display_title.size()) > inner_width - 2) {
+        display_title = display_title.substr(0, inner_width - 2);
+    }
+    
+    // Calculate how many filler dashes we need on each side of the title.
+    // Two extra spaces are added around the title.
+    int title_len = display_title.size();
+    int total_filler = inner_width - (title_len + 2);
+    int left_filler_count = total_filler / 2;
+    int right_filler_count = total_filler - left_filler_count;
+    
+    for (int i = 0; i < left_filler_count; ++i) {
+        left_filler += u8"─";
+    }
+    for (int i = 0; i < right_filler_count; ++i) {
+        right_filler += u8"─";
+    }
+
+    // Create the bottom filler (for the bottom border)
+    for (int i = 0; i < inner_width; ++i) {
+        bottom_filler += u8"─";
+    }
+
+    // Build the top border with the centered title.
+    std::string top_border = this->colorize_box(u8"┌" + left_filler + " ", outline_color) + this->colorize_box(display_title, content_color) + " " + this->colorize_box(right_filler + u8"┐\n", outline_color);
+    
+    // Build the content lines by centering each line within the inner width.
+    std::string content;
+    for (const auto &line : output) {
+        std::string adjusted_line = line;
+        // Truncate the line if it's too long.
+        if (static_cast<int>(adjusted_line.size()) > inner_width) {
+            adjusted_line = adjusted_line.substr(0, inner_width);
+        }
+        // Calculate left and right padding for centering.
+        int pad_total = inner_width - adjusted_line.size();
+        int pad_left = pad_total / 2;
+        int pad_right = pad_total - pad_left;
+        std::string padded_line = std::string(pad_left, ' ') + adjusted_line + std::string(pad_right, ' ');
+        content += this->colorize_box(u8"│", outline_color) + this->colorize_box(padded_line, content_color) + this->colorize_box(u8"│\n",outline_color);
+    }
+    
+    // Build the bottom border.
+    std::string bottom_border = this->colorize_box(u8"└" + bottom_filler + u8"┘\n", outline_color);
+    
+
+    // Output the complete box (with neon colors applied).
+    std::cout << "\n\n" + this->ioHandler->apply_neon_colors(top_border + content + bottom_border) + "\n" + this->ioHandler->reset_code;
+}
+
+
+void AsciiHandler::display_end_of_battle(BattleModel* battleModel, unsigned int xp, unsigned int money){
+    int bribe = battleModel->get_bribe_amount();
+    string xp_info;
+    if(bribe > 0){
+        xp_info = "You Recieved: " + to_string(xp) + " xp and: " + to_string(money) + " eddies and bribed for " + to_string(bribe) + " eddies";    
+    } 
+    else {
+        xp_info =  "You Recieved: " + to_string(xp) + " xp and: " + to_string(money) + " eddies";
+    }
+    vector<string> output;
+
+    string battle_msg = this->logicWrapper->battleLogic->battle_over_msg(battleModel);
+
+    output.push_back("");
+    output.push_back(battle_msg);
+    output.push_back("");
+    output.push_back(xp_info);
+    output.push_back("");
+    
+
+    this->display_box_layout("BATTLE OVER", output);
 }
 
