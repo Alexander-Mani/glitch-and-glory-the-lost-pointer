@@ -88,8 +88,7 @@ void BattleHandler::start_battle(BattleModel *battleModel) {
         IOHandler::clear_terminal();
         if(battleModel->player_turn){            
             AsciiHandler::display_turn(battleModel);
-            IOHandler::glitch_sleep(2);
-        }
+        } 
         // if(!battleModel->player_turn){
             // IOHandler::input_continue();
         // }

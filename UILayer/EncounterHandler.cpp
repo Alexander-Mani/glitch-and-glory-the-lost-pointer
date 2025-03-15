@@ -14,23 +14,25 @@ EncounterHandler::EncounterHandler(LogicWrapper *logicWrapper) {
 
 #include <typeinfo> 
 void EncounterHandler::get_random_encounter(PartyModel* partyModel, EntityModel *entityModel){
+    
+    
     size_t max_line_width = 100; 
     Encounter encounter = this->logicWrapper->encounterLogic->get_random_encounter();
-
-    // IOHandler::output_title("Encounter"); 
-
-
+    
+    
+    
     // IOHandler::output_msg(encounter.description);
-
+    
     vector<string> description_lines;
     vector<string> description = IOHandler::wrap_text(encounter.description, max_line_width);
     
     description_lines.push_back("");
     description_lines.insert(description_lines.end(), description.begin(), description.end());
     description_lines.push_back("");
-
-
-    AsciiHandler::display_box_layout("Encounter", description_lines);
+    
+    
+    IOHandler::clear_terminal();
+    AsciiHandler::display_box_layout("Encounter", description_lines, "yellow", "yellow");
     
     IOHandler::output_options("Choose your action:", encounter.options);
 

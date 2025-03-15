@@ -113,7 +113,7 @@ string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action
         attacker->decrease_magic(10);
     
         // Randomly choose one of the five abilities (0 to 4)
-        int ability = rand() % 5;
+        int ability = rand() % 6; // Added one extra for surprise stone licking
         switch (ability) {
             case 0: { // DATA DRAIN: Drain 5 hacking points from the enemy.
                 EntityModel *defender = battleModel->get_defender();
@@ -121,42 +121,73 @@ string BattleLogic::handle_battle_action(BattleModel* battleModel ,string action
                 if (defender->get_magic() < drainAmount)
                     drainAmount = defender->get_magic();
                 defender->decrease_magic(drainAmount);
-                ret_msg = "DATA DRAIN: Used 10 hacking pts and drained " + to_string(drainAmount) + " hacking points from your enemy!";
+                if(battleModel->player_turn){
+                    ret_msg = "DATA DRAIN: Used 10 hacking pts and drained " + to_string(drainAmount) + " hacking points from your enemy!";
+                } else {
+                    ret_msg = "DATA DRAIN: Used 10 hacking pts and drained " + to_string(drainAmount) + " hacking points from you!";
+                }
                 break;
             }
             case 1: { // FIREWALL: Activate a digital shield for the next incoming attack.
                 // battleModel->set_firewall_active(true);  // Assume this method sets a firewall status.
-                ret_msg = "FIREWALL: Used 10 hacking pts to build a firewall! But you messed up, the firewall is on the wrong side, you gave the enemy 15 def...";
+                if(battleModel->player_turn){
+                    ret_msg = "FIREWALL: Used 10 hacking pts to build a firewall! But you messed up, the firewall is on the wrong side, you gave the enemy 15 def...";
+                } else {
+                    ret_msg = "FIREWALL: Used 10 hacking pts to build a firewall! But enemy messed up, and you gave the enemy 15 def!";
+
+                }
                 defender->decrease_def(15);
                 if(rand() % 2){
                 } else {
-                    ret_msg = "FIREWALL: Used 10 hacking pts to build a firewall! But you messed up, the firewall is on the wrong side, you gained 5 def...";
+                    if(battleModel->player_turn){
+                        ret_msg = "FIREWALL: Used 10 hacking pts to build a firewall! You gained 5 def!";
+                    } else {
+                        ret_msg = "FIREWALL: Used 10 hacking pts to build a firewall! Enemy gained 5 def.";
+                    }
                     defender->increase_def(5);
                 }
                 break;
             }
             case 2: { // RAPID REBOOT: Restore 10 HP.
                 int healAmount = 10;
-                if(rand() % 2){
-                    attacker->increase_hp(healAmount);  // Assume this method exists.
-                } else {
-                    ret_msg = "RAPID REBOOT: Used 10 hacking pts to reboot your system, restoring " + to_string(healAmount) + " HP!";
+                attacker->increase_hp(healAmount); 
+                if(battleModel->player_turn){
+                    ret_msg = "RAPID REBOOT: Used 10 hacking pts to reboot system, you restore " + to_string(healAmount) + " HP!";
+                } 
+                else {
+                    ret_msg = "RAPID REBOOT: Used 10 hacking pts to reboot system, the enemy restores " + to_string(healAmount) + " HP!";
                 }
 
                 break;
             }
             case 3: { // ATTACKER: Remove 50hp of opponent
-                ret_msg = "ATTACKER: Used 10 hacking pts to remove 50 HP from the opponent";
-                defender->decrease_hp(50);
+                if(battleModel->player_turn){
+                    ret_msg = "ATTACKER: Used 10 hacking pts to remove 150 HP from the opponent! :D";
+                } else {
+                    ret_msg = "ATTACKER: Used 10 hacking pts to remove 150 HP from you :'(";
+                }
+                defender->decrease_hp(150);
                 break;
             }
             case 4: { // EMP BLAST: Temporarily disable the enemy's weapon systems.
-                ret_msg = "EMP BLAST: Used 10 hacking pts to send an EMP pulse that took all your hacking pts!";
+                if(rand() % 2){ // Messes up
+                    if(battleModel->player_turn){
+                        ret_msg = "EMP BLAST: Used 10 hacking pts to send an EMP pulse, but it took all your hacking pts!";
+                    } else {
+                        ret_msg = "EMP BLAST: Used 10 hacking pts to send an EMP pulse, but it took all of his own hacking pts!";
+                    }
+                } else { // Succeeds
+                    if(battleModel->player_turn){
+                        ret_msg = "EMP BLAST: Used 10 hacking pts to send an EMP pulse and took all enemy hacking pts!";
+                    } else {
+                        ret_msg = "EMP BLAST: Used 10 hacking pts to send an EMP pulse and took all your hacking pts!";
+                    }
+                }
                 attacker->zero_hack_points();
                 break;
             }
             default: {
-                ret_msg = "You used magic to lick a stone, lost 10 HP due to bacterial virus.";
+                ret_msg = "Used magic to lick a stone, lost 10 HP due to bacterial virus.";
                 attacker->decrease_hp(10);
                 break;
             }

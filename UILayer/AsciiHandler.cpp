@@ -134,6 +134,7 @@ void AsciiHandler::display_turn(BattleModel* battleModel) {
 
 
 void AsciiHandler::display_end_of_battle(BattleModel* battleModel, unsigned int xp, unsigned int money) {
+    IOHandler::clear_terminal();
     int bribe = battleModel->get_bribe_amount();
     string xp_info;
     if (bribe > 0)
@@ -145,9 +146,12 @@ void AsciiHandler::display_end_of_battle(BattleModel* battleModel, unsigned int 
     // In a complete game, you might call a function like battle_over_msg; here we use a placeholder.
     string battle_msg = "Battle Over";
     output.push_back("");
+    output.push_back("");
     output.push_back(battle_msg);
     output.push_back("");
     output.push_back(xp_info);
+    output.push_back("");
+    output.push_back("");
     output.push_back("");
     
     if(xp == 0){
@@ -155,6 +159,8 @@ void AsciiHandler::display_end_of_battle(BattleModel* battleModel, unsigned int 
     } else {
         display_box_layout("BATTLE WON", output, "green");
     }
+    IOHandler::glitch_sleep(2);
+    IOHandler::clear_terminal();
 }
 
 void AsciiHandler::display_battle_stats(BattleModel* battleModel){
