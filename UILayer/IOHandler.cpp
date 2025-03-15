@@ -210,7 +210,6 @@ bool IOHandler::validate_index_input(int user_input, int size) {
     return false;
 }
 
-#include <cctype>
 
 
 vector<string> IOHandler::wrap_text(const string &text, size_t maxWidth) {
