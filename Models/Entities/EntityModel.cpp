@@ -120,18 +120,16 @@ EquipmentModel* EntityModel::get_equipped_item(const std::string &slot) const {
     return nullptr;
 }
 
-vector<string> EntityModel::get_inventory_lines() {
-    vector<string> lines;
-    string inv_l = "| INVENTORY |";
-    int padding = inv_l.size() - 1;
-    string wrapper = string(inv_l.size(), '-');
-    string inner_wrapper = "| " + string(inv_l.size() - 4, '-') + " |";
 
+vector<string> EntityModel::get_inventory_lines() {
     vector<string> item_lines;
+    item_lines.reserve(inventory.size());
+
     for (const auto &pair : inventory) {
-        string line = "| " + pair.first + ": ";
+        string line = pair.first + ": ";
         if (pair.second) {
             line += pair.second->get_name();
+
             if (pair.second->get_max_hp())
                 line += " | +HP: " + to_string(pair.second->get_max_hp());
             if (pair.second->get_atk())
@@ -147,25 +145,41 @@ vector<string> EntityModel::get_inventory_lines() {
         } else {
             line += "None";
         }
-
-        // Safeguard to avoid negative length
-        int needed_spaces = (padding + 1) - static_cast<int>(line.size());
-        if (needed_spaces < 0) {
-            needed_spaces = 0;
-        }
-        line += string(needed_spaces, ' ') + "|";
         item_lines.push_back(line);
     }
 
-    lines.push_back(wrapper);
-    lines.push_back(inv_l);
-    lines.push_back(inner_wrapper);
-
-    for (auto &item_line : item_lines) {
-        lines.push_back(item_line);
+    size_t max_len = 0;
+    for (auto &ln : item_lines) {
+        if (ln.size() > max_len) {
+            max_len = ln.size();
+        }
     }
-    lines.push_back(wrapper);
 
-    return lines;
+    vector<string> inventory_view;
+
+    string wrapper = string(max_len + 4, '-');
+    string title = "| INVENTORY";
+    if (max_len > 9) {
+        title += string(max_len - 9, ' ');
+    }
+    title += " |";
+
+    string inner_wrapper = "|" + string(wrapper.size() - 2, '-') + "|";
+
+    inventory_view.push_back(wrapper);
+    inventory_view.push_back(title);
+    inventory_view.push_back(inner_wrapper);
+
+    for (auto &ln : item_lines) {
+        string padded_ln = "| " + ln;
+        if (ln.size() < max_len) {
+            padded_ln += string(max_len - ln.size(), ' ');
+        }
+        padded_ln += " |";
+        inventory_view.push_back(padded_ln);
+    }
+
+    inventory_view.push_back(wrapper);
+
+    return inventory_view;
 }
-
