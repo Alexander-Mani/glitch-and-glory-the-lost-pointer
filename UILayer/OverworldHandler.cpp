@@ -88,7 +88,8 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         EntityModel *character = this->choose_party_member(overworldModel);
         //EntityModel* enemyModel = this->logicWrapper->entityLogic->get_random_entity();
         EntityModel* enemyModel = this->logicWrapper->entityLogic->generate_enemy_entity(character);
-        cout << this->battle(overworldModel,character, enemyModel, false) << endl;
+        this->battle(overworldModel,character, enemyModel, false);
+        // cout << this->battle(overworldModel,character, enemyModel, false) << endl;
 
     } else if (action == "View Party") {
 
