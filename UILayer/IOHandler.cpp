@@ -44,6 +44,9 @@ void IOHandler::glitch_sleep_static(unsigned int seconds) {
 }
 
 void IOHandler::output_title(const string &title) {
+    
+
+
     int max_len = (title_max_len - 4 >= (int)title.length()) ? title_max_len : (int)title.length() + 4;
     string wrapper(max_len, '=');
     string title_padded = " " + title + " ";

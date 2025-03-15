@@ -415,53 +415,19 @@ string AsciiHandler::colorize_box(string text, string color){
     return color_code + text + IOHandler::reset_code;
 }
 
-// string AsciiHandler::colorize_box(const string &text, const string &color) {
-//     string color_code;
-//     // color = to_string(color);
-//     cout << endl;
-//     cout << endl;
-//     cout << endl;
-//     cout << "running colorize_box" << endl;
-//     cout << "text: " << text << endl;
-//     cout << "color: " << color << endl;
-//     cout << "done running colorize_box" << endl;
-//     cout << "to_string(color_code == pink)" << endl;
-//     cout << to_string(color_code == "pink") << endl;
-//     cout << "to_string(color_code == white)" << endl;
-//     cout << to_string(color_code == "white") << endl;
-//     cout << endl;
-//     cout << endl;
-//     if (color == "pink")
-//         color_code = "\033[38;2;255;105;180m";
-//     else if (color == "orange")
-//         color_code = "\033[38;2;255;165;0m";
-//     else if (color == "yellow")
-//         color_code = "\033[38;2;255;255;0m";
-//     else if (color == "green")
-//         color_code = "\033[38;2;0;255;0m";
-//     else if (color == "blue")
-//         color_code = "\033[38;2;0;0;255m";
-//     else if (color == "white")
-//         color_code = "\033[38;2;255;255;255m";
-//     else
-//         assert(false);
-//         color_code = "\033[38;2;255;255;255m"; // default white
-//     return color_code + text + IOHandler::reset_code;
-// }
-
 
 void AsciiHandler::display_box_layout(const string &title, const vector<string> &output, const string &outline_color, const string &content_color) {
-    cout << endl;
-    cout << endl;
-    cout << endl;
-    cout << title << endl;
-    cout << outline_color << endl;
-    cout << outline_color << endl;
-    cout << outline_color << endl;
-    cout << outline_color << endl;
-    cout << endl;
-    cout << endl;
-    cout << endl;
+    // cout << endl;
+    // cout << endl;
+    // cout << endl;
+    // cout << title << endl;
+    // cout << outline_color << endl;
+    // cout << outline_color << endl;
+    // cout << outline_color << endl;
+    // cout << outline_color << endl;
+    // cout << endl;
+    // cout << endl;
+    // cout << endl;
     const int inner_width = 135; // Fixed inner width.
     string left_filler, right_filler, bottom_filler;
     string display_title = title;
