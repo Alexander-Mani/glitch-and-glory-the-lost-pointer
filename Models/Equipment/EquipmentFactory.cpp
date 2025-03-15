@@ -2,6 +2,7 @@
 #include "EquipmentFactory.h"
 #include <iostream>
 #include <iomanip>
+#include <string>
 
 EquipmentFactory::EquipmentFactory() {
     // Create new weapon objects and store pointers to them
@@ -85,13 +86,14 @@ void EquipmentFactory::show_combat_gear() {
             << " | EVA: " << armor->get_evade()
             << " | Price: " << armor->get_price()
             << "\n";
-    }
+    } 
+    std::cout << to_string(ind++)+". " << "Leave" << endl;
     std::cout << std::endl;
 }
 
 void EquipmentFactory::show_cyber_augments() {
     std::cout << "=== Implants ===\n";
-    int ind = 0;
+    int ind = 1;
     for (const auto* implant : this->implants) {
         std::cout
             << ind++
@@ -105,5 +107,6 @@ void EquipmentFactory::show_cyber_augments() {
             << " | Price: " << implant->get_price()
             << "\n";
     }
+    std::cout << to_string(ind++)+". " << "Leave" << endl;
     std::cout << std::endl;
 }

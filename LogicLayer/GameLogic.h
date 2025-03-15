@@ -21,6 +21,9 @@ class GameLogic{
     void level_up(OverworldModel *overworldModel, EntityModel* selected_party_member);
     unsigned int deligate_post_battle_money(OverworldModel *overworldModel);
     unsigned int get_random_from_range(unsigned int min, unsigned int max);
+    void pay_for_night_and_heal(OverworldModel* overworldModel);
+    unsigned int get_stay_night_price(OverworldModel* overworldModel);
+    bool won_gamble(OverworldModel* overworldModel, int amount);
 
 
     

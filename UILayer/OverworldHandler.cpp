@@ -55,19 +55,18 @@ void OverworldHandler::initialize_overworld() {
 }
 
 void OverworldHandler::move(OverworldModel *overworldModel,string location){
-    this->handle_random_encounter(overworldModel);
     this->handle_level_up(overworldModel);
-    location = this->logicWrapper->gameLogic->change_location(overworldModel, location);
+    string new_location = this->logicWrapper->gameLogic->change_location(overworldModel, location);
     //string new_location = overworldModel->set_curr_location(location);
-    vector<string> locations = overworldModel->get_routes(location);
-    this->ioHandler->output_options(location, locations);
+    vector<string> locations = overworldModel->get_routes(new_location);
+    if (location != new_location){
+        this->handle_random_encounter(overworldModel);
+    }
+    this->ioHandler->output_options(new_location, locations);
     string option = this->ioHandler->input_choose_option(locations);
     vector<string> actions = overworldModel->get_actions();
     bool is_action = this->logicWrapper->gameLogic->is_action(actions, option);
-    if (location == overworldModel->get_final_zone()){
-        cout << "BOSS TIME!" << endl;
-        return;
-    }else if (is_action) {
+     if (is_action) {
         // option is not location so it must be action thus we call action handler
         string action = this->logicWrapper->gameLogic->action_resolver(option);
         return this->do_action(overworldModel, action);
@@ -98,7 +97,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         vector<WeaponModel*>* weapons = overworldModel->get_equipment_factory()->get_weapons();
         vector<ArmorModel*>* armors = overworldModel->get_equipment_factory()->get_armors();
         overworldModel->get_equipment_factory()->show_combat_gear();
-        unsigned int index = this->ioHandler->input_choose_index(weapons->size()+armors->size());
+        unsigned int index = this->ioHandler->input_choose_index(weapons->size()+armors->size()+1);
         if (index+1 <= weapons->size()){
             WeaponModel* weapon = (*weapons)[index];
             if ((unsigned int)weapon->get_price() > overworldModel->get_party_model()->get_money()) { 
@@ -109,7 +108,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
             EntityModel* character = this->choose_party_member(overworldModel);
             purchase = character->equip_item("Weapon", weapon);
             
-        }else{
+        }else if (index != 10){
             index %=5;
             ArmorModel* armor = (*armors)[index];
             if ((unsigned int)armor->get_price() > overworldModel->get_party_model()->get_money()) { 
@@ -126,7 +125,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         overworldModel->get_party_model()->display_party();
         vector<ImplantModel*>* implants = overworldModel->get_equipment_factory()->get_implants();
         overworldModel->get_equipment_factory()->show_cyber_augments();
-        unsigned int index = this->ioHandler->input_choose_index(implants->size());
+        unsigned int index = this->ioHandler->input_choose_index(implants->size()+1);
         ImplantModel* implant = (*implants)[index];
         if ((unsigned int)implant->get_price() > overworldModel->get_party_model()->get_money()) { 
             cout << "You can't afford that" << endl;
@@ -146,12 +145,50 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         this->battle(overworldModel,character, bossPhase2Model, true);
         return;
     } else if (action == "Gamble") {
-        cout << "You see an underground gathering of scum and villany" << endl;
-        cout << "You and the lads think you wold wreck them in rock, paper, scissors" << endl;
+        vector<string> gamble_options = {"100", "200", "500", "1000", "5000", "10000"};
+        vector<int> gamble_amounts = {100, 200, 500, 1000, 5000, 10000};
+        this->ioHandler->output_options("Want to Gamble like a Gamer?", gamble_options);
+        int choice_ind = this->ioHandler->input_choose_index(gamble_amounts.size());
+        unsigned int gamble_amount = gamble_amounts[choice_ind];
+        string status_msg = "";
+        if (gamble_amount <= overworldModel->get_party_model()->get_money()){
+            bool won = this->logicWrapper->gameLogic->won_gamble(overworldModel, gamble_amount);
+            if (won) status_msg = "You won! " + to_string(gamble_amount);
+            else status_msg = "You lost " + to_string(gamble_amount);
+        }else status_msg = "You can't afford that";
+        ioHandler->output_title(status_msg);
         this->ioHandler->glitch_sleep(3);
 
     } else if (action == "Apply For Job") {
         cout << DENY_JOB_LETTER << endl;
+    } else if (action == "Stay Night"){
+        int price = this->logicWrapper->gameLogic->get_stay_night_price(overworldModel); 
+        string message = "Stay Night And Fully Heal Party For " + to_string(price);
+        overworldModel->get_party_model()->display_party();
+        vector<string> options = {"Stay Night", "Leave"};
+        this->ioHandler->output_options(message, options);
+        string choice = this->ioHandler->input_choose_option(options);
+        if (choice == options[0]) this->logicWrapper->gameLogic->pay_for_night_and_heal(overworldModel);
+    } else if (action == "Attempt Rat Communication"){
+        int chance = logicWrapper->gameLogic->get_random_from_range(0, 6);
+        if (chance == 1){
+            cout << "You Succeed, You gain the mark of the rat!, gain one level!";
+            int xp = overworldModel->get_party_model()->get_level_threshold();
+            overworldModel->get_party_model()->increase_xp(xp);
+            
+        }else{
+            cout << "You failed" << endl;
+            cout << "A loyal member of the children of the rat aproaches you" << endl;
+            cout << "Prepare to fight" << endl;
+            this->ioHandler->glitch_sleep(2);
+            EntityModel *character = this->choose_party_member(overworldModel);
+            //EntityModel* enemyModel = this->logicWrapper->entityLogic->get_random_entity();
+            EntityModel* enemyModel = this->logicWrapper->entityLogic->generate_enemy_entity(character);
+            cout << this->battle(overworldModel,character, enemyModel, false) << endl;
+
+
+
+        }
     }
 
     
@@ -184,6 +221,7 @@ void OverworldHandler::handle_random_encounter(OverworldModel *overworldModel){
         cout << "You Hear something behind you..." << endl;
         cout << "Who responds?" << endl;
         EntityModel *entityModel = this->choose_party_member(overworldModel);
+        //turn to bool will be battle, and make the guy fight you
         this->encounterHandler->get_random_encounter(overworldModel->get_party_model(), entityModel);
     }
 }

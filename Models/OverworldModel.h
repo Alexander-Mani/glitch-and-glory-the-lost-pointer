@@ -26,16 +26,16 @@ protected:
     const string final_zone = "Fight Boss";
 
     unordered_map<string, vector<string>> location_map = {
-        {"Streets", {"View Party", "Arena", "Shop", "Ripper", "HQ", "Apartments", "Warehouse", "Club", "Union"}},
-        {"Arena", {"View Party", "Streets", "Duel"}},
-        {"Shop", {"View Party", "Streets", "Browse Equipment"}},
-        {"Ripper", {"View Party", "Streets", "Browse Implants"}},
-        {"HQ", {"View Party", "Streets", "Fight Boss"}},
-        {"Apartments", {"View Party", "Streets", "Stay Night"}},
-        {"Warehouse", {"View Party", "Streets", "Attempt Rat Communication"}},
-        {"Club", {"View Party", "Streets", "Gamble"}},
-        {"Union", {"View Party", "Streets", "Apply For Job"}},
-        {"Boss", {"View Party", "Win"}}
+        {"Streets", {"Arena", "Shop", "Ripper", "HQ", "Apartments", "Warehouse", "Club", "Union", "View Party"}},
+        {"Arena", {"Duel", "Streets", "View Party"}},
+        {"Shop", {"Browse Equipment", "Streets", "View Party"}},
+        {"Ripper", {"Browse Implants", "Streets", "View Party"}},
+        {"HQ", {"Fight Boss", "Streets", "View Party"}},
+        {"Apartments", {"Stay Night", "Streets", "View Party"}},
+        {"Warehouse", {"Attempt Rat Communication", "Streets", "View Party"}},
+        {"Club", {"Gamble", "Streets", "View Party"}},
+        {"Union", {"Apply For Job", "Streets", "View Party"}},
+        {"Boss", {"Win", "View Party"}}
     };
 
     vector<string> actions = {
@@ -46,7 +46,8 @@ protected:
         "Fight Boss",
         "Gamble",
         "Apply For Job",
-        "Stay Night"
+        "Stay Night",
+        "Attempt Rat Communication",
 
     };
 

@@ -80,11 +80,41 @@ bool GameLogic::is_action(vector<string> actions, string option){
     return false;
 } 
 
+
 string GameLogic::action_resolver(string action){
     if (action == "Duel"){
         return "Battle";
     }
     return action;
+}
+void GameLogic::pay_for_night_and_heal(OverworldModel* overworldModel){
+    unsigned int money = overworldModel->get_party_model()->get_money();
+    overworldModel->get_party_model()->decrease_money(money * 0.1);
+
+    vector<EntityModel*> members = overworldModel->get_party_model()->get_party_members();
+    for( EntityModel *member: members){
+        member->set_hp(member->get_max_hp());
+    };
+    
+}
+
+unsigned int GameLogic::get_stay_night_price(OverworldModel* overworldModel){
+    unsigned int money = overworldModel->get_party_model()->get_money();
+    unsigned int price = money * 0.1;
+    if (price < 100) price = 100;
+    return price;
+}
+
+bool GameLogic::won_gamble(OverworldModel* overworldModel, int amount){
+    int roll = get_random_from_range(0, 6);
+    overworldModel->get_party_model()->decrease_money(amount);
+    if (roll == 1){
+        overworldModel->get_party_model()->increase_money(amount*2);
+        return true;
+    }
+    return false;
+
+
 }
 
 unsigned int GameLogic::get_random_from_range(unsigned int min, unsigned int max){
