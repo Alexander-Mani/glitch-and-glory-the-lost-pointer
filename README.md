@@ -2,6 +2,7 @@
 ## Disclaimers
 - This has only been tested on linux (or wsl). 
 - On some computers we had to run it within the VSCode terminal.
+- [Github](https://github.com/Alexander-Mani/glitch-and-glory-the-lost-pointer/)
 
 ## The Lost Pointer
 
