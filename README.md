@@ -7,7 +7,7 @@ A Cyberpunk JRPG.
 
 In this turn based JRPG inspired by the Cyberpunk genre and Swords And Sandals the objective is to storm the HQ and defeat the final boss.
 
-To achieve this the you will want to head to the arena to sharpen your game skills, gain EXP and Money so you can increase the parties stats
+To achieve this the you will want to head to the arena to sharpen your game skills, gain XP and Money(eddies) so you can increase the parties stats
 and buy fancy new equipment from the Ripper and Shop.
 
 The gameplay loop is simple but offers some depth Explore the maps many options while increasing your power all for the final goal
@@ -52,9 +52,6 @@ Once enemies are beaten, players gain experience points and money.
 ```bash
 ├── Art
 │   └── (Contains art not directly used in the game but for devlopment, and a handy asciiflipper.py)
-├── data
-│   └── project_description.md
-├── debug.h
 ├── glitch-and-glory.out
 ├── LogicLayer
 │   ├── AttackLogic.cpp

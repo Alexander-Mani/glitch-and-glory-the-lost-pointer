@@ -138,9 +138,9 @@ void AsciiHandler::display_end_of_battle(BattleModel* battleModel, unsigned int 
     int bribe = battleModel->get_bribe_amount();
     string xp_info;
     if (bribe > 0)
-        xp_info = "You Received: " + std::to_string(xp) + " xp and: " + std::to_string(money) + " eddies and bribed for " + std::to_string(bribe) + " eddies";
+        xp_info = "You Received: " + std::to_string(xp) + " xp and: $" + std::to_string(money) + " eddies and bribed for " + std::to_string(bribe) + " eddies";
     else
-        xp_info = "You Received: " + std::to_string(xp) + " xp and: " + std::to_string(money) + " eddies";
+        xp_info = "You Received: " + std::to_string(xp) + " xp and: $" + std::to_string(money) + " eddies";
     
     vector<string> output;
     // In a complete game, you might call a function like battle_over_msg; here we use a placeholder.

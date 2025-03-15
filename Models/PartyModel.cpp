@@ -94,7 +94,7 @@ vector<string> PartyModel::display_party() {
 
     // Add header lines
     output.push_back("Your Party:");
-    output.push_back("Eddies: " + to_string(party_money));
+    output.push_back("Eddies: $" + to_string(party_money));
     output.push_back("Level: " + to_string(level) + " | Next level: [" +
                      to_string(party_xp) + "/" + to_string(party_xp_level_up_threshold) + "xp]");
 
