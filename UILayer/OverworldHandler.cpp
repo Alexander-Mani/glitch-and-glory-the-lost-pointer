@@ -168,7 +168,7 @@ void OverworldHandler::do_action(OverworldModel *overworldModel, string action){
         // int choice_ind = IOHandler::input_choose_index(gamble_amounts.size());
         IOHandler::output_options("Want to Gamble like a Gamer?", gamble_options);
         int choice_ind = IOHandler::input_choose_index(gamble_options.size());
-        if (choice_ind == gamble_amounts.size()) return move(overworldModel, overworldModel->get_curr_location());; 
+        if (choice_ind == static_cast<int>(gamble_amounts.size())) return move(overworldModel, overworldModel->get_curr_location());; 
         unsigned int gamble_amount = gamble_amounts[choice_ind];
         string status_msg = "";
         if (gamble_amount <= overworldModel->get_party_model()->get_money()){
