@@ -1,4 +1,8 @@
 # Glitch & Glory: 
+## Disclaimers
+- This has only been tested on linux (or wsl). 
+- On some computers we had to run it within the VSCode terminal.
+
 ## The Lost Pointer
 
 A Cyberpunk JRPG.
