@@ -9,8 +9,8 @@ public:
     ElonoTronPhase1Model()
         : EntityModel(
             "Elono Tron Mk I",    // Name
-            100,                // max_hp
-            125,                // hp
+            300,                // max_hp
+            300,                // hp
             100,                // atk
             15,                 // def
             70,                 // magic

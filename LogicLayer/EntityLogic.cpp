@@ -48,14 +48,18 @@ EntityModel* EntityLogic::generate_enemy_entity(EntityModel *playerModel){
     int rand_name_index = this->gameLogic->get_random_from_range(0, names.size()-1); 
 
     for(int& stat : stats){
-        stat = this->gameLogic->get_random_from_range(0.8*stat, 1.2*stat); 
+        stat = this->gameLogic->get_random_from_range(0.6*stat, 0.9*stat); 
     }
+    int atk = playerModel->get_atk();
+    atk = this->gameLogic->get_random_from_range(0.6*atk, 0.9*atk); 
+    int max_hp = playerModel->get_max_hp();
+    max_hp = this->gameLogic->get_random_from_range(0.6*max_hp, 0.9*max_hp); 
     int acc = playerModel->get_acc();
-    int enemy_acc = this->gameLogic->get_random_from_range(acc * 0.8, acc * 1.2); 
+    int enemy_acc = this->gameLogic->get_random_from_range(acc * 0.6, acc * 0.9); 
     // acc > 100
     if (enemy_acc > 100) enemy_acc = 100;
 
-    return new EnemyModel(names[rand_name_index], stats[0], stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], enemy_acc, ascii_art);
+    return new EnemyModel(names[rand_name_index], max_hp, max_hp, atk, stats[2], stats[3], stats[4], stats[5], enemy_acc, ascii_art);
 
 }
 

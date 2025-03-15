@@ -31,6 +31,7 @@ HOW TO PLAY
 
 * Go to the Arena to earn xp and money.
 * Go To the shop and ripper to buy equipment.
+* Go to apartments when your party is low on hp.
 * Once you think you are powerful enough, attempt to take on the boss in HQ 
 )";
 

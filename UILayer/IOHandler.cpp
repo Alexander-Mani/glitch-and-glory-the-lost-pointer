@@ -70,14 +70,14 @@ void IOHandler::output_subtitle(const string &subtitle) {
 void IOHandler::write_dialoge(string dialog){
      for (const char c : dialog) {
         std::cout << c << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
 void IOHandler::write_story(string dialog){
      for (const char c : dialog) {
         std::cout << c << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(25));
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
 }
 
